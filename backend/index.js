@@ -8,6 +8,8 @@ fastify.get('/', (req, reply) => {
   reply.send('Hello World!');
 });
 
+fastify.register(require('./routes/forecast'));
+
 const start = async () => {
   try {
     await fastify.listen(PORT);
