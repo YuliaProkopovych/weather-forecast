@@ -1,0 +1,17 @@
+{
+  "name": "Weather",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Yulia Prokopovych",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "fastify": "^3.22.1"
+  }
+}
