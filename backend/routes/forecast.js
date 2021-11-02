@@ -1,5 +1,7 @@
 const axios = require('axios');
 
+const { getCoordinatesByQuery, locationAutocomplete } = require('../utils/geocoder');
+
 const forecastRoute = (fastify, options, done) => {
   fastify.get('/forecast', getForecastOpts);
   done();
@@ -17,11 +19,7 @@ const getForecastOpts = {
       // reply.send(weather);
 
 
-      const city = 'Lviv';
-
-      const res = await axios.get(`https://nominatim.openstreetmap.org/search?q=${city}&format=json`);
-
-      const coordinates = { lat: Math.round(res.data[0].lat * 100) / 100, lon: Math.round(res.data[1].lon * 100) / 100 };
+      const coordinates = await getCoordinatesByQuery('Lviv+Ukraine');
       console.log(coordinates);
 
       const response = await axios.get(`https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${coordinates.lat}&lon=${coordinates.lat}`,
@@ -35,11 +33,12 @@ const getForecastOpts = {
       const forecast = response.data['properties'].timeseries.map(
         entity => { return { time: entity.time, weather: entity.data.instant.details }}
       );
-      reply.send(forecast);
+      reply.send('fast');
     }
     catch (error) {
       console.log(error);
     }
+
 
   },
 };
