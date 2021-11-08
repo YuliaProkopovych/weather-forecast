@@ -1,9 +1,9 @@
-import React from 'react';
-import axios from 'axios';
+import React, { useCallback } from 'react';
 import { FormClose } from 'grommet-icons';
 import { Box, Button, Grommet, Keyboard, Text, TextInput } from 'grommet';
 import { grommet } from 'grommet/themes';
 import locationAutocomplete from '../utils/autocomplete';
+import _ from 'lodash';
 
 
 const SearchComponent = () => {
@@ -14,22 +14,25 @@ const SearchComponent = () => {
 
   const boxRef = React.useRef();
 
-  const loadSuggestions = async (event) => {
+  const loadSuggestions = useCallback(
+    _.debounce(async (value) => {
+      if (!value) {
+        return;
+      }
 
-    setQuery(event.target.value);
-    console.log(query);
-
-    const newSuggestions = await locationAutocomplete(event.target.value);
-    setSuggestions(newSuggestions);
-    console.log(suggestions);
-  };
+      try {
+        const newSuggestions = await locationAutocomplete(value);
+        setSuggestions(newSuggestions);
+      } catch (error) {
+        console.error(error);
+      }
+    }, 500),
+  []);
 
   const selectPlace = (value) => {
     setSelectedPlace(value);
     setQuery(value);
   };
-
-
 
   return (
 //on enter
@@ -47,7 +50,7 @@ const SearchComponent = () => {
             type="search"
             plain
             dropTarget={boxRef.current}
-            onChange={e => loadSuggestions(e)}
+            onChange={event => { setQuery(event.target.value); loadSuggestions(event.target.value) }}
             value={query}
             onSuggestionSelect={(event) => selectPlace(event.suggestion)}
             placeholder="Search for aliases..."
