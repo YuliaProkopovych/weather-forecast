@@ -4,15 +4,15 @@ const { getCoordinatesByQuery, locationAutocomplete } = require('../utils/geocod
 const getForecast = require('../utils/getForecast');
 
 const forecastRoute = (fastify, options, done) => {
-  fastify.get('/forecast', getForecastOpts);
+  fastify.post('/forecast', getForecastOpts);
   done();
 };
-
+//write schema??
 const getForecastOpts = {
   handler: async (req, reply) => {
     try {
 
-      const coordinates = await getCoordinatesByQuery('Lviv+Ukraine');
+      const coordinates = await getCoordinatesByQuery(req.location);
       console.log(coordinates);
 
       const forecast = await getForecast(coordinates);
