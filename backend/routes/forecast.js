@@ -11,9 +11,9 @@ const forecastRoute = (fastify, options, done) => {
 const getForecastOpts = {
   handler: async (req, reply) => {
     try {
+      console.log(req.body.location);
+      const coordinates = await getCoordinatesByQuery(req.body.location);
 
-      const coordinates = await getCoordinatesByQuery(req.location);
-      console.log(coordinates);
 
       const forecast = await getForecast(coordinates);
       reply.send(forecast);
