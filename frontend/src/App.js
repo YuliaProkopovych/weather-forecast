@@ -41,12 +41,8 @@ function App() {
 
   const sendLocation = async (place) => {
     setLocation(place);
-    console.log('still here');
-     const f = await getForecast(place);
-     console.log('before setting forecast');
-    //  console.log(f);
-     setForecast(f);
-    //  console.log(f);
+     const weatherForecast = await getForecast(place);
+     setForecast(weatherForecast);
   }
 
   if(location) {
