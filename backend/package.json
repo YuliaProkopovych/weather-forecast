@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.24.0",
-    "fastify": "^3.22.1"
+    "fastify": "^3.22.1",
+    "fastify-cors": "^6.0.2"
   }
 }
