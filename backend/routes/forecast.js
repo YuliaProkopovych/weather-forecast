@@ -7,9 +7,18 @@ const forecastRoute = (fastify, options, done) => {
   fastify.post('/forecast', getForecastOpts);
   done();
 };
-//write schema??
+
 const getForecastOpts = {
-  handler: async (req, reply) => {
+  schema: {
+    body: {
+    type: 'object',
+    required: ['location'],
+  },
+  response: {
+    200: { type: 'array'},
+  },
+},
+    handler: async (req, reply) => {
     try {
       console.log(req.body.location);
       const coordinates = await getCoordinatesByQuery(req.body.location);
