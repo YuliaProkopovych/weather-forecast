@@ -1,12 +1,10 @@
 import React, { useCallback } from 'react';
-import { FormClose } from 'grommet-icons';
 import { Box, Button, Grommet, Keyboard, Text, TextInput } from 'grommet';
-import { grommet } from 'grommet/themes';
 import locationAutocomplete from '../utils/autocomplete';
 import _ from 'lodash';
 
 
-const SearchComponent = () => {
+const SearchComponent = ({ onSelectLocation }) => {
 
   const [selectedPlace, setSelectedPlace] = React.useState('');
   const [suggestions, setSuggestions] = React.useState([]);
@@ -32,6 +30,8 @@ const SearchComponent = () => {
   const selectPlace = (value) => {
     setSelectedPlace(value);
     setQuery(value);
+    onSelectLocation(value);
+    console.log("place selected");
   };
 
   return (
@@ -45,7 +45,7 @@ const SearchComponent = () => {
         ref={boxRef}
         wrap
       >
-        <Box flex style={{ minWidth: '120px' }}>
+        <Box flex style={{ minWidth: '500px' }}>
           <TextInput
             type="search"
             plain

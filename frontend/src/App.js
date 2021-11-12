@@ -1,8 +1,11 @@
-import React from 'react';
-import { Box, Button, Heading, Grommet, Keyboard, Text, TextInput } from 'grommet';
-import { Notification } from 'grommet-icons';
+import React, { useState } from 'react';
+import { Box, Button, Heading, Grommet } from 'grommet';
+import { Location, Notification } from 'grommet-icons';
 
 import SearchComponent from './components/searchComponent';
+import WeatherComponent from './components/weatherComponent';
+
+import getForecast from './utils/getForecast';
 
 const theme = {
   global: {
@@ -32,16 +35,35 @@ const AppBar = (props) => (
   );
 
 function App() {
+
+  const [location, setLocation] = useState('');
+  const [forecast, setForecast] = useState(null);
+
+  const sendLocation = async (place) => {
+    setLocation(place);
+    console.log('still here');
+     const f = await getForecast(place);
+     console.log('before setting forecast');
+    //  console.log(f);
+     setForecast(f);
+    //  console.log(f);
+  }
+
+  if(location) {
+
+  }
+
   return (
     <Grommet theme={theme} full>
       <Box fill>
         <AppBar>
-          <Heading level='3' margin='none'>My App</Heading>
+          <Heading level='3' margin='none'>SunnyRain</Heading>
           <Button icon={<Notification />} onClick={() => {}} />
         </AppBar>
         <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
-          <Box flex align='center' justify='center'>
-            <SearchComponent/>
+          <Box flex align='start' justify='center'>
+            <SearchComponent onSelectLocation={sendLocation}/>
+            { forecast && <WeatherComponent weather={forecast} />}
           </Box>
           <Box
             width='medium'
