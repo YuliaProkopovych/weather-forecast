@@ -10,7 +10,7 @@ getForecastByCoordinates = async (coordinates) => {
   );
 
   const forecast = response.data['properties'].timeseries.map(
-    entity => { return { time: entity.time, weather: entity.data.instant.details }}
+    entity => { return { time: entity.time, weather: entity.data.instant.details, symbol: entity.data.next_1_hours.summary.symbol_code }}
   );
 
   return forecast;
