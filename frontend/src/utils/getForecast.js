@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 
-import { MyIcon } from "../components/icon";
+import { WeatherIcon, WindDirectionIcon } from "../components/icon";
+import { Box, Text } from 'grommet';
 
 const getForecast = async (location) => {
   console.log('getting forecast');
@@ -15,10 +16,13 @@ const getForecast = async (location) => {
   const formattedWeather = weather.map(entity => {
 
     return { time: DateTime.fromISO(entity.time).toFormat('ff'),
-    weather: <MyIcon path={ `/icons/svg/${entity.symbol}.svg` }/>,
+    weather: <WeatherIcon path={ `/icons/svg/${entity.symbol}.svg` }/>,
     temperature: entity.weather.air_temperature,
     precipations: '',
-    wind: entity.weather.wind_speed
+    wind: <Box direction='row' justify='evenly'>
+        <Text margin={{right: '10px'}}>{ entity.weather.wind_speed }</Text>
+        <WindDirectionIcon angle={ 180 + entity.weather.wind_from_direction } />
+      </Box>
     }
   });
   console.log(formattedWeather);
