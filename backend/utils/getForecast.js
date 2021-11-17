@@ -8,11 +8,11 @@ getForecastByCoordinates = async (coordinates) => {
       'Accept': '*/*'}
     }
   );
-  //console.log(response.data['properties'].timeseries.data.next_1_hours);
 
+  response.data['properties'].timeseries.map(item => {console.log(item.data)});
 
   const forecast = response.data['properties'].timeseries.map(
-    entity => { return { time: entity.time, weather: entity.data.instant.details, symbol: entity.data.next_1_hours ? entity.data.next_1_hours.summary.symbol_code : '' }}
+    entity => ({ time: entity.time, weather: entity.data.instant.details, symbol: entity.data.next_1_hours ? entity.data.next_1_hours.summary.symbol_code : entity.data.next_6_hours?.summary.symbol_code })
   );
 
   return forecast;
