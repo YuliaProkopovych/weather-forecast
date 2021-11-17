@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Box, Button, Heading, Grommet } from 'grommet';
+import { Box, Button, Heading, Text, Grommet } from 'grommet';
 import { Location, Notification } from 'grommet-icons';
 
 import SearchComponent from './components/searchComponent';
 import WeatherComponent from './components/weatherComponent';
 
 import getForecast from './utils/getForecast';
+
+import _ from 'lodash';
 
 const theme = {
   global: {
@@ -45,21 +47,28 @@ function App() {
      setForecast(weatherForecast);
   }
 
-  if(location) {
+  if(forecast) {
+console.log(forecast);
 
-  }
+}
 
   return (
     <Grommet theme={theme} full>
-      <Box fill>
+      <Box>
         <AppBar>
           <Heading level='3' margin='none'>SunnyRain</Heading>
           <Button icon={<Notification />} onClick={() => {}} />
         </AppBar>
-        <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
-          <Box flex align='start' justify='center'>
+        <Box direction='row' flex>
+          <Box flex align='start' direction='column'>
             <SearchComponent onSelectLocation={sendLocation}/>
-            { forecast && <WeatherComponent weather={forecast} />}
+            { forecast && _.map(forecast, (item) => (
+                    <Box>
+                      <Box margin={{left: '30px'}}><Heading level='3'>{item.date}</Heading></Box>
+                      <WeatherComponent weather={item.forecast}/>
+                    </Box>
+                  ))
+  }
           </Box>
           <Box
             width='medium'

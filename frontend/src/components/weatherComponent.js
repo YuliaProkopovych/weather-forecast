@@ -27,14 +27,8 @@ const WeatherComponent = ({ weather }) => {
   ];
 
   return (
-    <Box>
-
-      <Box align="center" pad="large">
-
-        <DataTable columns={columns} data={weather} step={10} />
-
-      </Box>
-
+    <Box margin={{left: '20px'}}>
+      <DataTable pad='medium' columns={columns} data={weather} step={weather.length} />
     </Box>
   );
 };
