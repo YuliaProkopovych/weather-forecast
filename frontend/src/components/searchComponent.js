@@ -72,7 +72,7 @@ const SearchComponent = ({ onSelectLocation }) => {
                 onChange={event => { setQuery(event.target.value); loadSuggestions(event.target.value) }}
                 value={query}
                 onSuggestionSelect={(event) => selectPlace(event.suggestion)}
-                placeholder="Search for aliases..."
+                placeholder="Select location..."
                 suggestions={suggestions}
               />
             </Box>
