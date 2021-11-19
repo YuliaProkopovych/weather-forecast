@@ -14,9 +14,10 @@ const getForecast = async (location) => {
   const weather = await response.json();
 
   const formattedWeather = weather.map(record => {
+    const tempColor = record.weather.air_temperature > 0 ? '#9e0000' : '#0202a1';
     let formattedRecord = {
       date: DateTime.fromISO(record.time).toFormat('dd LLLL'),
-      temperature: record.weather.air_temperature,
+      temperature: <Text color={tempColor}>{`${record.weather.air_temperature}°`}</Text>,
       wind: (
         <Box direction='row' justify='evenly'>
           <Text margin={{right: '10px'}}>{ record.weather.wind_speed }</Text>
