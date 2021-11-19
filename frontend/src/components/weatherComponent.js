@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, DataTable, Meter, Text, Tip } from 'grommet';
+import { Box, DataTable, Text } from 'grommet';
 
 const WeatherComponent = ({ weather }) => {
   const columns = [
@@ -15,10 +15,12 @@ const WeatherComponent = ({ weather }) => {
     {
       property: 'temperature',
       header: 'Temperature',
+      align: 'center',
     },
     {
-      property: 'precipations',
+      property: 'precipitations',
       header: <Text>Precip. mm</Text>,
+      align: 'center',
     },
     {
       property: 'wind',

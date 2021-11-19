@@ -2,7 +2,6 @@ import { DateTime } from "luxon";
 
 import { WeatherIcon, WindDirectionIcon } from "../components/icon";
 import { Box, Text } from 'grommet';
-import _ from 'lodash';
 
 const getForecast = async (location) => {
   const requestOptions = {
@@ -14,21 +13,27 @@ const getForecast = async (location) => {
 
   const weather = await response.json();
 
-  const formattedWeather = weather.map(entity => {
-    console.log('rain', entity.precipitation_amount);
-    return {
-      date: DateTime.fromISO(entity.time).toFormat('dd LLLL'),
-      time: DateTime.fromISO(entity.time).toFormat('HH:mm'),
-      weather: <WeatherIcon path={ `/icons/svg/${entity.symbol}.svg` }/>,
-      temperature: entity.weather.air_temperature,
-      precipitations: entity.precipitation_amount,
+  const formattedWeather = weather.map(record => {
+    let formattedRecord = {
+      date: DateTime.fromISO(record.time).toFormat('dd LLLL'),
+      temperature: record.weather.air_temperature,
       wind: (
         <Box direction='row' justify='evenly'>
-          <Text margin={{right: '10px'}}>{ entity.weather.wind_speed }</Text>
-          <WindDirectionIcon angle={ 180 + entity.weather.wind_from_direction } />
+          <Text margin={{right: '10px'}}>{ record.weather.wind_speed }</Text>
+          <WindDirectionIcon angle={ 180 + record.weather.wind_from_direction } />
         </Box>
       )
+    };
+    if (record.next_1_hours) {
+      formattedRecord.time = DateTime.fromISO(record.time).toFormat('T');
+      formattedRecord.weather = <WeatherIcon path={ `/icons/svg/${record.next_1_hours.symbol}.svg` }/>;
+      formattedRecord.precipitations = record.next_1_hours.precipitations;
+    } else if (record.next_6_hours) {
+      formattedRecord.time = DateTime.fromISO(record.time).toFormat('T') + '-' + DateTime.fromISO(record.time).plus({ hours: 6 }).toFormat('T');
+      formattedRecord.weather = <WeatherIcon path={ `/icons/svg/${record.next_6_hours.symbol}.svg` }/>;
+      formattedRecord.precipitations = record.next_6_hours.precipitations;
     }
+    return formattedRecord;
   });
 
   return formattedWeather.reduce((accumulator, forecastItem) => {
