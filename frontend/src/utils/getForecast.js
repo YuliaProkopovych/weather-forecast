@@ -5,7 +5,6 @@ import { Box, Text } from 'grommet';
 import _ from 'lodash';
 
 const getForecast = async (location) => {
-  console.log('getting forecast');
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -16,12 +15,13 @@ const getForecast = async (location) => {
   const weather = await response.json();
 
   const formattedWeather = weather.map(entity => {
+    console.log('rain', entity.precipitation_amount);
     return {
       date: DateTime.fromISO(entity.time).toFormat('dd LLLL'),
-      time: DateTime.fromISO(entity.time).toFormat('hh:mm'),
+      time: DateTime.fromISO(entity.time).toFormat('HH:mm'),
       weather: <WeatherIcon path={ `/icons/svg/${entity.symbol}.svg` }/>,
       temperature: entity.weather.air_temperature,
-      precipations: '',
+      precipitations: entity.precipitation_amount,
       wind: (
         <Box direction='row' justify='evenly'>
           <Text margin={{right: '10px'}}>{ entity.weather.wind_speed }</Text>
