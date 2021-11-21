@@ -4,6 +4,7 @@ import { Location, Notification } from 'grommet-icons';
 
 import SearchComponent from './components/searchComponent';
 import WeatherComponent from './components/weatherComponent';
+import WeatherPreviewComponent from './components/preview';
 
 import getForecast from './utils/getForecast';
 
@@ -47,11 +48,6 @@ function App() {
      setForecast(weatherForecast);
   }
 
-  if(forecast) {
-console.log(forecast);
-
-}
-
   return (
     <Grommet theme={theme} full>
       <Box>
@@ -62,13 +58,14 @@ console.log(forecast);
         <Box direction='row' flex>
           <Box flex align='start' direction='column'>
             <SearchComponent onSelectLocation={sendLocation}/>
-            { forecast && _.map(forecast, (item) => (
+            {forecast && <WeatherPreviewComponent data={forecast}/>}
+            {/* { forecast && _.map(forecast, (item) => (
                     <Box>
                       <Box margin={{left: '30px'}}><Heading level='3'>{item.date}</Heading></Box>
                       <WeatherComponent weather={item.forecast}/>
                     </Box>
                   ))
-  }
+  } */}
           </Box>
           <Box
             width='medium'

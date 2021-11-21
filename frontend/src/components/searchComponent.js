@@ -47,7 +47,6 @@ const SearchComponent = ({ onSelectLocation }) => {
     setSelectedPlace(value);
     setQuery(value);
     onSelectLocation(value);
-    console.log("place selected");
   };
 
   return (
