@@ -1,8 +1,24 @@
 import React, { useCallback } from 'react';
-import { Box, Button, Grommet, Keyboard, Text, TextInput } from 'grommet';
+import { Box, Grommet, Keyboard, TextInput } from 'grommet';
 import locationAutocomplete from '../utils/autocomplete';
 import _ from 'lodash';
 
+import { Search } from 'grommet-icons';
+import { deepMerge } from 'grommet/utils';
+
+const customTheme = deepMerge(Grommet, {
+
+  textInput: {
+    extend: () => `
+
+    &:focus {
+      box-shadow: 0px 0px 2px 2px #000000;
+      border-radius: 0px;
+    }
+  `,
+  },
+
+});
 
 const SearchComponent = ({ onSelectLocation }) => {
 
@@ -31,34 +47,38 @@ const SearchComponent = ({ onSelectLocation }) => {
     setSelectedPlace(value);
     setQuery(value);
     onSelectLocation(value);
-    console.log("place selected");
   };
 
   return (
 //on enter
-    <Keyboard>
-      <Box
-        direction="row"
-        align="center"
+    <Grommet theme={customTheme}>
+      <Box pad="medium">
+        <Keyboard>
+          <Box
+            direction="row"
+            align="center"
 
-        border="all"
-        ref={boxRef}
-        wrap
-      >
-        <Box flex style={{ minWidth: '500px' }}>
-          <TextInput
-            type="search"
-            plain
-            dropTarget={boxRef.current}
-            onChange={event => { setQuery(event.target.value); loadSuggestions(event.target.value) }}
-            value={query}
-            onSuggestionSelect={(event) => selectPlace(event.suggestion)}
-            placeholder="Search for aliases..."
-            suggestions={suggestions}
-          />
-        </Box>
+            border="all"
+            ref={boxRef}
+            wrap
+          >
+          <Box flex style={{ minWidth: '500px' }}>
+            <TextInput
+                type="search"
+                icon={<Search />}
+                plain
+                dropTarget={boxRef.current}
+                onChange={event => { setQuery(event.target.value); loadSuggestions(event.target.value) }}
+                value={query}
+                onSuggestionSelect={(event) => selectPlace(event.suggestion)}
+                placeholder="Select location..."
+                suggestions={suggestions}
+              />
+            </Box>
+          </Box>
+        </Keyboard>
       </Box>
-    </Keyboard>
+    </Grommet>
   );
 };
 
