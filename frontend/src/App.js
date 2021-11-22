@@ -3,7 +3,7 @@ import { Box, Button, Heading, Text, Grommet } from 'grommet';
 import { Location, Notification } from 'grommet-icons';
 
 import SearchComponent from './components/searchComponent';
-import WeatherComponent from './components/weatherComponent';
+
 import WeatherPreviewComponent from './components/preview';
 
 import getForecast from './utils/getForecast';
