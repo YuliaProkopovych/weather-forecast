@@ -30,6 +30,7 @@ const groupForecastRecordsByDate = ( forecast ) => {
     ];
   }, []);
 
+  //remove last uncomplete day forecast
   w.pop();
 
   return w;

@@ -1,34 +1,45 @@
 import React from 'react';
-import { Box, DataTable, Text } from 'grommet';
-import { WeatherIcon, WindDirectionIcon } from "../components/icon";
+import { Box, DataTable, Text, Layer } from 'grommet';
+import { WeatherIcon } from "./icon";
+import WeatherComponent from './weatherComponent';
 
 const WeatherPreviewComponent = ({ data }) => {
+  const [show, setShow] = React.useState(false);
+
+  const [clicked, setClicked] = React.useState({});
 
   const formattedData = data.map( ( record, index ) => {
     const { date, forecast } = record;
     let symbols = {};
+    const times = {
+      dawn : '08:00',
+      noon : '14:00',
+      dusk : '20:00',
+      midnight : '02:00'
+    };
+    const getSymbolByTimeInForecast = ( time ) => (forecast.find(item => (item.time === time))).next_6_hours.symbol;
 
     if (index === 0 ) {
-      if ( forecast[0].time < '08:00' ) {
+      if ( forecast[0].time < times.dawn ) {
         symbols.night = forecast[0].next_6_hours.symbol;
-        symbols.morning = (forecast.find(item => (item.time === '08:00'))).next_6_hours.symbol;
-        symbols.afternoon = (forecast.find(item => (item.time === '14:00'))).next_6_hours.symbol;
-        symbols.evening = (forecast.find(item => (item.time === '20:00'))).next_6_hours.symbol;
-      } else if ( forecast[0].time < '14:00' ) {
+        symbols.morning = getSymbolByTimeInForecast(times.dawn);
+        symbols.afternoon = getSymbolByTimeInForecast(times.noon);
+        symbols.evening = getSymbolByTimeInForecast(times.dusk);
+      } else if ( forecast[0].time < times.noon ) {
         symbols.morning = forecast[0].next_6_hours.symbol;
-        symbols.afternoon = (forecast.find(item => (item.time === '14:00'))).next_6_hours.symbol;
-        symbols.evening = (forecast.find(item => (item.time === '20:00'))).next_6_hours.symbol;
-      } else if ( forecast[0].time < '20:00' ){
+        symbols.afternoon = getSymbolByTimeInForecast(times.noon);
+        symbols.evening = getSymbolByTimeInForecast(times.dusk);
+      } else if ( forecast[0].time < times.dusk ){
         symbols.afternoon = forecast[0].next_6_hours.symbol;
-        symbols.evening = (forecast.find(item => (item.time === '20:00'))).next_6_hours.symbol;
+        symbols.evening = getSymbolByTimeInForecast(times.dusk);
       } else {
         symbols.evening = forecast[0].next_6_hours.symbol;
       }
     } else {
-      symbols.night = (forecast.find(item => (item.time === '02:00'))).next_6_hours.symbol;
-      symbols.morning = (forecast.find(item => (item.time === '08:00'))).next_6_hours.symbol;
-      symbols.afternoon = (forecast.find(item => (item.time === '14:00'))).next_6_hours.symbol;
-      symbols.evening = (forecast.find(item => (item.time === '20:00'))).next_6_hours.symbol;
+      symbols.night = getSymbolByTimeInForecast(times.midnight);
+      symbols.morning = getSymbolByTimeInForecast(times.dawn);
+      symbols.afternoon = getSymbolByTimeInForecast(times.noon);
+      symbols.evening = getSymbolByTimeInForecast(times.dusk);
     }
 
     const maxT = forecast.reduce(
@@ -53,6 +64,8 @@ const WeatherPreviewComponent = ({ data }) => {
     return { date: date, minT: minT, maxT: maxT, precipitations: precip, wind: wind, ...symbols };
   });
 
+  const renderIcon = ( icon ) => icon && <WeatherIcon path={ `/icons/svg/${icon}.svg` }/>;
+
   const columns = [
     {
       property: 'date',
@@ -62,22 +75,22 @@ const WeatherPreviewComponent = ({ data }) => {
     {
       property: 'night',
       header: 'Night',
-      render: ({ night }) => night && <WeatherIcon path={ `/icons/svg/${night}.svg` }/>,
+      render: ({ night }) => renderIcon(night),
     },
     {
       property: 'morning',
       header: 'Morning',
-      render: ({ morning }) => morning && <WeatherIcon path={ `/icons/svg/${morning}.svg` }/>,
+      render: ({ morning }) => renderIcon(morning),
     },
     {
       property: 'afternoon',
       header: 'Afternoon',
-      render: ({ afternoon }) => afternoon && <WeatherIcon path={ `/icons/svg/${afternoon}.svg` }/>,
+      render: ({ afternoon }) => renderIcon(afternoon),
     },
     {
       property: 'evening',
       header: 'Evening',
-      render: ({ evening }) => evening && <WeatherIcon path={ `/icons/svg/${evening}.svg` }/>,
+      render: ({ evening }) => renderIcon(evening),
     },
     {
       property: 'temperature',
@@ -85,14 +98,14 @@ const WeatherPreviewComponent = ({ data }) => {
       render: (object) =>
       <Box flex direction='row'>
         <Text color={object.maxT > 0 ? '#9e0000' : '#0202a1'}>{object.maxT}°</Text>
-        <Text> / </Text>
+        <Text>{' / '}</Text>
         <Text color={object.minT > 0 ? '#9e0000' : '#0202a1'}>{object.minT}°</Text>
       </Box>,
     },
     {
       property: 'precipitations',
       header: 'Precipitations',
-      render: ({ precipitations }) => precipitations && <Text>{precipitations} mm</Text>
+      render: ({ precipitations }) => precipitations ? <Text>{precipitations} mm</Text> : ''
     },
     {
       property: 'wind',
@@ -107,7 +120,23 @@ const WeatherPreviewComponent = ({ data }) => {
 
   return (
     <Box margin={{left: '20px'}}>
-      <DataTable pad='medium' columns={columns} data={formattedData} step={data.length} />
+      <DataTable
+        pad='medium'
+        columns={columns}
+        data={formattedData}
+        step={data.length}
+        onClickRow={(event) => {
+          setShow(true);
+          setClicked(event.datum);
+        }}/>
+        {show && (
+          <Layer
+            position="center"
+            onEsc={() => setShow(false)}
+            onClickOutside={() => setShow(false)}
+          >
+            <WeatherComponent forecastRecord={data.find( record => record.date === clicked.date)} />
+       </Layer>)}
     </Box>
   );
 };
