@@ -3,10 +3,11 @@ import { Box, Button, Heading, Text, Grommet } from 'grommet';
 import { Location, Notification } from 'grommet-icons';
 
 import SearchComponent from './components/searchComponent';
-
 import WeatherPreviewComponent from './components/preview';
+import LocationsListComponent from './components/listOfLocations';
 
 import getForecast from './utils/getForecast';
+import locationAutocomplete from './utils/autocomplete';
 
 import _ from 'lodash';
 
@@ -41,11 +42,19 @@ function App() {
 
   const [location, setLocation] = useState('');
   const [forecast, setForecast] = useState(null);
+  const [locationList, setLocationList] = useState([]);
+  console.log('app', location);
 
   const sendLocation = async (place) => {
     setLocation(place);
-     const weatherForecast = await getForecast(place);
-     setForecast(weatherForecast);
+    const weatherForecast = await getForecast(place);
+    setForecast(weatherForecast);
+    setLocationList([]);
+  }
+
+  const showSuggestionComponent = async (query) => {
+    const locations = await locationAutocomplete(query);
+    setLocationList(locations);
   }
 
   return (
@@ -57,15 +66,9 @@ function App() {
         </AppBar>
         <Box direction='row' flex>
           <Box flex align='start' direction='column'>
-            <SearchComponent onSelectLocation={sendLocation}/>
+            <SearchComponent location={location} onSelectLocation={sendLocation} showSuggestionComponent={showSuggestionComponent}/>
+            {(locationList.length !== 0) && <LocationsListComponent locations={locationList} onSelectLocation={sendLocation} />}
             {forecast && <WeatherPreviewComponent data={forecast}/>}
-            {/* { forecast && _.map(forecast, (item) => (
-                    <Box>
-                      <Box margin={{left: '30px'}}><Heading level='3'>{item.date}</Heading></Box>
-                      <WeatherComponent weather={item.forecast}/>
-                    </Box>
-                  ))
-  } */}
           </Box>
           <Box
             width='medium'

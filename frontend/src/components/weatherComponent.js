@@ -3,7 +3,6 @@ import { Box, DataTable, Heading, Text } from 'grommet';
 
 import { WeatherIcon, WindDirectionIcon } from "../components/icon";
 
-
 const WeatherComponent = ({ forecastRecord }) => {
   console.log(forecastRecord);
 
