@@ -20,13 +20,14 @@ const customTheme = deepMerge(Grommet, {
 
 });
 
-const SearchComponent = ({ onSelectLocation }) => {
+const SearchComponent = ({ location, onSelectLocation, showSuggestionComponent }) => {
 
   const [selectedPlace, setSelectedPlace] = React.useState('');
   const [suggestions, setSuggestions] = React.useState([]);
-  const [query, setQuery] = React.useState('');
+  const [query, setQuery] = React.useState(location);
 
   const boxRef = React.useRef();
+  console.log('search', query, location);
 
   const loadSuggestions = useCallback(
     _.debounce(async (value) => {
@@ -50,14 +51,12 @@ const SearchComponent = ({ onSelectLocation }) => {
   };
 
   return (
-//on enter
     <Grommet theme={customTheme}>
       <Box pad="medium">
-        <Keyboard>
+        <Keyboard onEnter={() => showSuggestionComponent(query)}>
           <Box
             direction="row"
             align="center"
-
             border="all"
             ref={boxRef}
             wrap
@@ -69,7 +68,7 @@ const SearchComponent = ({ onSelectLocation }) => {
                 plain
                 dropTarget={boxRef.current}
                 onChange={event => { setQuery(event.target.value); loadSuggestions(event.target.value) }}
-                value={query}
+                value={location ? location : query}
                 onSuggestionSelect={(event) => selectPlace(event.suggestion)}
                 placeholder="Select location..."
                 suggestions={suggestions}
