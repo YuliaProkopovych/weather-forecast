@@ -1,36 +1,53 @@
 const axios = require('axios');
+// const getSunrise = require('./getSunrise');
 
-getForecastByCoordinates = async (coordinates) => {
-  const response = await axios.get(`https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${coordinates.lat}&lon=${coordinates.lon}`,
-    { headers: {'User-Agent': 'https://github.com/YuliaProkopovych/weather-forecast',
-      'Accept-Encoding': 'gzip, deflate, br',
-      'Connection': 'keep-alive',
-      'Accept': '*/*'}
-    }
+async function getForecastByCoordinates(coordinates) {
+  const params = new URLSearchParams({
+    ...coordinates,
+  });
+  const url = `https://api.met.no/weatherapi/locationforecast/2.0/compact?${params.toString()}`;
+
+  const response = await axios.get(
+    url,
+    {
+      headers: {
+        'User-Agent': 'https://github.com/YuliaProkopovych/weather-forecast',
+        'Accept-Encoding': 'gzip, deflate, br',
+        Connection: 'keep-alive',
+        Accept: '*/*',
+      },
+    },
   );
 
-  response.data['properties'].timeseries.map(item => {console.log(item.data)});
+  const forecast = response.data.properties.timeseries.map((record) => {
+    const formattedRecord = {
+      time: record.time,
+      weather: record.data.instant.details,
+    };
 
-  const forecast = response.data['properties'].timeseries.map(
-    record => {
-      let formattedRecord = { time: record.time,
-        weather: record.data.instant.details
+    const next6Hours = record.data.next_6_hours;
+    const nextHour = record.data.next_1_hours;
+
+    if (next6Hours) {
+      formattedRecord.next_6_hours = {
+        symbol: next6Hours.summary.symbol_code,
+        precipitations: next6Hours.details.precipitation_amount,
       };
-
-      if (record.data.next_6_hours) {
-        formattedRecord.next_6_hours = {symbol: record.data.next_6_hours.summary.symbol_code, precipitations: record.data.next_6_hours.details.precipitation_amount}
-      };
-
-      if (record.data.next_1_hours) {
-        formattedRecord.next_1_hours = {symbol: record.data.next_1_hours.summary.symbol_code, precipitations: record.data.next_1_hours.details.precipitation_amount}
-      };
-
-      return formattedRecord;
     }
-  );
+
+    if (nextHour) {
+      formattedRecord.next_1_hours = {
+        symbol: nextHour.summary.symbol_code,
+        precipitations: nextHour.details.precipitation_amount,
+      };
+    }
+
+    return formattedRecord;
+  });
+
+  // const res = await getSunrise(coordinates, forecast[10].time);
 
   return forecast;
 }
-
 
 module.exports = getForecastByCoordinates;

@@ -1,10 +1,14 @@
 import React, { useCallback } from 'react';
-import { Box, Grommet, Keyboard, TextInput } from 'grommet';
-import locationAutocomplete from '../utils/autocomplete';
+import {
+  Box, Grommet, Keyboard, TextInput,
+} from 'grommet';
 import _ from 'lodash';
 
 import { Search } from 'grommet-icons';
 import { deepMerge } from 'grommet/utils';
+
+import { useNavigate } from 'react-router-dom';
+import locationAutocomplete from '../utils/autocomplete';
 
 const customTheme = deepMerge(Grommet, {
 
@@ -17,17 +21,15 @@ const customTheme = deepMerge(Grommet, {
     }
   `,
   },
-
 });
 
-const SearchComponent = ({ location, onSelectLocation, showSuggestionComponent }) => {
-
+function SearchForm({ location, onSelectLocation, showSuggestionComponent }) {
   const [selectedPlace, setSelectedPlace] = React.useState('');
   const [suggestions, setSuggestions] = React.useState([]);
   const [query, setQuery] = React.useState(location);
 
   const boxRef = React.useRef();
-  console.log('search', query, location);
+  const navigate = useNavigate();
 
   const loadSuggestions = useCallback(
     _.debounce(async (value) => {
@@ -42,18 +44,22 @@ const SearchComponent = ({ location, onSelectLocation, showSuggestionComponent }
         console.error(error);
       }
     }, 500),
-  []);
+    [],
+  );
 
   const selectPlace = (value) => {
-    setSelectedPlace(value);
-    setQuery(value);
-    onSelectLocation(value);
+    // setSelectedPlace(value);
+    // setQuery(value);
+    // onSelectLocation(value);
+
+    navigate(`./forecast/${encodeURIComponent(value)}`, { replace: true });
   };
 
   return (
     <Grommet theme={customTheme}>
       <Box pad="medium">
-        <Keyboard onEnter={() => showSuggestionComponent(query)}>
+
+        <Keyboard onEnter={() => navigate('./search', { replace: true })}>
           <Box
             direction="row"
             align="center"
@@ -61,14 +67,14 @@ const SearchComponent = ({ location, onSelectLocation, showSuggestionComponent }
             ref={boxRef}
             wrap
           >
-          <Box flex style={{ minWidth: '500px' }}>
-            <TextInput
+            <Box flex style={{ minWidth: '500px' }}>
+              <TextInput
                 type="search"
                 icon={<Search />}
                 plain
                 dropTarget={boxRef.current}
-                onChange={event => { setQuery(event.target.value); loadSuggestions(event.target.value) }}
-                value={location ? location : query}
+                onChange={(event) => { setQuery(event.target.value); loadSuggestions(event.target.value); }}
+                value={location || query}
                 onSuggestionSelect={(event) => selectPlace(event.suggestion)}
                 placeholder="Select location..."
                 suggestions={suggestions}
@@ -79,6 +85,6 @@ const SearchComponent = ({ location, onSelectLocation, showSuggestionComponent }
       </Box>
     </Grommet>
   );
-};
+}
 
-export default SearchComponent;
+export default SearchForm;

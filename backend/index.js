@@ -1,14 +1,10 @@
-const fastify = require('fastify')({ logger: true });
+require('dotenv').config();
 
-fastify.register(require('fastify-cors'), { origin: true, credentials: true });
+const fastify = require('fastify')({ logger: true });
 
 const PORT = process.env.PORT || 3000;
 
-//fastify.register(require('fastify-cors'), { origin: config.corsWhiteList, credentials: true });
-
-fastify.get('/', (req, reply) => {
-  reply.send('Hello World!');
-});
+fastify.register(require('fastify-cors'), { origin: true, credentials: true });
 
 fastify.register(require('./routes/forecast'));
 

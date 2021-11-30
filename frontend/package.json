@@ -8,22 +8,19 @@
     "grommet-icons": "^4.6.2",
     "lodash": "^4.17.21",
     "luxon": "^2.1.1",
+    "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
     "styled-components": "^5.3.3"
   },
   "scripts": {
-    "start": "PORT=3006 react-scripts start",
+    "start": "export ESLINT_NO_DEV_ERRORS=true && export PORT=3006 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "eject": "react-scripts eject",
+    "lint": "eslint '**/**.js' --fix"
   },
   "browserslist": {
     "production": [
@@ -36,5 +33,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^19.0.1"
   }
 }
