@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
-  Box, DataTable, Text, Layer, Heading, Button,
+  Box, DataTable, Text, Layer, Heading,
 } from 'grommet';
 import { Location, Star } from 'grommet-icons';
 
@@ -12,7 +12,6 @@ import getForecast from '../utils/getForecast';
 function Forecast() {
   const params = useParams();
   const [show, setShow] = React.useState(false);
-  console.log(params.location);
 
   const [clicked, setClicked] = React.useState({});
   const [rawForecast, setRawForecast] = useState([]);

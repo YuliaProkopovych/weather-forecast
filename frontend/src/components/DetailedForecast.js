@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Box, DataTable, Heading, Text,
 } from 'grommet';
@@ -7,8 +8,6 @@ import WeatherIcon from './icons/WeatherIcon';
 import WindDirectionIcon from './icons/WindDirectionIcon';
 
 function DetailedForecast({ forecastRecord }) {
-  console.log(forecastRecord);
-
   const columns = [
     {
       property: 'time',
@@ -60,5 +59,9 @@ function DetailedForecast({ forecastRecord }) {
     </Box>
   );
 }
+
+DetailedForecast.propTypes = {
+  forecastRecord: PropTypes.object.isRequired,
+};
 
 export default DetailedForecast;

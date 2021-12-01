@@ -44,7 +44,7 @@ function App() {
                     <Routes>
                       <Route exact path="/" element={<Home />} />
                       <Route path="/forecast/:location" element={<Forecast />} />
-                      <Route path="/search" element={<Search />} />
+                      <Route path="/search/:location" element={<Search />} />
                     </Routes>
                   </Router>
                 </Box>

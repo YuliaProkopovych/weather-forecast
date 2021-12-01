@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
 import {
   Box, Grommet, Keyboard, TextInput,
 } from 'grommet';
@@ -23,8 +24,7 @@ const customTheme = deepMerge(Grommet, {
   },
 });
 
-function SearchForm({ location, onSelectLocation, showSuggestionComponent }) {
-  const [selectedPlace, setSelectedPlace] = React.useState('');
+function SearchForm({ location }) {
   const [suggestions, setSuggestions] = React.useState([]);
   const [query, setQuery] = React.useState(location);
 
@@ -48,10 +48,6 @@ function SearchForm({ location, onSelectLocation, showSuggestionComponent }) {
   );
 
   const selectPlace = (value) => {
-    // setSelectedPlace(value);
-    // setQuery(value);
-    // onSelectLocation(value);
-
     navigate(`./forecast/${encodeURIComponent(value)}`, { replace: true });
   };
 
@@ -59,7 +55,7 @@ function SearchForm({ location, onSelectLocation, showSuggestionComponent }) {
     <Grommet theme={customTheme}>
       <Box pad="medium">
 
-        <Keyboard onEnter={() => navigate('./search', { replace: true })}>
+        <Keyboard onEnter={() => navigate(`./search/${encodeURIComponent(query)}`, { replace: true })}>
           <Box
             direction="row"
             align="center"
@@ -86,5 +82,13 @@ function SearchForm({ location, onSelectLocation, showSuggestionComponent }) {
     </Grommet>
   );
 }
+
+SearchForm.propTypes = {
+  location: PropTypes.string,
+};
+
+SearchForm.defaultProps = {
+  location: '',
+};
 
 export default SearchForm;
