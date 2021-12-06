@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
-  Box, DataTable, Text, Layer, Heading,
+  Box, DataTable, Text, Layer, Heading, ResponsiveContext, Image,
 } from 'grommet';
-import { Location, Star } from 'grommet-icons';
+import { Location, Pin } from 'grommet-icons';
 
 import WeatherIcon from '../components/icons/WeatherIcon';
 import DetailedForecast from '../components/DetailedForecast';
+import SmallForecast from '../components/SmallForecast';
 import getForecast from '../utils/getForecast';
 
 function Forecast() {
   const params = useParams();
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = useState(false);
 
-  const [clicked, setClicked] = React.useState({});
+  const [clicked, setClicked] = useState({});
   const [rawForecast, setRawForecast] = useState([]);
   const [weather, setWeather] = useState([]);
 
@@ -157,54 +158,63 @@ function Forecast() {
     {
       property: 'open',
       header: '',
+      render: () => { <Text>Open detailed forecast</Text>; },
     },
   ];
 
+  const loadSearchComponent = () => {};
+
   return (
     <Box>
-      <Box pad="large" direction="row" align="center" justify="evenly">
-        <Box direction="row" align="center">
-          <Location size="70px" />
+      <Box pad="large" direction="row" align="center" justify="evenly" wrap="true">
+        <Box direction="row" align="center" flex="2 1">
+          <Box height="70px" width="70px" onClick={loadSearchComponent}>
+            <Image
+              fit="cover"
+              src="/icons/svg/map4.svg"
+            />
+          </Box>
           <Box margin={{ left: '10px' }}>
             <Box direction="row" align="center">
-              <Heading margin={{ bottom: '10px', top: '15px', right: '10px' }} level="2">
+              <Heading margin={{ bottom: '0px', top: '0px', right: '15px' }} level="2">
                 {params.location.split(' ').pop()}
               </Heading>
-              <Star size="35px" />
+              <Pin size="22px" />
             </Box>
             <Text>{params.location}</Text>
           </Box>
         </Box>
-        <Box direction="row" align="start">
-
-          {/* <Button
-            label="Search"
-            color='teal'
-            hoverIndicator='teal'
-          /> */}
-        </Box>
+        <Box flex="2 1" />
       </Box>
-      <Box margin={{ left: '20px' }}>
-        <DataTable
-          pad="medium"
-          columns={columns}
-          data={weather}
-          step={rawForecast.length}
-          onClickRow={(event) => {
-            setShow(true);
-            setClicked(event.datum);
-          }}
-        />
-        {show && (
-        <Layer
-          position="center"
-          onEsc={() => setShow(false)}
-          onClickOutside={() => setShow(false)}
-        >
-          <DetailedForecast forecastRecord={rawForecast.find((record) => record.date === clicked.date)} />
-        </Layer>
+      <ResponsiveContext.Consumer>
+        {(size) => (
+          size !== 'small' ? (
+            <Box margin={{ left: '20px' }}>
+              <DataTable
+                pad="medium"
+                columns={columns}
+                data={weather}
+                step={rawForecast.length}
+                onClickRow={(event) => {
+                  setShow(true);
+                  setClicked(event.datum);
+                }}
+                responsive="true"
+              />
+              {show && (
+              <Layer
+                position="center"
+                onEsc={() => setShow(false)}
+                onClickOutside={() => setShow(false)}
+              >
+                <DetailedForecast forecastRecord={rawForecast.find((record) => record.date === clicked.date)} />
+              </Layer>
+              )}
+            </Box>
+          ) : <SmallForecast forecast={weather} />
         )}
-      </Box>
+
+      </ResponsiveContext.Consumer>
     </Box>
   );
 }

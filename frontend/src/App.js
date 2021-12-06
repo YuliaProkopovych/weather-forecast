@@ -33,29 +33,31 @@ const theme = {
 function App() {
   return (
     <Grommet theme={theme} full>
-      <BackgroundBox fill="true">
-        <ResponsiveContext.Consumer>
-          {size => (
-            <Box fill="horizontal">
-              <Header />
-              <Box flex direction="row" wrap="true">
-                <Box flex={{ grow: 3, srink: 1 }}>
-                  <Router>
-                    <Routes>
-                      <Route exact path="/" element={<Home />} />
-                      <Route path="/forecast/:location" element={<Forecast />} />
-                      <Route path="/search/:location" element={<Search />} />
-                    </Routes>
-                  </Router>
-                </Box>
-                <Box flex={{ grow: 1, srink: 1 }}>
-                  Sidebar
+      <Box full>
+        <BackgroundBox fill="true">
+          <ResponsiveContext.Consumer>
+            {size => (
+              <Box fill="horizontal">
+                <Header />
+                <Box flex direction="row" wrap="true">
+                  <Box flex={{ grow: 3, srink: 1 }}>
+                    <Router>
+                      <Routes>
+                        <Route exact path="/" element={<Home />} />
+                        <Route path="/forecast/:location" element={<Forecast />} />
+                        <Route path="/search/:location" element={<Search />} />
+                      </Routes>
+                    </Router>
+                  </Box>
+                  <Box flex={{ grow: 1, srink: 1 }}>
+                    Sidebar
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-          )}
-        </ResponsiveContext.Consumer>
-      </BackgroundBox>
+            )}
+          </ResponsiveContext.Consumer>
+        </BackgroundBox>
+      </Box>
     </Grommet>
   );
 }

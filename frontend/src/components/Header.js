@@ -16,12 +16,13 @@ function Header({ children }) {
       wrap="true"
       align="center"
       justify="between"
-      pad="large"
+      pad={{ left: '20px', right: '20px' }}
       style={{ zIndex: '1' }}
+      height={{ max: '100px' }}
       border={{ bottom: '1px' }}
     >
       <Box flex={{ grow: 5, srink: 1 }}>
-        <Heading color="#010b11" level="2" margin="none">SunnyRain</Heading>
+        <Heading color="#010b11" level="2" margin="none">Sunshower</Heading>
       </Box>
       <Box flex={{ grow: 1, srink: 1 }}>
         <ThemedButtons />
