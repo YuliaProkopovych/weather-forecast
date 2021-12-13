@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
-  Box, DataTable, Text, Layer, Heading, ResponsiveContext, Image,
+  Box, DataTable, Text, Layer, ResponsiveContext,
 } from 'grommet';
-import { Location, Pin } from 'grommet-icons';
 
 import WeatherIcon from '../components/icons/WeatherIcon';
 import DetailedForecast from '../components/DetailedForecast';
 import SmallForecast from '../components/SmallForecast';
+import WeatherPreviewHeader from '../components/WeatherPreviewHeader';
 import getForecast from '../utils/getForecast';
 
 function Forecast() {
@@ -121,12 +121,12 @@ function Forecast() {
       header: 'max/min temp.',
       render: (object) => (
         <Box flex direction="row">
-          <Text color={object.maxT > 0 ? '#9e0000' : '#0202a1'}>
+          <Text color={object.maxT > 0 ? 'aboveZero' : 'belowZero'}>
             {object.maxT}
             °
           </Text>
           <Text>{' / '}</Text>
-          <Text color={object.minT > 0 ? '#9e0000' : '#0202a1'}>
+          <Text color={object.minT > 0 ? 'aboveZero' : 'belowZero'}>
             {object.minT}
             °
           </Text>
@@ -162,36 +162,16 @@ function Forecast() {
     },
   ];
 
-  const loadSearchComponent = () => {};
-
   return (
     <Box>
-      <Box pad="large" direction="row" align="center" justify="evenly" wrap="true">
-        <Box direction="row" align="center" flex="2 1">
-          <Box height="70px" width="70px" onClick={loadSearchComponent}>
-            <Image
-              fit="cover"
-              src="/icons/svg/map4.svg"
-            />
-          </Box>
-          <Box margin={{ left: '10px' }}>
-            <Box direction="row" align="center">
-              <Heading margin={{ bottom: '0px', top: '0px', right: '15px' }} level="2">
-                {params.location.split(' ').pop()}
-              </Heading>
-              <Pin size="22px" />
-            </Box>
-            <Text>{params.location}</Text>
-          </Box>
-        </Box>
-        <Box flex="2 1" />
-      </Box>
+      <WeatherPreviewHeader location={params.location} currentConditions={rawForecast[0]} />
       <ResponsiveContext.Consumer>
         {(size) => (
           size !== 'small' ? (
             <Box margin={{ left: '20px' }}>
               <DataTable
                 pad="medium"
+                background="semitransparent-white"
                 columns={columns}
                 data={weather}
                 step={rawForecast.length}
