@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Image } from 'grommet';
 
-function WeatherIcon({ path }) {
+function WeatherIcon({ path, size }) {
   return (
-    <Box height="50px" width="50px">
+    <Box height={size} width={size}>
       <Image
         fit="cover"
         src={path}
@@ -15,6 +15,11 @@ function WeatherIcon({ path }) {
 
 WeatherIcon.propTypes = {
   path: PropTypes.string.isRequired,
+  size: PropTypes.string,
+};
+
+WeatherIcon.defaultProps = {
+  size: '50px',
 };
 
 export default WeatherIcon;

@@ -27,7 +27,7 @@ function DetailedForecast({ forecastRecord }) {
       header: 'Temperature',
       align: 'center',
       render: (record) => (
-        <Text color={record.weather.air_temperature > 0 ? '#9e0000' : '#0202a1'}>
+        <Text color={record.weather.air_temperature > 0 ? 'aboveZero' : 'belowZero'}>
           {`${record.weather.air_temperature}°`}
         </Text>
       ),
@@ -46,7 +46,7 @@ function DetailedForecast({ forecastRecord }) {
       render: (record) => (
         <Box direction="row" justify="evenly">
           <Text>{ record.weather.wind_speed }</Text>
-          <WindDirectionIcon angle={180 + record.weather.wind_from_direction} />
+          <WindDirectionIcon angle={record.weather.wind_from_direction} />
         </Box>
       ),
     },
@@ -61,7 +61,7 @@ function DetailedForecast({ forecastRecord }) {
 }
 
 DetailedForecast.propTypes = {
-  forecastRecord: PropTypes.object.isRequired,
+  forecastRecord: PropTypes.objectOf(PropTypes.array).isRequired,
 };
 
 export default DetailedForecast;

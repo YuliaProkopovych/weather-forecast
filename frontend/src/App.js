@@ -20,7 +20,10 @@ import Forecast from './pages/preview';
 const theme = {
   global: {
     colors: {
-      brand: '#1b4332',
+      belowZero: '#0202a1',
+      aboveZero: '#9e0000',
+      precip: '#4287f5',
+      'semitransparent-white': 'rgba(255,255,255,0.7)',
     },
     font: {
       family: 'Roboto',
@@ -33,31 +36,26 @@ const theme = {
 function App() {
   return (
     <Grommet theme={theme} full>
-      <Box full>
-        <BackgroundBox fill="true">
-          <ResponsiveContext.Consumer>
-            {size => (
-              <Box fill="horizontal">
-                <Header />
-                <Box flex direction="row" wrap="true">
-                  <Box flex={{ grow: 3, srink: 1 }}>
-                    <Router>
-                      <Routes>
-                        <Route exact path="/" element={<Home />} />
-                        <Route path="/forecast/:location" element={<Forecast />} />
-                        <Route path="/search/:location" element={<Search />} />
-                      </Routes>
-                    </Router>
-                  </Box>
-                  <Box flex={{ grow: 1, srink: 1 }}>
-                    Sidebar
-                  </Box>
+      <BackgroundBox style={{ minHeight: '100%' }}>
+        <ResponsiveContext.Consumer>
+          {size => (
+            <Box fill="horizontal">
+              <Header />
+              <Box flex direction="row" wrap="true">
+                <Box flex={{ grow: 3, srink: 1 }}>
+                  <Router>
+                    <Routes>
+                      <Route exact path="/" element={<Home />} />
+                      <Route path="/forecast/:location" element={<Forecast />} />
+                      <Route path="/search/:location" element={<Search />} />
+                    </Routes>
+                  </Router>
                 </Box>
               </Box>
-            )}
-          </ResponsiveContext.Consumer>
-        </BackgroundBox>
-      </Box>
+            </Box>
+          )}
+        </ResponsiveContext.Consumer>
+      </BackgroundBox>
     </Grommet>
   );
 }
