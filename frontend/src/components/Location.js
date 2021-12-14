@@ -60,13 +60,13 @@ function Location({ location }) {
                 </Heading>
                 {size !== 'small' && (
                   <Tip content={locationIsSaved ? 'Unsave location' : 'Save location'}>
-                    <CustomIcon path={locationIsSaved ? '/icons/svg/pin-push.svg' : '/icons/svg/pin.svg'} size="25px" onClick={saveLocation} />
+                    <CustomIcon path={locationIsSaved ? '/icons/svg/push-pin-color.svg' : '/icons/svg/push-pin.svg'} size="25px" onClick={saveLocation} />
                   </Tip>
                 ) }
               </Box>
               <Text size="small">{locationDetails}</Text>
             </Box>
-            {size === 'small' && <Box pad="medium"><CustomIcon path={locationIsSaved ? '/icons/svg/pin-push.svg' : '/icons/svg/pin.svg'} size="22px" /></Box> }
+            {size === 'small' && <Box pad="medium"><CustomIcon path={locationIsSaved ? '/icons/svg/push-pin-color.svg' : '/icons/svg/push-pin.svg'} size="22px" /></Box> }
           </Box>
         )}
 

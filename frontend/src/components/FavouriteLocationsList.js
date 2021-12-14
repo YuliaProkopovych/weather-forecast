@@ -16,12 +16,15 @@ import { deepMerge } from 'grommet/utils';
 import CustomIcon from './icons/CustomIcon';
 
 const theme = deepMerge(grommet, {
-  background: { color: 'transparent' },
   list: {
     item: {
       pad: { horizontal: 'medium', vertical: 'xsmall' },
-      background: ['white', 'light-2'],
+      background: ['rgba(255,255,255,0.6)', 'light-2'],
       border: false,
+      default: {},
+      extend: `&:hover{
+        background: #fff;
+      }`,
     },
   },
 });
