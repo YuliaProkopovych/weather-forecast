@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import {
   Box, Text, Heading, ResponsiveContext, Tip,
 } from 'grommet';
+
 import _ from 'lodash';
-import { Pin } from 'grommet-icons';
 import CustomIcon from './icons/CustomIcon';
 
 function Location({ location }) {
@@ -54,17 +54,19 @@ function Location({ location }) {
         {(size) => (
           <Box direction="row" align="center" justify="between" alignSelf="end" flex="grow">
             <Box direction="column">
-              <Heading size={size} margin={{ bottom: '0px', top: '0px', right: '15px' }} level="3">
-                {mainLocation}
+              <Box direction="row" align="center">
+                <Heading size={size} margin={{ bottom: '0px', top: '0px', right: '15px' }} level="3">
+                  {mainLocation}
+                </Heading>
                 {size !== 'small' && (
                   <Tip content={locationIsSaved ? 'Unsave location' : 'Save location'}>
-                    <Pin color={locationIsSaved ? 'yellow' : 'grey'} size="22px" onClick={saveLocation} />
+                    <CustomIcon path={locationIsSaved ? '/icons/svg/pin-push.svg' : '/icons/svg/pin.svg'} size="25px" onClick={saveLocation} />
                   </Tip>
                 ) }
-              </Heading>
+              </Box>
               <Text size="small">{locationDetails}</Text>
             </Box>
-            {size === 'small' && <Box pad="medium"><Pin color={locationIsSaved ? 'yellow' : 'grey'} size="22px" /></Box> }
+            {size === 'small' && <Box pad="medium"><CustomIcon path={locationIsSaved ? '/icons/svg/pin-push.svg' : '/icons/svg/pin.svg'} size="22px" /></Box> }
           </Box>
         )}
 
