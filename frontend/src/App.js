@@ -23,6 +23,8 @@ const theme = {
       belowZero: '#0202a1',
       aboveZero: '#9e0000',
       precip: '#4287f5',
+      textGray: '#444',
+      textDeepGray: '#222',
       'semitransparent-white': 'rgba(255,255,255,0.7)',
     },
     font: {
@@ -36,7 +38,7 @@ const theme = {
 function App() {
   return (
     <Grommet theme={theme} full>
-      <BackgroundBox style={{ minHeight: '100%' }}>
+      <BackgroundBox style={{ minHeight: '100%' }} pad="medium">
         <ResponsiveContext.Consumer>
           {size => (
             <Box fill="horizontal">
