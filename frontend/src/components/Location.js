@@ -14,7 +14,6 @@ function Location({ location }) {
   const loadSearchComponent = () => {};
   const saveLocation = () => {
     let favLocations = JSON.parse(localStorage.getItem('Favourite Locations'));
-    console.log('local', favLocations);
     if (favLocations) {
       if (favLocations.includes(location)) {
         setLocationIsSaved(false);
@@ -26,7 +25,6 @@ function Location({ location }) {
     } else {
       favLocations = [location];
     }
-    console.log('local2', favLocations);
     localStorage.setItem('Favourite Locations', JSON.stringify(favLocations));
   };
 

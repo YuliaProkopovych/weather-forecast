@@ -10,6 +10,7 @@ import DetailedForecast from '../components/DetailedForecast';
 import SmallForecast from '../components/SmallForecast';
 import WeatherPreviewHeader from '../components/WeatherPreviewHeader';
 import getForecast from '../utils/getForecast';
+import SolarCalendarLink from '../components/SolarCalendarLink';
 
 function Forecast() {
   const params = useParams();
@@ -168,23 +169,22 @@ function Forecast() {
       <Header>
         <WeatherPreviewHeader location={params.location} currentConditions={rawForecast[0]} />
       </Header>
+      <SolarCalendarLink />
       <ResponsiveContext.Consumer>
         {(size) => (
           size !== 'small' ? (
-            <Box margin={{ left: '20px' }}>
-              <DataTable
-                pad="medium"
-                background="semitransparent-white"
-                columns={columns}
-                data={weather}
-                step={rawForecast.length}
-                onClickRow={(event) => {
-                  setShow(true);
-                  setClicked(event.datum);
-                }}
-                responsive="true"
-              />
-            </Box>
+            <DataTable
+              pad="medium"
+              background="semitransparent-white"
+              columns={columns}
+              data={weather}
+              step={rawForecast.length}
+              onClickRow={(event) => {
+                setShow(true);
+                setClicked(event.datum);
+              }}
+              responsive="true"
+            />
           ) : (
             <SmallForecast
               forecast={weather}
