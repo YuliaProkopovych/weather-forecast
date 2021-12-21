@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import {
   Box, Image, Text, Card,
 } from 'grommet';
+import { LinkNext } from 'grommet-icons';
 import styled from 'styled-components';
 
 import WeatherIcon from './icons/WeatherIcon';
 
-function SmallForecast({ forecast }) {
+function SmallForecast({ forecast, onClickItem }) {
   const renderIcon = (icon) => icon && <WeatherIcon path={`/icons/svg/${icon}.svg`} />;
   const DetailsText = styled(Text)`
     font-size: 16px;
@@ -36,15 +37,15 @@ function SmallForecast({ forecast }) {
                   src="/icons/svg/thermometer2.svg"
                 />
               </Box>
-              <Text size="16px" color={record.maxT > 0 ? 'aboveZero' : 'belowZero'}>
+              <DetailsText color={record.maxT > 0 ? 'aboveZero' : 'belowZero'}>
                 {record.maxT}
                 °
-              </Text>
-              <Text size="16px">{' / '}</Text>
-              <Text size="16px" color={record.minT > 0 ? 'aboveZero' : 'belowZero'}>
+              </DetailsText>
+              <DetailsText size="16px">{' / '}</DetailsText>
+              <DetailsText color={record.minT > 0 ? 'aboveZero' : 'belowZero'}>
                 {record.minT}
                 °
-              </Text>
+              </DetailsText>
             </Box>
             <Box direction="row" align="end">
               <Box
@@ -93,6 +94,20 @@ function SmallForecast({ forecast }) {
               {renderIcon(record.evening)}
             </Box>
           </Box>
+          <Box pad={{ left: 'large', top: 'medium' }}>
+            <Box
+              direction="row"
+              align="center"
+              onClick={() => {
+                onClickItem(record);
+              }}
+            >
+              <Text margin={{ right: '10px' }}>
+                Open detailed forecast
+              </Text>
+              <LinkNext size="15px" />
+            </Box>
+          </Box>
         </Card>
       ))}
     </Box>
@@ -101,6 +116,7 @@ function SmallForecast({ forecast }) {
 
 SmallForecast.propTypes = {
   forecast: PropTypes.objectOf(PropTypes.array).isRequired,
+  onClickItem: PropTypes.func.isRequired,
 };
 
 export default SmallForecast;

@@ -4,6 +4,7 @@ import {
   Box, DataTable, Text, Layer, ResponsiveContext,
 } from 'grommet';
 
+import Header from '../components/Header';
 import WeatherIcon from '../components/icons/WeatherIcon';
 import DetailedForecast from '../components/DetailedForecast';
 import SmallForecast from '../components/SmallForecast';
@@ -164,7 +165,9 @@ function Forecast() {
 
   return (
     <Box>
-      <WeatherPreviewHeader location={params.location} currentConditions={rawForecast[0]} />
+      <Header>
+        <WeatherPreviewHeader location={params.location} currentConditions={rawForecast[0]} />
+      </Header>
       <ResponsiveContext.Consumer>
         {(size) => (
           size !== 'small' ? (
@@ -181,20 +184,30 @@ function Forecast() {
                 }}
                 responsive="true"
               />
-              {show && (
-              <Layer
-                position="center"
-                onEsc={() => setShow(false)}
-                onClickOutside={() => setShow(false)}
-              >
-                <DetailedForecast forecastRecord={rawForecast.find((record) => record.date === clicked.date)} />
-              </Layer>
-              )}
             </Box>
-          ) : <SmallForecast forecast={weather} />
+          ) : (
+            <SmallForecast
+              forecast={weather}
+              onClickItem={(item) => {
+                setShow(true);
+                setClicked(item);
+              }}
+            />
+          )
         )}
-
       </ResponsiveContext.Consumer>
+      {show && (
+      <Layer
+        position="center"
+        onEsc={() => setShow(false)}
+        onClickOutside={() => setShow(false)}
+      >
+        <DetailedForecast
+          forecastRecord={rawForecast.find((record) => record.date === clicked.date)}
+          closeItself={() => setShow(false)}
+        />
+      </Layer>
+      )}
     </Box>
   );
 }

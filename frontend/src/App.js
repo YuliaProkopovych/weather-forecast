@@ -12,7 +12,7 @@ import {
 
 import BackgroundBox from './components/background';
 
-import Header from './components/Header';
+
 import Home from './pages/home';
 import Search from './pages/search';
 import Forecast from './pages/preview';
@@ -40,18 +40,17 @@ function App() {
         <ResponsiveContext.Consumer>
           {size => (
             <Box fill="horizontal">
-              <Header />
-              <Box flex direction="row" wrap="true">
-                <Box flex={{ grow: 3, srink: 1 }}>
-                  <Router>
+              <Router>
+                <Box flex direction="row" wrap="true">
+                  <Box flex={{ grow: 3, srink: 1 }}>
                     <Routes>
                       <Route exact path="/" element={<Home />} />
                       <Route path="/forecast/:location" element={<Forecast />} />
                       <Route path="/search/:location" element={<Search />} />
                     </Routes>
-                  </Router>
+                  </Box>
                 </Box>
-              </Box>
+              </Router>
             </Box>
           )}
         </ResponsiveContext.Consumer>
