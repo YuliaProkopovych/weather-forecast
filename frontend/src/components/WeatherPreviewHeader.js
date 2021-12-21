@@ -10,12 +10,11 @@ import LocationComponent from './Location';
 import CurrentConditions from './currentConditions';
 
 function WeatherPreviewHeader({ location, currentConditions }) {
-  console.log(currentConditions, typeof currentConditions !== 'undefined');
   return (
     <ResponsiveContext.Consumer>
       {(size) => (size !== 'small'
         ? (
-          <Box pad="large" direction="row" align="center" justify="evenly" wrap="true">
+          <Box direction="row" align="center" justify="around" wrap="true">
             <LocationComponent location={location} />
             <Box flex="2 1">
               {currentConditions && <Card pad="small" direction="column" background="semitransparent-white"><CurrentConditions conditions={currentConditions} /></Card>}

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Box, List } from 'grommet';
+import { Box } from 'grommet';
 
+import Header from '../components/Header';
 import SearchForm from '../components/SearchForm';
 import FavouriteLocationsList from '../components/FavouriteLocationsList';
 
 function Home() {
-  const [location, setLocation] = useState('');
   const [favouriteLocations, setFavouriteLocations] = useState([]);
 
   useEffect(() => {
@@ -13,13 +13,13 @@ function Home() {
     if (favLocations) {
       setFavouriteLocations(favLocations);
     }
-  });
+  }, []);
 
   return (
     <Box>
-      <SearchForm
-        location={location}
-      />
+      <Header>
+        <SearchForm />
+      </Header>
       <Box>
         {favouriteLocations.length !== 0 && <FavouriteLocationsList locations={favouriteLocations} />}
       </Box>

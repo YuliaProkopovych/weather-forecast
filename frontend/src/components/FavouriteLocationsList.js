@@ -7,15 +7,13 @@ import {
   Box,
   List,
   Heading,
-  Tip,
-  Text,
 } from 'grommet';
 import { grommet } from 'grommet/themes';
 import { deepMerge } from 'grommet/utils';
 
-import CustomIcon from './icons/CustomIcon';
+import FavouriteLocationItem from './FavouriteLocationItem';
 
-const theme = deepMerge(grommet, {
+const theme = {
   list: {
     item: {
       pad: { horizontal: 'medium', vertical: 'xsmall' },
@@ -27,7 +25,7 @@ const theme = deepMerge(grommet, {
       }`,
     },
   },
-});
+};
 
 function FavouriteLocationsList({ locations }) {
   const navigate = useNavigate();
@@ -47,12 +45,7 @@ function FavouriteLocationsList({ locations }) {
           }}
         >
           {(datum) => (
-            <Tip content="see forecast" dropProps={{ align: { left: 'right' } }}>
-              <Box direction="row" gap="medium" align="center">
-                <CustomIcon size="35px" path="/icons/svg/place.svg" />
-                <Text weight="bold">{datum}</Text>
-              </Box>
-            </Tip>
+            <FavouriteLocationItem location={datum} />
           )}
         </List>
       </Box>

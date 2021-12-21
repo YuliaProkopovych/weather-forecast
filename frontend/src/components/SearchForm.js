@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Box, Grommet, Keyboard, TextInput,
@@ -24,9 +24,9 @@ const customTheme = deepMerge(Grommet, {
   },
 });
 
-function SearchForm({ location }) {
-  const [suggestions, setSuggestions] = React.useState([]);
-  const [query, setQuery] = React.useState(location);
+function SearchForm() {
+  const [suggestions, setSuggestions] = useState([]);
+  const [query, setQuery] = useState();
 
   const boxRef = React.useRef();
   const navigate = useNavigate();
@@ -48,14 +48,13 @@ function SearchForm({ location }) {
   );
 
   const selectPlace = (value) => {
-    navigate(`./forecast/${encodeURIComponent(value)}`, { replace: true });
+    navigate(`./forecast/${encodeURIComponent(value)}`);
   };
 
   return (
     <Grommet theme={customTheme}>
       <Box pad="medium">
-
-        <Keyboard onEnter={() => navigate(`./search/${encodeURIComponent(query)}`, { replace: true })}>
+        <Keyboard onEnter={() => navigate(`./search/${encodeURIComponent(query)}`)}>
           <Box
             direction="row"
             align="center"
@@ -70,7 +69,7 @@ function SearchForm({ location }) {
                 plain
                 dropTarget={boxRef.current}
                 onChange={(event) => { setQuery(event.target.value); loadSuggestions(event.target.value); }}
-                value={location || query}
+                value={query}
                 onSuggestionSelect={(event) => selectPlace(event.suggestion)}
                 placeholder="Select location..."
                 suggestions={suggestions}

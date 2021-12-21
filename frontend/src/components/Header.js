@@ -1,13 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+
 import {
   Box,
   Heading,
+  Grommet,
+  Image,
+  ResponsiveContext,
 } from 'grommet';
 
-import ThemedButtons from './SearchButton';
+import { grommet } from 'grommet/themes';
+import { deepMerge } from 'grommet/utils';
+
+const theme = deepMerge(grommet, {
+  global: {
+    font: {
+      family: "'Calinastiya', Arial, sans-serif",
+      face: `
+        @font-face {
+          font-family: "Calinastiya";
+          src: url("/fonts/calinastiya/Calinastiya.ttf") format('truetype');
+        }
+      `,
+    },
+  },
+});
 
 function Header({ children }) {
+  const navigate = useNavigate();
   return (
     <Box
       flex
@@ -15,19 +36,23 @@ function Header({ children }) {
       direction="row"
       wrap="true"
       align="center"
-      justify="between"
-      pad={{ left: '20px', right: '20px' }}
+      justify="start"
+      pad="medium"
       style={{ zIndex: '1' }}
-      height={{ max: '100px' }}
-      border={{ bottom: '1px' }}
     >
-      <Box flex={{ grow: 5, srink: 1 }}>
-        <Heading color="#010b11" level="2" margin="none">Sunshower</Heading>
+      <Box flex={{ grow: 1, shrink: 1 }}>
+        <Box alignSelf="center" align="center"  onClick={() => { navigate('/'); }}>
+          <Grommet theme={theme} background="transparent">
+            <Heading width="230px" level="2" size="80px" margin="none">Sunshower</Heading>
+          </Grommet>
+          <Box height="100px" width="230px" margin={{ top: '-30px' }}>
+            <Image src="/drawing.svg" fit="cover" />
+          </Box>
+        </Box>
       </Box>
-      <Box flex={{ grow: 1, srink: 1 }}>
-        <ThemedButtons />
+      <Box flex={{ grow: 4, shrink: 1 }}>
+        {children}
       </Box>
-      {children}
     </Box>
   );
 }
