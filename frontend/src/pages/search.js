@@ -28,7 +28,7 @@ function Search() {
         <List
           data={locations}
           onClickItem={(event) => {
-            navigate(`../../forecast/${encodeURIComponent(event.target.innerText)}`, { replace: true });
+            navigate(`../../forecast/${encodeURIComponent(event.target.innerText)}`);
           }}
         />
       </Box>

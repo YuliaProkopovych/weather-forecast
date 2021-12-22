@@ -12,7 +12,7 @@ import {
 
 import BackgroundBox from './components/background';
 
-
+import SolarCalendar from './pages/solarCalendar';
 import Home from './pages/home';
 import Search from './pages/search';
 import Forecast from './pages/preview';
@@ -49,6 +49,7 @@ function App() {
                       <Route exact path="/" element={<Home />} />
                       <Route path="/forecast/:location" element={<Forecast />} />
                       <Route path="/search/:location" element={<Search />} />
+                      <Route path="/solar-calendar/:location" element={<SolarCalendar />} />
                     </Routes>
                   </Box>
                 </Box>

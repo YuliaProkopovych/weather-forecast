@@ -169,7 +169,7 @@ function Forecast() {
       <Header>
         <WeatherPreviewHeader location={params.location} currentConditions={rawForecast[0]} />
       </Header>
-      <SolarCalendarLink />
+      <SolarCalendarLink location={params.location} />
       <ResponsiveContext.Consumer>
         {(size) => (
           size !== 'small' ? (
