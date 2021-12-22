@@ -1,5 +1,4 @@
 const axios = require('axios');
-// const getSunrise = require('./getSunrise');
 
 async function getForecastByCoordinates(coordinates) {
   const params = new URLSearchParams({
@@ -44,8 +43,6 @@ async function getForecastByCoordinates(coordinates) {
 
     return formattedRecord;
   });
-
-  // const res = await getSunrise(coordinates, forecast[10].time);
 
   return forecast;
 }
