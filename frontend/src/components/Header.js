@@ -7,7 +7,6 @@ import {
   Heading,
   Grommet,
   Image,
-  ResponsiveContext,
 } from 'grommet';
 
 import { grommet } from 'grommet/themes';
@@ -41,7 +40,7 @@ function Header({ children }) {
       style={{ zIndex: '1' }}
     >
       <Box flex={{ grow: 1, shrink: 1 }}>
-        <Box alignSelf="center" align="center" onClick={() => { navigate('/'); }}>
+        <Box alignSelf="center" align="center" onClick={() => { navigate('/'); }} focusIndicator={false}>
           <Grommet theme={theme} background="transparent">
             <Heading width="230px" level="2" size="80px" margin="none">Sunshower</Heading>
           </Grommet>

@@ -42,9 +42,9 @@ function Location({ location }) {
       <ResponsiveContext.Consumer>
         {(size) => (
           size !== 'small' ? (
-            <CustomIcon size="60px" path="/icons/svg/map4.svg" onClick={loadSearchComponent} margin={{ right: '10px' }} />
+            <CustomIcon size="60px" path="/icons/svg/map4.svg" onClick={loadSearchComponent} margin={{ right: '10px' }} focusIndicator={false} />
           ) : (
-            <CustomIcon size="25px" path="/icons/svg/search.svg" onClick={loadSearchComponent} margin={{ left: '10px', right: '10px' }} />
+            <CustomIcon size="25px" path="/icons/svg/search.svg" onClick={loadSearchComponent} margin={{ left: '10px', right: '10px' }} focusIndicator={false} />
           )
         )}
       </ResponsiveContext.Consumer>
