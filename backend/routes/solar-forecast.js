@@ -14,7 +14,9 @@ const getSolarForecastOpts = {
   handler: async (req, reply) => {
     try {
       const coordinates = await getCoordinatesByLocationName(req.body.location);
+      console.log(coordinates, req.body.date, req.body.offset);
       const solarData = await getSunrise(coordinates, req.body.date, req.body.offset);
+
       reply.send(solarData);
     } catch (error) {
       console.error(error);
@@ -23,7 +25,7 @@ const getSolarForecastOpts = {
 };
 
 const solarForecastRoute = (fastify, options, done) => {
-  fastify.post('/solarForecast', getSolarForecastOpts);
+  fastify.post('/solar-forecast', getSolarForecastOpts);
   done();
 };
 
