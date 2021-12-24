@@ -98,6 +98,7 @@ function SmallForecast({ forecast, onClickItem }) {
             <Box
               direction="row"
               align="center"
+              focusIndicator={false}
               onClick={() => {
                 onClickItem(record);
               }}

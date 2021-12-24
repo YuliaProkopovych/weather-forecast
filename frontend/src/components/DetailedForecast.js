@@ -112,7 +112,7 @@ function DetailedForecast({ forecastRecord, closeItself }) {
       <Box direction="row" justify="between">
         <Heading level="2">{forecastRecord.date}</Heading>
         <Box margin={{ top: 'medium', right: 'medium' }}>
-          <Close onClick={() => closeItself()} />
+          <Close onClick={() => closeItself()} focusIndicator={false} />
         </Box>
       </Box>
       <Box flex={false}>
