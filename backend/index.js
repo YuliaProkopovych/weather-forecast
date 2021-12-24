@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 fastify.register(require('fastify-cors'), { origin: true, credentials: true });
 
 fastify.register(require('./routes/forecast'));
-fastify.register(require('./routes/solarForecast'));
+fastify.register(require('./routes/solar-forecast'));
 
 const start = async () => {
   try {
