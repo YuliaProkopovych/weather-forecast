@@ -8,15 +8,13 @@ import {
   List,
   Heading,
 } from 'grommet';
-import { grommet } from 'grommet/themes';
-import { deepMerge } from 'grommet/utils';
 
 import FavouriteLocationItem from './FavouriteLocationItem';
 
 const theme = {
   list: {
     item: {
-      pad: { horizontal: 'medium', vertical: 'xsmall' },
+      pad: { horizontal: 'small' },
       background: ['rgba(255,255,255,0.6)', 'light-2'],
       border: false,
       default: {},
@@ -31,23 +29,25 @@ function FavouriteLocationsList({ locations }) {
   const navigate = useNavigate();
 
   const redirectToForecast = (location) => {
-    navigate(`../../forecast/${encodeURIComponent(location)}`, { replace: true });
+    navigate(`../../forecast/${encodeURIComponent(location)}`);
   };
 
   return (
     <Grommet theme={theme} background={{ color: 'transparent' }}>
       <Box pad="large">
-        <Heading level="3">Favourite locations</Heading>
-        <List
-          data={locations}
-          onClickItem={(event) => {
-            redirectToForecast(event.item);
-          }}
-        >
-          {(datum) => (
-            <FavouriteLocationItem location={datum} />
-          )}
-        </List>
+        <Heading level="3">Pinned locations</Heading>
+        <Box width={{ max: '1000px' }}>
+          <List
+            data={locations}
+            onClickItem={(event) => {
+              redirectToForecast(event.item);
+            }}
+          >
+            {(datum) => (
+              <FavouriteLocationItem location={datum} />
+            )}
+          </List>
+        </Box>
       </Box>
     </Grommet>
   );

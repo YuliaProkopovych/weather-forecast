@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
 import {
   Box, Grommet, Keyboard, TextInput,
 } from 'grommet';
@@ -15,10 +14,8 @@ const customTheme = deepMerge(Grommet, {
 
   textInput: {
     extend: () => `
-
     &:focus {
-      box-shadow: 0px 0px 2px 2px #000000;
-      border-radius: 0px;
+      box-shadow: 0 0 1px 0 #999;
     }
   `,
   },
@@ -58,15 +55,13 @@ function SearchForm() {
           <Box
             direction="row"
             align="center"
-            border="all"
             ref={boxRef}
             wrap
           >
-            <Box flex style={{ minWidth: '500px' }}>
+            <Box>
               <TextInput
                 type="search"
                 icon={<Search />}
-                plain
                 dropTarget={boxRef.current}
                 onChange={(event) => { setQuery(event.target.value); loadSuggestions(event.target.value); }}
                 value={query}
@@ -81,13 +76,5 @@ function SearchForm() {
     </Grommet>
   );
 }
-
-SearchForm.propTypes = {
-  location: PropTypes.string,
-};
-
-SearchForm.defaultProps = {
-  location: '',
-};
 
 export default SearchForm;

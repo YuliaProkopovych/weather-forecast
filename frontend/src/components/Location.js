@@ -38,18 +38,14 @@ function Location({ location }) {
   });
 
   return (
-    <Box direction="row" align="center">
-      <ResponsiveContext.Consumer>
-        {(size) => (
-          size !== 'small' ? (
+    <ResponsiveContext.Consumer>
+      {(size) => (
+        <Box direction="row" align="center" pad={size === 'small' ? { top: 'medium' } : '0px'}>
+          {size !== 'small' ? (
             <CustomIcon size="60px" path="/icons/svg/map4.svg" onClick={loadSearchComponent} margin={{ right: '10px' }} focusIndicator={false} />
           ) : (
             <CustomIcon size="25px" path="/icons/svg/search.svg" onClick={loadSearchComponent} margin={{ left: '10px', right: '10px' }} focusIndicator={false} />
-          )
-        )}
-      </ResponsiveContext.Consumer>
-      <ResponsiveContext.Consumer>
-        {(size) => (
+          )}
           <Box direction="row" align="center" justify="between" alignSelf="end" flex="grow">
             <Box direction="column">
               <Box direction="row" align="center">
@@ -66,11 +62,9 @@ function Location({ location }) {
             </Box>
             {size === 'small' && <Box pad="medium"><CustomIcon path={locationIsSaved ? '/icons/svg/push-pin-color.svg' : '/icons/svg/push-pin.svg'} size="22px" /></Box> }
           </Box>
-        )}
-
-      </ResponsiveContext.Consumer>
-
-    </Box>
+        </Box>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 

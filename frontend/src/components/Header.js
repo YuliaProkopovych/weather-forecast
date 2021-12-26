@@ -7,6 +7,7 @@ import {
   Heading,
   Grommet,
   Image,
+  ResponsiveContext,
 } from 'grommet';
 
 import { grommet } from 'grommet/themes';
@@ -29,30 +30,34 @@ const theme = deepMerge(grommet, {
 function Header({ children }) {
   const navigate = useNavigate();
   return (
-    <Box
-      flex
-      tag="header"
-      direction="row"
-      wrap="true"
-      align="center"
-      justify="start"
-      pad="medium"
-      style={{ zIndex: '1' }}
-    >
-      <Box flex={{ grow: 1, shrink: 1 }}>
-        <Box alignSelf="center" align="center" onClick={() => { navigate('/'); }} focusIndicator={false}>
-          <Grommet theme={theme} background="transparent">
-            <Heading width="230px" level="2" size="80px" margin="none">Sunshower</Heading>
-          </Grommet>
-          <Box height="100px" width="230px" margin={{ top: '-30px' }}>
-            <Image src="/drawing.svg" fit="cover" />
+    <ResponsiveContext.Consumer>
+      {(size) => (
+        <Box
+          flex
+          tag="header"
+          direction="row"
+          wrap="true"
+          align="center"
+          justify="start"
+          pad={size !== 'small' ? 'medium' : '0px'}
+          style={{ zIndex: '1' }}
+        >
+          <Box flex={{ grow: 1, shrink: 1 }}>
+            <Box alignSelf="center" align="center" onClick={() => { navigate('/'); }} focusIndicator={false}>
+              <Grommet theme={theme} background="transparent">
+                <Heading width="230px" level="2" size="80px" margin="none">Sunshower</Heading>
+              </Grommet>
+              <Box height="100px" width="230px" margin={{ top: '-30px' }}>
+                <Image src="/drawing.svg" fit="cover" />
+              </Box>
+            </Box>
+          </Box>
+          <Box flex={{ grow: 4, shrink: 1 }}>
+            {children}
           </Box>
         </Box>
-      </Box>
-      <Box flex={{ grow: 4, shrink: 1 }}>
-        {children}
-      </Box>
-    </Box>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 
