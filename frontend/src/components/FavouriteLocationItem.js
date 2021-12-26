@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import {
   Box,
-  Tip,
   Text,
 } from 'grommet';
 
@@ -14,12 +13,10 @@ function FavouriteLocationItem({ location }) {
 
   return (
     <div onMouseOver={() => { setScale(1.1); }} onMouseLeave={() => { setScale(1); }}> {/* eslint-disable-line */}
-      <Tip content="see forecast" dropProps={{ align: { left: 'right' } }}>
-        <Box direction="row" gap="medium" align="center">
-          <CustomIcon flex={{ shrink: 0 }} size="35px" path="/icons/svg/place.svg" style={{ transform: `scale(${scale})` }} />
-          <Text weight="bold">{location}</Text>
-        </Box>
-      </Tip>
+      <Box direction="row" gap="medium" align="center">
+        <CustomIcon flex={{ shrink: 0 }} size="35px" path="/icons/svg/place.svg" style={{ transform: `scale(${scale})` }} />
+        <Text weight="bold">{location}</Text>
+      </Box>
     </div>
   );
 }

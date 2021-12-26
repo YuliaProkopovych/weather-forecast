@@ -7,7 +7,8 @@ import {
 } from 'grommet';
 
 import LocationComponent from './Location';
-import CurrentConditions from './currentConditions';
+import CurrentConditions from './CurrentConditions';
+import SolarCalendarLink from './SolarCalendarLink';
 
 function WeatherPreviewHeader({ location, currentConditions }) {
   return (
@@ -23,6 +24,7 @@ function WeatherPreviewHeader({ location, currentConditions }) {
         ) : (
           <Card pad="small" direction="column" background="semitransparent-white">
             <LocationComponent location={location} />
+            <SolarCalendarLink location={location} />
             {currentConditions && <CurrentConditions conditions={currentConditions} />}
           </Card>
         )

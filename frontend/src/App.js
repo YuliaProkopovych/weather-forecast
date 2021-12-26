@@ -38,9 +38,9 @@ const theme = {
 function App() {
   return (
     <Grommet theme={theme} full>
-      <BackgroundBox style={{ minHeight: '100%' }} pad="medium">
-        <ResponsiveContext.Consumer>
-          {size => (
+      <ResponsiveContext.Consumer>
+        {(size) => (
+          <BackgroundBox style={{ minHeight: '100%' }} pad={(size === 'small' && '0px') || (size === 'medium' && 'small') || 'medium'}>
             <Box fill="horizontal">
               <Router>
                 <Box flex direction="row" wrap="true">
@@ -55,9 +55,9 @@ function App() {
                 </Box>
               </Router>
             </Box>
-          )}
-        </ResponsiveContext.Consumer>
-      </BackgroundBox>
+          </BackgroundBox>
+        )}
+      </ResponsiveContext.Consumer>
     </Grommet>
   );
 }

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
-  Box, DataTable, Text, Layer, ResponsiveContext,
+  Box, DataTable, Layer, ResponsiveContext,
 } from 'grommet';
 
 import Header from '../components/Header';
-import WeatherIcon from '../components/icons/WeatherIcon';
+import { wideColumns, mediumColumns } from '../utils/weatherTableColumns';
 import DetailedForecast from '../components/DetailedForecast';
 import SmallForecast from '../components/SmallForecast';
 import WeatherPreviewHeader from '../components/WeatherPreviewHeader';
@@ -90,101 +90,29 @@ function Forecast() {
     getWeatherForecast();
   }, []);
 
-  const renderIcon = (icon) => icon && <WeatherIcon path={`/icons/svg/${icon}.svg`} />;
-
-  const columns = [
-    {
-      property: 'date',
-      header: '',
-      primary: true,
-    },
-    {
-      property: 'night',
-      header: 'Night',
-      render: ({ night }) => renderIcon(night),
-    },
-    {
-      property: 'morning',
-      header: 'Morning',
-      render: ({ morning }) => renderIcon(morning),
-    },
-    {
-      property: 'afternoon',
-      header: 'Afternoon',
-      render: ({ afternoon }) => renderIcon(afternoon),
-    },
-    {
-      property: 'evening',
-      header: 'Evening',
-      render: ({ evening }) => renderIcon(evening),
-    },
-    {
-      property: 'temperature',
-      header: 'max/min temp.',
-      render: (object) => (
-        <Box flex direction="row">
-          <Text color={object.maxT > 0 ? 'aboveZero' : 'belowZero'}>
-            {object.maxT}
-            °
-          </Text>
-          <Text>{' / '}</Text>
-          <Text color={object.minT > 0 ? 'aboveZero' : 'belowZero'}>
-            {object.minT}
-            °
-          </Text>
-        </Box>
-      ),
-    },
-    {
-      property: 'precipitations',
-      header: 'Precipitations',
-      render: ({ precipitations }) => (precipitations ? (
-        <Text>
-          {precipitations}
-          {' '}
-          mm
-        </Text>
-      ) : ''),
-    },
-    {
-      property: 'wind',
-      header: 'Wind',
-      render: ({ wind }) => (
-        <Text>
-          {wind}
-          {' '}
-          m/s
-        </Text>
-      ),
-    },
-    {
-      property: 'open',
-      header: '',
-      render: () => { <Text>Open detailed forecast</Text>; },
-    },
-  ];
-
   return (
     <Box>
       <Header>
         <WeatherPreviewHeader location={params.location} currentConditions={rawForecast[0]} />
       </Header>
-      <SolarCalendarLink location={params.location} />
       <ResponsiveContext.Consumer>
         {(size) => (
           size !== 'small' ? (
-            <DataTable
-              pad="medium"
-              background="semitransparent-white"
-              columns={columns}
-              data={weather}
-              step={rawForecast.length}
-              onClickRow={(event) => {
-                setShow(true);
-                setClicked(event.datum);
-              }}
-              responsive="true"
-            />
+            <Box>
+              <SolarCalendarLink location={params.location} />
+              <DataTable
+                pad="xsmall"
+                background="semitransparent-white"
+                columns={size !== 'medium' ? wideColumns : mediumColumns}
+                data={weather}
+                step={rawForecast.length}
+                onClickRow={(event) => {
+                  setShow(true);
+                  setClicked(event.datum);
+                }}
+                responsive="true"
+              />
+            </Box>
           ) : (
             <SmallForecast
               forecast={weather}
