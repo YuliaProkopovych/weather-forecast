@@ -3,19 +3,17 @@ const getSunrise = require('../utils/getSunrise');
 
 const getSolarForecastOpts = {
   schema: {
-    body: {
-      type: 'object',
-      required: ['location', 'date', 'offset'],
+    querystring: {
+      location: { type: 'string' },
+      startDate: { type: 'string' },
+      endDate: { type: 'string' },
+      offset: { type: 'string' },
     },
-    // response: {
-    //   200: { type: 'object' },
-    // },
   },
   handler: async (req, reply) => {
     try {
-      const coordinates = await getCoordinatesByLocationName(req.body.location);
-      console.log(coordinates, req.body.date, req.body.offset);
-      const solarData = await getSunrise(coordinates, req.body.date, req.body.offset);
+      const coordinates = await getCoordinatesByLocationName(req.query.location);
+      const solarData = await getSunrise(coordinates, req.query.startDate, req.query.endDate, req.query.offset);
 
       reply.send(solarData);
     } catch (error) {
@@ -25,7 +23,7 @@ const getSolarForecastOpts = {
 };
 
 const solarForecastRoute = (fastify, options, done) => {
-  fastify.post('/solar-forecast', getSolarForecastOpts);
+  fastify.get('/solar-forecast', getSolarForecastOpts);
   done();
 };
 

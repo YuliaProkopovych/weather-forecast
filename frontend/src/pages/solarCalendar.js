@@ -7,7 +7,7 @@ import {
   Heading,
 } from 'grommet';
 
-import { DateTime, Duration } from 'luxon';
+import { DateTime } from 'luxon';
 import _ from 'lodash';
 
 import getSunrise from '../utils/getSunrise';
@@ -15,6 +15,7 @@ import Header from '../components/Header';
 import LunarInfo from '../components/LunarInfo';
 import Location from '../components/Location';
 import CustomIcon from '../components/icons/CustomIcon';
+import DateRangeSelect from '../components/DateRangeSelect';
 
 function TimeText({ time }) {
   return (
@@ -27,22 +28,29 @@ function TimeText({ time }) {
 function SolarCalendar() {
   const params = useParams();
   const [data, setData] = useState({});
+  const [startDate, setStartDate] = useState(params.startDate ? decodeURIComponent(params.startDate)
+    : DateTime.now().toISO());
+  const [endDate, setEndDate] = useState(params.endDate ? decodeURIComponent(params.endDate)
+    : DateTime.now().plus({ days: 5 }).toISO());
 
   useEffect(() => {
     async function getSolarData() {
       const place = decodeURIComponent(params.location);
-      const offsetInMinutes = DateTime.now().offset;
-      const offset = Duration.fromObject({ minutes: offsetInMinutes }).toFormat('hh:mm');
-      const solarData = await getSunrise(place, DateTime.now().toFormat('yyyy-MM-dd'), `+${offset}`);
+      const solarData = await getSunrise(place, startDate, endDate);
       setData(solarData);
     }
     getSolarData();
-  }, []);
+  }, [startDate, endDate]);
 
+  const setNewDates = (newStartDate, newEndDate) => {
+    setStartDate(newStartDate);
+    setEndDate(newEndDate);
+  };
   return (
     <Box>
       <Header>
         <Location location={params.location} />
+        <DateRangeSelect startDate={startDate} endDate={endDate} updateInterval={setNewDates} />
       </Header>
       <Box pad="medium" direction="row" wrap="true" justify="left" alignContent="start">
         {data.length && data.map((item) => (
@@ -87,7 +95,7 @@ function SolarCalendar() {
                 </Box>
               </Box>
               <Box direction="row" pad={{ top: 'medium' }} align="end" justify="between">
-                <LunarInfo moonphase={item.moonphase.value} moonrise={item.moonrise} moonset={item.moonset} />
+                <LunarInfo moonphase={item.moonposition.phase} moonrise={item.moonrise} moonset={item.moonset} />
               </Box>
             </Card>
           </Box>
