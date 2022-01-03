@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Box,
   Text,
   Card,
   Heading,
+  Grid,
+  ResponsiveContext,
 } from 'grommet';
 
 import { DateTime } from 'luxon';
@@ -46,60 +48,63 @@ function SolarCalendar() {
     setStartDate(newStartDate);
     setEndDate(newEndDate);
   };
+  const size = useContext(ResponsiveContext);
   return (
     <Box>
       <Header>
         <Location location={params.location} />
         <DateRangeSelect startDate={startDate} endDate={endDate} updateInterval={setNewDates} />
       </Header>
-      <Box pad="medium" direction="row" wrap="true" justify="left" alignContent="start">
-        {data.length && data.map((item) => (
-          <Box pad="small" width={{ min: '330px' }}>
-            <Card pad="medium" background="semitransparent-white">
-              <Heading alignSelf="center" level="3">{(DateTime.fromISO(item.date)).toFormat('dd MMMM')}</Heading>
-              { item.sunrise ? (
-                <Box direction="row" justify="between" gap="20px">
-                  <Box align="center">
-                    <Text size="16px">Sunrise</Text>
-                    <Box direction="row" align="end">
-                      <CustomIcon margin={{ right: '5px' }} path="/icons/svg/sunrise.svg" size="40px" />
-                      <TimeText time={item.sunrise.time} />
+      <Box pad="medium">
+        <Grid columns={size !== 'small' ? '330px' : '100%'} gap="small">
+          {data.length && data.map((item) => (
+            <Box pad="small" width={{ min: '330px' }}>
+              <Card pad="medium" background="semitransparent-white">
+                <Heading alignSelf="center" level="3">{(DateTime.fromISO(item.date)).toFormat('dd MMMM')}</Heading>
+                { item.sunrise ? (
+                  <Box direction="row" justify="between" gap="20px">
+                    <Box align="center">
+                      <Text size="16px">Sunrise</Text>
+                      <Box direction="row" align="end">
+                        <CustomIcon margin={{ right: '5px' }} path="/icons/svg/sunrise.svg" size="40px" />
+                        <TimeText time={item.sunrise.time} />
+                      </Box>
+                    </Box>
+                    <Box align="center">
+                      <Text size="16px">Solar noon</Text>
+                      <Box direction="row" align="end">
+                        <CustomIcon margin={{ right: '5px' }} path="/icons/svg/sunnoon.svg" size="40px" />
+                        <TimeText time={item.solarnoon.time} />
+                      </Box>
+                    </Box>
+                    <Box align="center">
+                      <Text size="16px">Sunset</Text>
+                      <Box direction="row" align="end">
+                        <CustomIcon margin={{ right: '5px' }} path="/icons/svg/sunset.svg" size="40px" />
+                        <TimeText time={item.sunset.time} />
+                      </Box>
                     </Box>
                   </Box>
-                  <Box align="center">
-                    <Text size="16px">Solar noon</Text>
-                    <Box direction="row" align="end">
-                      <CustomIcon margin={{ right: '5px' }} path="/icons/svg/sunnoon.svg" size="40px" />
-                      <TimeText time={item.solarnoon.time} />
-                    </Box>
+                ) : (
+                  <Box direction="row" align="center">
+                    <Text size="16px">{item.solarnoon.elevation > 0 ? 'Polar day' : 'Polar night'}</Text>
+                    <CustomIcon margin={{ left: '10px' }} path="/icons/svg/clearsky_polartwilight.svg" size="40px" />
                   </Box>
-                  <Box align="center">
-                    <Text size="16px">Sunset</Text>
-                    <Box direction="row" align="end">
-                      <CustomIcon margin={{ right: '5px' }} path="/icons/svg/sunset.svg" size="40px" />
-                      <TimeText time={item.sunset.time} />
-                    </Box>
+                ) }
+                <Box align="start" pad={{ top: '15px' }}>
+                  <Box direction="row" align="end">
+                    <Text size="small">Max sun elevation</Text>
+                    <CustomIcon margin={{ left: '10px', bottom: '3px', right: '3px' }} size="20px" path="/icons/svg/angle.svg" />
+                    <Text size="16px">{`${_.round((item.solarnoon.elevation), 1)}°`}</Text>
                   </Box>
                 </Box>
-              ) : (
-                <Box direction="row" align="center">
-                  <Text size="16px">{item.solarnoon.elevation > 0 ? 'Polar day' : 'Polar night'}</Text>
-                  <CustomIcon margin={{ left: '10px' }} path="/icons/svg/clearsky_polartwilight.svg" size="40px" />
+                <Box direction="row" pad={{ top: 'medium' }} align="end" justify="between">
+                  <LunarInfo moonphase={item.moonposition.phase} moonrise={item.moonrise} moonset={item.moonset} />
                 </Box>
-              ) }
-              <Box align="start" pad={{ top: '15px' }}>
-                <Box direction="row" align="end">
-                  <Text size="small">Max sun elevation</Text>
-                  <CustomIcon margin={{ left: '10px', bottom: '3px', right: '3px' }} size="20px" path="/icons/svg/angle.svg" />
-                  <Text size="16px">{`${_.round((item.solarnoon.elevation), 1)}°`}</Text>
-                </Box>
-              </Box>
-              <Box direction="row" pad={{ top: 'medium' }} align="end" justify="between">
-                <LunarInfo moonphase={item.moonposition.phase} moonrise={item.moonrise} moonset={item.moonset} />
-              </Box>
-            </Card>
-          </Box>
-        ))}
+              </Card>
+            </Box>
+          ))}
+        </Grid>
       </Box>
     </Box>
   );
