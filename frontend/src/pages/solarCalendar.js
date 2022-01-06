@@ -55,7 +55,7 @@ function SolarCalendar() {
         <Location location={params.location} />
         <DateRangeSelect startDate={startDate} endDate={endDate} updateInterval={setNewDates} />
       </Header>
-      <Box pad="medium">
+      <Box pad="medium" gridArea="main">
         <Grid columns={size !== 'small' ? '330px' : '100%'} gap="small">
           {data.length && data.map((item) => (
             <Box pad="small" width={{ min: '330px' }}>

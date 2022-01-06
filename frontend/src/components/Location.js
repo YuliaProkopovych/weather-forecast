@@ -46,7 +46,7 @@ function Location({ location }) {
           ) : (
             <CustomIcon size="25px" path="/icons/svg/search.svg" onClick={loadSearchComponent} margin={{ left: '10px', right: '10px' }} focusIndicator={false} />
           )}
-          <Box direction="row" align="center" justify="between" alignSelf="end" flex="grow">
+          <Box direction="row" align="center" justify="between" flex="grow">
             <Box direction="column">
               <Box direction="row" align="center">
                 <Heading size={size} margin={{ bottom: '0px', top: '0px', right: '15px' }} level="3">

@@ -22,7 +22,7 @@ function CurrentConditions({ conditions }) {
         const currentSymbolSize = size !== 'small' ? '80px' : '60px';
         return (
           <Box>
-            <Box direction="row" align="center" margin={{ top: 'medium' }}>
+            <Box direction="row" align="center">
               <CustomIcon size="25px" margin={{ right: '10px', left: '10px' }} path="/icons/svg/clock.svg" />
               <Heading size="small" level="5">Current conditions</Heading>
             </Box>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Box, DataTable, Layer, ResponsiveContext,
@@ -90,40 +90,37 @@ function Forecast() {
     getWeatherForecast();
   }, []);
 
+  const size = useContext(ResponsiveContext);
   return (
     <Box>
       <Header>
         <WeatherPreviewHeader location={params.location} currentConditions={rawForecast[0]} />
       </Header>
-      <ResponsiveContext.Consumer>
-        {(size) => (
-          size !== 'small' ? (
-            <Box>
-              <SolarCalendarLink location={params.location} />
-              <DataTable
-                pad="xsmall"
-                background="semitransparent-white"
-                columns={size !== 'medium' ? wideColumns : mediumColumns}
-                data={weather}
-                step={rawForecast.length}
-                onClickRow={(event) => {
-                  setShow(true);
-                  setClicked(event.datum);
-                }}
-                responsive="true"
-              />
-            </Box>
-          ) : (
-            <SmallForecast
-              forecast={weather}
-              onClickItem={(item) => {
-                setShow(true);
-                setClicked(item);
-              }}
-            />
-          )
-        )}
-      </ResponsiveContext.Consumer>
+      {size !== 'small' ? (
+        <Box>
+          <SolarCalendarLink location={params.location} />
+          <DataTable
+            pad="xsmall"
+            background="semitransparent-white"
+            columns={size !== 'medium' ? wideColumns : mediumColumns}
+            data={weather}
+            step={rawForecast.length}
+            onClickRow={(event) => {
+              setShow(true);
+              setClicked(event.datum);
+            }}
+            responsive="true"
+          />
+        </Box>
+      ) : (
+        <SmallForecast
+          forecast={weather}
+          onClickItem={(item) => {
+            setShow(true);
+            setClicked(item);
+          }}
+        />
+      )}
       {show && (
       <Layer
         position="center"
