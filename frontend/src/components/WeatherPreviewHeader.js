@@ -16,9 +16,11 @@ function WeatherPreviewHeader({ location, currentConditions }) {
       {(size) => (size !== 'small'
         ? (
           <Box direction="row" align="center" justify="around" wrap="true">
-            <LocationComponent location={location} />
             <Box flex="2 1">
-              {currentConditions && <Card pad="small" direction="column" background="semitransparent-white"><CurrentConditions conditions={currentConditions} /></Card>}
+              <Card pad="small" direction="row" background="semitransparent-white">
+                <LocationComponent location={location} />
+                {currentConditions && <CurrentConditions conditions={currentConditions} />}
+              </Card>
             </Box>
           </Box>
         ) : (

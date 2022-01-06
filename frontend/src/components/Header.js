@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
@@ -27,37 +27,34 @@ const theme = deepMerge(grommet, {
   },
 });
 
-function Header({ children }) {
+function Header({ children, ...rest }) {
   const navigate = useNavigate();
+  const size = useContext(ResponsiveContext);
   return (
-    <ResponsiveContext.Consumer>
-      {(size) => (
-        <Box
-          flex
-          tag="header"
-          direction="row"
-          wrap="true"
-          align="center"
-          justify="start"
-          pad={size !== 'small' ? 'medium' : '0px'}
-          style={{ zIndex: '1' }}
-        >
-          <Box flex={{ grow: 1, shrink: 1 }}>
-            <Box alignSelf="center" align="center" onClick={() => { navigate('/'); }} focusIndicator={false}>
-              <Grommet theme={theme} background="transparent">
-                <Heading width="230px" level="2" size="80px" margin="none">Sunshower</Heading>
-              </Grommet>
-              <Box height="100px" width="230px" margin={{ top: '-30px' }}>
-                <Image src="/drawing.svg" fit="cover" />
-              </Box>
-            </Box>
-          </Box>
-          <Box flex={{ grow: 4, shrink: 1 }}>
-            {children}
+    <Box
+      tag="header"
+      direction="row"
+      wrap="true"
+      align="center"
+      justify="start"
+      pad={size !== 'small' ? 'medium' : '0px'}
+      style={{ zIndex: '1' }}
+      {...rest}
+    >
+      <Box flex={{ grow: 1, shrink: 1 }}>
+        <Box alignSelf="center" align="center" onClick={() => { navigate('/'); }} focusIndicator={false}>
+          <Grommet theme={theme} background="transparent">
+            <Heading width="230px" level="2" size="80px" margin="none">Sunshower</Heading>
+          </Grommet>
+          <Box height="100px" width="230px" margin={{ top: '-30px' }}>
+            <Image src="/drawing.svg" fit="cover" />
           </Box>
         </Box>
-      )}
-    </ResponsiveContext.Consumer>
+      </Box>
+      <Box flex={{ grow: 4, shrink: 1 }}>
+        {children}
+      </Box>
+    </Box>
   );
 }
 
