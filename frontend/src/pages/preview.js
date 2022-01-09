@@ -9,8 +9,12 @@ import { wideColumns, mediumColumns } from '../utils/weatherTableColumns';
 import DetailedForecast from '../components/DetailedForecast';
 import SmallForecast from '../components/SmallForecast';
 import WeatherPreviewHeader from '../components/WeatherPreviewHeader';
+import LocationComponent from '../components/Location';
+import CurrentConditions from '../components/CurrentConditions';
 import getForecast from '../utils/getForecast';
 import SolarCalendarLink from '../components/SolarCalendarLink';
+import ResponsiveGrid from '../components/ResponsiveGrid';
+import Logo from '../components/Logo';
 
 function Forecast() {
   const params = useParams();
@@ -92,15 +96,19 @@ function Forecast() {
 
   const size = useContext(ResponsiveContext);
   return (
-    <Box>
-      <Header>
-        <WeatherPreviewHeader location={params.location} currentConditions={rawForecast[0]} />
+    <ResponsiveGrid>
+      <Header gridArea="header">
+        <Box direction="row" gap="xlarge" wrap>
+          <LocationComponent location={params.location} />
+          {rawForecast[0] && <CurrentConditions conditions={rawForecast[0]} />}
+        </Box>
+        <SolarCalendarLink location={params.location} />
       </Header>
+      <Logo />
       {size !== 'small' ? (
-        <Box>
-          <SolarCalendarLink location={params.location} />
+        <Box pad="medium">
           <DataTable
-            pad="xsmall"
+            pad="medium"
             background="semitransparent-white"
             columns={size !== 'medium' ? wideColumns : mediumColumns}
             data={weather}
@@ -133,7 +141,7 @@ function Forecast() {
         />
       </Layer>
       )}
-    </Box>
+    </ResponsiveGrid>
   );
 }
 

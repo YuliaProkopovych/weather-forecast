@@ -21,12 +21,12 @@ function CurrentConditions({ conditions }) {
         const weatherIconSize = size !== 'small' ? '35px' : '30px';
         const currentSymbolSize = size !== 'small' ? '80px' : '60px';
         return (
-          <Box>
+          <Box pad="small">
             <Box direction="row" align="center">
               <CustomIcon size="25px" margin={{ right: '10px', left: '10px' }} path="/icons/svg/clock.svg" />
-              <Heading size="small" level="5">Current conditions</Heading>
+              <Heading size="small" level="5" margin="none">Current conditions</Heading>
             </Box>
-            <Box direction="row" align="center" justify="evenly" gap="small">
+            <Box direction="row" align="center" justify="evenly" gap="medium">
               {currentSymbol && <WeatherIcon path={`/icons/svg/${currentSymbol}.svg`} size={currentSymbolSize} />}
               <Box direction="row" align="center">
                 <CustomIcon size={weatherIconSize} path="/icons/svg/thermometer2.svg" />

@@ -34,9 +34,9 @@ function FavouriteLocationsList({ locations }) {
 
   return (
     <Grommet theme={theme} background={{ color: 'transparent' }}>
-      <Box pad="large">
+      <Box pad="medium">
         <Heading level="3">Pinned locations</Heading>
-        <Box width={{ max: '1000px' }}>
+        <Box>
           <List
             data={locations}
             onClickItem={(event) => {

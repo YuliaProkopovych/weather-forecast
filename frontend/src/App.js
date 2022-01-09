@@ -1,9 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   Grommet,
   Box,
-  Grid,
-  ResponsiveContext,
 } from 'grommet';
 import {
   BrowserRouter as Router,
@@ -37,22 +35,17 @@ const theme = {
 };
 
 function App() {
-  const size = useContext(ResponsiveContext);
   return (
     <Grommet theme={theme} full>
-      <BackgroundBox style={{ minHeight: '100%' }} pad={(size === 'small' && '0px') || (size === 'medium' && 'small') || 'medium'}>
+      <BackgroundBox style={{ minHeight: '100%' }}>
         <Box fill="horizontal">
           <Router>
-            <Box flex direction="row" wrap="true">
-              <Box flex={{ grow: 3, srink: 1 }}>
-                <Routes>
-                  <Route exact path="/" element={<Home />} />
-                  <Route path="/forecast/:location" element={<Forecast />} />
-                  <Route path="/search/:location" element={<Search />} />
-                  <Route path="/solar-calendar/:location" element={<SolarCalendar />} />
-                </Routes>
-              </Box>
-            </Box>
+            <Routes>
+              <Route exact path="/" element={<Home />} />
+              <Route path="/forecast/:location" element={<Forecast />} />
+              <Route path="/search/:location" element={<Search />} />
+              <Route path="/solar-calendar/:location" element={<SolarCalendar />} />
+            </Routes>
           </Router>
         </Box>
       </BackgroundBox>

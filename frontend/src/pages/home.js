@@ -4,6 +4,8 @@ import { Box } from 'grommet';
 import Header from '../components/Header';
 import SearchForm from '../components/SearchForm';
 import FavouriteLocationsList from '../components/FavouriteLocationsList';
+import ResponsiveGrid from '../components/ResponsiveGrid';
+import Logo from '../components/Logo';
 
 function Home() {
   const [favouriteLocations, setFavouriteLocations] = useState([]);
@@ -16,14 +18,16 @@ function Home() {
   }, []);
 
   return (
-    <Box>
+    <ResponsiveGrid>
       <Header>
         <SearchForm />
       </Header>
-      <Box>
+      <Logo />
+      <Box gridArea="main">
         {favouriteLocations.length !== 0 && <FavouriteLocationsList locations={favouriteLocations} />}
       </Box>
-    </Box>
+      <Box gridArea="sidebar">Sidebar</Box>
+    </ResponsiveGrid>
   );
 }
 
