@@ -15,8 +15,8 @@ function SolarCalendarLink({ location }) {
         <Box
           direction="row"
           align="center"
+          alignSelf="end"
           width={{ max: '450px' }}
-          pad={size !== 'small' ? 'medium' : { top: 'medium' }}
           focusIndicator={false}
           onClick={() => {
             navigate(`../../solar-calendar/${encodeURIComponent(location)}`);

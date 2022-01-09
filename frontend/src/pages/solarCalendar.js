@@ -18,6 +18,8 @@ import LunarInfo from '../components/LunarInfo';
 import Location from '../components/Location';
 import CustomIcon from '../components/icons/CustomIcon';
 import DateRangeSelect from '../components/DateRangeSelect';
+import ResponsiveGrid from '../components/ResponsiveGrid';
+import Logo from '../components/Logo';
 
 function TimeText({ time }) {
   return (
@@ -48,15 +50,16 @@ function SolarCalendar() {
     setStartDate(newStartDate);
     setEndDate(newEndDate);
   };
-  const size = useContext(ResponsiveContext);
+  const screenSize = useContext(ResponsiveContext);
   return (
-    <Box>
-      <Header>
+    <ResponsiveGrid>
+      <Header gridArea="header">
         <Location location={params.location} />
         <DateRangeSelect startDate={startDate} endDate={endDate} updateInterval={setNewDates} />
       </Header>
+      <Logo />
       <Box pad="medium" gridArea="main">
-        <Grid columns={size !== 'small' ? '330px' : '100%'} gap="small">
+        <Grid columns={screenSize !== 'small' ? '330px' : '100%'} gap="small">
           {data.length && data.map((item) => (
             <Box pad="small" width={{ min: '330px' }}>
               <Card pad="medium" background="semitransparent-white">
@@ -106,7 +109,7 @@ function SolarCalendar() {
           ))}
         </Grid>
       </Box>
-    </Box>
+    </ResponsiveGrid>
   );
 }
 
