@@ -24,11 +24,11 @@ function WeatherPreviewHeader({ location, currentConditions }) {
             </Box>
           </Box>
         ) : (
-          <Card pad="small" direction="column" background="semitransparent-white">
+          <Box pad="medium" direction="column">
             <LocationComponent location={location} />
             <SolarCalendarLink location={location} />
             {currentConditions && <CurrentConditions conditions={currentConditions} />}
-          </Card>
+          </Box>
         )
       )}
     </ResponsiveContext.Consumer>

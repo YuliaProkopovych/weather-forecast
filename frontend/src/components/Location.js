@@ -80,7 +80,7 @@ function Location({ location }) {
             </Box>
             <Text size="small">{locationDetails}</Text>
           </Box>
-          {screenSize === 'small' && <Box pad="medium"><CustomIcon path={locationIsSaved ? '/icons/svg/push-pin-color.svg' : '/icons/svg/push-pin.svg'} size="22px" onClick={saveLocation} /></Box> }
+          {screenSize === 'small' && <Box pad="medium" alignSelf="end"><CustomIcon path={locationIsSaved ? '/icons/svg/push-pin-color.svg' : '/icons/svg/push-pin.svg'} size="22px" onClick={saveLocation} /></Box> }
         </Box>
       </Box>
     </Box>
