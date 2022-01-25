@@ -15,7 +15,7 @@ function SolarCalendarLink({ location }) {
         <Box
           direction="row"
           align="center"
-          alignSelf="end"
+          alignSelf={size !== 'small' && 'end'}
           width={{ max: '450px' }}
           focusIndicator={false}
           onClick={() => {

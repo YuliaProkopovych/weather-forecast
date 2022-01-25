@@ -9,7 +9,7 @@ import {
 } from 'grommet';
 
 function Header({ children, ...rest }) {
-  const size = useContext(ResponsiveContext);
+  const screenSize = useContext(ResponsiveContext);
   return (
     <Box
       gridArea="header"
@@ -18,9 +18,11 @@ function Header({ children, ...rest }) {
       pad={{ top: 'large', right: 'medium', left: 'medium' }}
       {...rest}
     >
-      <Box margin={{ bottom: 'large' }}>
-        <Text color="textGray">Weather forecast powered by Norwegian Meteorological Institute</Text>
-      </Box>
+      {screenSize !== 'small' && (
+        <Box margin={{ bottom: 'large' }}>
+          <Text color="textGray">Weather forecast powered by Norwegian Meteorological Institute</Text>
+        </Box>
+      )}
       <Card pad="medium" background="semitransparent-white">
         {children}
       </Card>
