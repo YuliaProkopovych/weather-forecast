@@ -106,7 +106,7 @@ function Forecast() {
       </Header>
       <Logo />
       {size !== 'small' ? (
-        <Box pad="medium">
+        <Box pad="medium" gridArea="main">
           <DataTable
             pad="medium"
             background="semitransparent-white"

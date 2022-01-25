@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Box } from 'grommet';
+import React, { useState, useEffect, useContext } from 'react';
+import { Box, ResponsiveContext } from 'grommet';
 
 import Header from '../components/Header';
 import SearchForm from '../components/SearchForm';
@@ -17,6 +17,7 @@ function Home() {
     }
   }, []);
 
+  const screenSize = useContext(ResponsiveContext);
   return (
     <ResponsiveGrid>
       <Header>
@@ -26,7 +27,7 @@ function Home() {
       <Box gridArea="main">
         {favouriteLocations.length !== 0 && <FavouriteLocationsList locations={favouriteLocations} />}
       </Box>
-      <Box gridArea="sidebar">Sidebar</Box>
+      {screenSize !== 'small' && <Box gridArea="sidebar">Sidebar</Box>}
     </ResponsiveGrid>
   );
 }

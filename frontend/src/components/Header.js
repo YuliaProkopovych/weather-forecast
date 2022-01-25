@@ -14,12 +14,11 @@ function Header({ children, ...rest }) {
     <Box
       gridArea="header"
       tag="header"
-      align="end"
       justify="start"
       pad={{ top: 'large', right: 'medium', left: 'medium' }}
       {...rest}
     >
-      <Box alignSelf="end" margin={{ bottom: 'large' }}>
+      <Box margin={{ bottom: 'large' }}>
         <Text color="textGray">Weather forecast powered by Norwegian Meteorological Institute</Text>
       </Box>
       <Card pad="medium" background="semitransparent-white">
