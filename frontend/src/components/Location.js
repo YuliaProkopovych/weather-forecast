@@ -8,8 +8,30 @@ import _ from 'lodash';
 import CustomIcon from './icons/CustomIcon';
 
 function Location({ location }) {
-  const mainLocation = location.split(', ')[0];
-  const locationDetails = location.replace(`${mainLocation}, `, '');
+  const coordinates = /lat:(-?\d{1,2}(?:\.\d{1,})?),lon:(-?\d{1,2}(?:\.\d{1,})?)/;
+  // let mainLocation;
+  // let locationDetails;
+  const coordinatesMatch = location.match(coordinates) || [];
+  const [, latitude, longitude] = coordinatesMatch;
+
+  const locationIsCoordinates = latitude && longitude;
+
+  const mainLocation = locationIsCoordinates
+    ? `${latitude}, ${longitude}`
+    : location.split(', ')[0];
+
+  const locationDetails = locationIsCoordinates
+    ? 'Geographical point'
+    : location.replace(`${mainLocation}, `, '');
+
+  // if (coordinatesMatch) {}
+  //   console.log(location.match(coordinates));
+  //   mainLocation = `${coordinatesMatch[0]}, ${coordinatesMatch[1]}`;
+  //   locationDetails = 'Geographical point';
+  // } else {
+  //   [mainLocation] = location.split(', ');
+  //   locationDetails = location.replace(`${mainLocation}, `, '');
+  // }
   const [locationIsSaved, setLocationIsSaved] = useState(false);
   const loadSearchComponent = () => {};
   const saveLocation = () => {

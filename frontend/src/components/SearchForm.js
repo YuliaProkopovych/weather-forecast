@@ -49,7 +49,7 @@ function CoordinateFormField({ name, id }) {
           placeholder="00.000"
           focusIndicator={false}
         /> */}
-        <TextInput placeholder={id} />
+        <TextInput name={name} id={id} placeholder={id} />
       </Box>
     </FormField>
   );
@@ -84,7 +84,7 @@ function SearchForm() {
 
   const searchByCoordinates = ({ value }) => {
     console.log(value);
-    //navigate(`./forecast/${encodeURIComponent(value)}`);
+    navigate(`./forecast/lat:${encodeURIComponent(value.latitude)},lon:${encodeURIComponent(value.longtitude)}`);
   };
 
   const screenSize = useContext(ResponsiveContext);
