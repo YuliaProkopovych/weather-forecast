@@ -30,8 +30,8 @@ function Logo() {
   const screenSize = useContext(ResponsiveContext);
   const navigate = useNavigate();
   return (
-    <Box gridArea="logo" pad={screenSize !== 'small' && { left: 'medium' }}>
-      <Box alignSelf={screenSize === 'small' ? 'center' : 'start'} align="center" onClick={() => { navigate('/'); }} focusIndicator={false} pad={{ top: 'small' }}>
+    <Box gridArea="logo" pad={screenSize !== 'small' && { right: 'medium' }}>
+      <Box alignSelf={screenSize === 'small' ? 'center' : 'end'} align="center" onClick={() => { navigate('/'); }} focusIndicator={false} pad={{ top: 'small' }}>
         <Grommet theme={theme} background="transparent">
           <Heading width="230px" level="2" size="80px" margin="none">Sunshower</Heading>
         </Grommet>
