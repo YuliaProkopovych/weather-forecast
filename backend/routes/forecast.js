@@ -13,7 +13,14 @@ const getForecastOpts = {
   },
   handler: async (req, reply) => {
     try {
-      const coordinates = await getCoordinatesByLocationName(req.body.location);
+      let coordinates;
+      if (!/lat=.+\&lon=.+/.test(req.body.location)) {
+        coordinates = await getCoordinatesByLocationName(req.body.location);
+      } else {
+        const [, lat, lon, ...rest ] = req.body.location.match(/lat=(.+)\&lon=(.+)/);
+        coordinates = { lat, lon };
+      }
+
       const forecast = await getForecast(coordinates);
 
       reply.send(forecast);
