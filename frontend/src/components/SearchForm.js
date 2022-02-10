@@ -89,7 +89,7 @@ function SearchForm() {
 
   const searchByCoordinates = ({ value }) => {
     console.log(value);
-    navigate(`./forecast/lat:${encodeURIComponent(value.latitude)},lon:${encodeURIComponent(value.longtitude)}`);
+    navigate(`./forecast/lat=${encodeURIComponent(value.latitude)}&lon=${encodeURIComponent(value.longtitude)}`);
   };
 
   const validateSearchForm = (validationResults) => {

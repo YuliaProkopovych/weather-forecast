@@ -1,16 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Box, Text, Heading, ResponsiveContext, Tip,
+  Box, Text, Heading, ResponsiveContext,
 } from 'grommet';
 
 import _ from 'lodash';
 import CustomIcon from './icons/CustomIcon';
 
 function Location({ location }) {
-  const coordinates = /lat:(-?\d{1,2}(?:\.\d{1,})?),lon:(-?\d{1,2}(?:\.\d{1,})?)/;
-  // let mainLocation;
-  // let locationDetails;
+  const coordinates = /lat=(-?\d{1,2}(?:\.\d{1,})?)&lon=(-?\d{1,2}(?:\.\d{1,})?)/;
   const coordinatesMatch = location.match(coordinates) || [];
   const [, latitude, longitude] = coordinatesMatch;
 
@@ -24,14 +22,6 @@ function Location({ location }) {
     ? 'Geographical point'
     : location.replace(`${mainLocation}, `, '');
 
-  // if (coordinatesMatch) {}
-  //   console.log(location.match(coordinates));
-  //   mainLocation = `${coordinatesMatch[0]}, ${coordinatesMatch[1]}`;
-  //   locationDetails = 'Geographical point';
-  // } else {
-  //   [mainLocation] = location.split(', ');
-  //   locationDetails = location.replace(`${mainLocation}, `, '');
-  // }
   const [locationIsSaved, setLocationIsSaved] = useState(false);
   const loadSearchComponent = () => {};
   const saveLocation = () => {
