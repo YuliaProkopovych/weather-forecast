@@ -13,13 +13,23 @@ const getSunrise = async (location, firstDate, lastDate) => {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   };
-  const url = `http://127.0.0.1:3000/solar-forecast?location=${location}&startDate=${startDate}&endDate=${endDate}&offset=${offset}`
+  const url = `http://127.0.0.1:3000/solar-forecast?location=${location}&startDate=${startDate}&endDate=${endDate}&offset=${offset}`;
   const response = await fetch(url, requestOptions);
 
   const solarData = await response.json();
 
-
   return solarData;
 };
 
-export default getSunrise;
+const getTimeStamps = (date) => {
+  const midnight = DateTime.fromISO(date).toFormat('hh:mm');
+  console.log(midnight);
+  return {
+    dawn: '09:00',
+    noon: '15:00',
+    dusk: '21:00',
+    midnight: '03:00',
+  };
+};
+
+export { getSunrise, getTimeStamps };

@@ -6,9 +6,9 @@ import {
 
 import Header from '../components/Header';
 import { wideColumns, mediumColumns } from '../utils/weatherTableColumns';
+import { getTimeStamps } from '../utils/getSunrise';
 import DetailedForecast from '../components/DetailedForecast';
 import SmallForecast from '../components/SmallForecast';
-import WeatherPreviewHeader from '../components/WeatherPreviewHeader';
 import LocationComponent from '../components/Location';
 import CurrentConditions from '../components/CurrentConditions';
 import getForecast from '../utils/getForecast';
@@ -23,20 +23,19 @@ function Forecast() {
   const [clicked, setClicked] = useState({});
   const [rawForecast, setRawForecast] = useState([]);
   const [weather, setWeather] = useState([]);
+  const [coordinates, setCoordinates] = useState({});
 
   useEffect(() => {
     async function getWeatherForecast() {
-      const weatherForecast = await getForecast(params.location);
+      const data = params.coordinates ? await getForecast(params.coordinates) : await getForecast(params.location);
+      const weatherForecast = data.forecast;
+      setCoordinates(data.coordinates);
+      //console.log(weatherForecast);
 
       const formattedData = weatherForecast.map((record, index) => {
         const { date, forecast } = record;
         const symbols = {};
-        const times = {
-          dawn: '08:00',
-          noon: '14:00',
-          dusk: '20:00',
-          midnight: '02:00',
-        };
+        const times = getTimeStamps(date);
         const getSymbolByTimeInForecast = (time) => (forecast.find((item) => (item.time === time))).next_6_hours.symbol;
 
         if (index === 0) {
@@ -99,7 +98,7 @@ function Forecast() {
     <ResponsiveGrid>
       <Header gridArea="header">
         <Box direction="row" gap="xlarge" wrap>
-          <LocationComponent location={params.location} />
+          <LocationComponent location={params.location} coordinates={coordinates} />
           {rawForecast[0] && <CurrentConditions conditions={rawForecast[0]} />}
         </Box>
         <SolarCalendarLink location={params.location} />

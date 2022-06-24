@@ -6,6 +6,7 @@ import SearchForm from '../components/SearchForm';
 import FavouriteLocationsList from '../components/FavouriteLocationsList';
 import ResponsiveGrid from '../components/ResponsiveGrid';
 import Logo from '../components/Logo';
+import NearbyLocationsList from '../components/NearbyLocations';
 
 function Home() {
   const [favouriteLocations, setFavouriteLocations] = useState([]);
@@ -25,6 +26,7 @@ function Home() {
       </Header>
       <Logo />
       <Box gridArea="main">
+        <NearbyLocationsList />
         {favouriteLocations.length !== 0 && <FavouriteLocationsList locations={favouriteLocations} />}
       </Box>
       {screenSize !== 'small' && <Box gridArea="sidebar">Sidebar</Box>}
