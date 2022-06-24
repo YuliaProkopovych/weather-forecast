@@ -89,7 +89,7 @@ function SearchForm() {
 
   const searchByCoordinates = ({ value }) => {
     console.log(value);
-    navigate(`./forecast/lat=${encodeURIComponent(value.latitude)}&lon=${encodeURIComponent(value.longtitude)}`);
+    navigate(`./forecast/${encodeURIComponent(value.latitude)},${encodeURIComponent(value.longitude)}`);
   };
 
   const validateSearchForm = (validationResults) => {
@@ -97,7 +97,7 @@ function SearchForm() {
   };
 
   const validateSelectField = (fieldValue, formValue) => {
-    if (!fieldValue && (!formValue.longtitude && !formValue.latitude)) {
+    if (!fieldValue && (!formValue.longitude && !formValue.latitude)) {
       return <Box alignSelf="start"><Text>select location</Text></Box>;
     }
     return undefined;
@@ -105,7 +105,7 @@ function SearchForm() {
 
   const validateLatitude = (fieldValue, formValue) => {
     if (!fieldValue) {
-      if (formValue.longtitude) {
+      if (formValue.longitude) {
         return <Box><Text>enter latitude</Text></Box>;
       }
     } else if (fieldValue >= 90 || fieldValue <= -90 || !fieldValue.match(/^-?[0-9]{1,2}\.?(\.[0-9]{1,3})?$/)) {
@@ -114,10 +114,10 @@ function SearchForm() {
     return undefined;
   };
 
-  const validateLongtitude = (fieldValue, formValue) => {
+  const validateLongitude = (fieldValue, formValue) => {
     if (!fieldValue) {
       if (formValue.latitude) {
-        return <Box><Text>enter longtitude</Text></Box>;
+        return <Box><Text>enter longitude</Text></Box>;
       }
     } else if (fieldValue >= 180 || fieldValue <= -180 || !fieldValue.match(/^-?[0-9]{1,3}\.?(\.[0-9]{1,3})?$/)) {
       return <Box><Text>incorrect value</Text></Box>;
@@ -162,7 +162,7 @@ function SearchForm() {
           </Box>
           <Box direction="row" gap="10px">
             <CoordinateFormField validate={validateLatitude} name="latitude" id="lat" label="Lat" />
-            <CoordinateFormField validate={validateLongtitude} name="longtitude" id="lon" label="Lon" />
+            <CoordinateFormField validate={validateLongitude} name="longitude" id="lon" label="Lon" />
           </Box>
           <Button margin={screenSize === 'small' && { vertical: 'medium' }} type="submit" label="Search" />
         </Box>

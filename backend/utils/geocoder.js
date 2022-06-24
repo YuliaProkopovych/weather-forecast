@@ -17,4 +17,37 @@ const getCoordinatesByLocationName = async (query) => {
   return coordinates;
 };
 
-module.exports = { getCoordinatesByLocationName };
+const getNearbyLocationsByCoordinates = async (lat, lon) => {
+  let latitudePlus = '';
+  let longitudePlus = '';
+  if (lat > 0) {
+    latitudePlus = '+';
+  }
+  if (lon > 0) {
+    longitudePlus = '+';
+  }
+  const options = {
+    method: 'GET',
+    url: `https://wft-geo-db.p.rapidapi.com/v1/geo/locations/${latitudePlus}${lat}${longitudePlus}${lon}/nearbyCities`,
+    params: { radius: '100', minPopulation: 1000, limit: 10 },
+    headers: {
+      'x-rapidapi-host': 'wft-geo-db.p.rapidapi.com',
+      'x-rapidapi-key': 'fac2d7680fmshbbc35ebd3a07c03p10a358jsn7ae4816ea4bd',
+    },
+  };
+
+  const res = await axios.request(options);
+
+  const { data } = res;
+  const locations = data.data.map((item) => {
+    const {
+      type, city, name, region, country, latitude, longitude,
+    } = item;
+    return {
+      type, city, name, region, country, latitude, longitude,
+    };
+  });
+  return locations;
+};
+
+module.exports = { getCoordinatesByLocationName, getNearbyLocationsByCoordinates };

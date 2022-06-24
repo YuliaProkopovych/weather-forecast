@@ -9,7 +9,7 @@ import {
   Heading,
 } from 'grommet';
 
-import FavouriteLocationItem from './FavouriteLocationItem';
+import FavouriteLocationItem from './LocationListItem';
 
 const theme = {
   list: {

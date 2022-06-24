@@ -12,7 +12,7 @@ import {
 import { DateTime } from 'luxon';
 import _ from 'lodash';
 
-import getSunrise from '../utils/getSunrise';
+import { getSunrise } from '../utils/getSunrise';
 import Header from '../components/Header';
 import LunarInfo from '../components/LunarInfo';
 import Location from '../components/Location';

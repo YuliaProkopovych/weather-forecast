@@ -7,12 +7,10 @@ import {
 import _ from 'lodash';
 import CustomIcon from './icons/CustomIcon';
 
-function Location({ location }) {
-  const coordinates = /lat=(-?\d{1,2}(?:\.\d{1,})?)&lon=(-?\d{1,2}(?:\.\d{1,})?)/;
-  const coordinatesMatch = location.match(coordinates) || [];
-  const [, latitude, longitude] = coordinatesMatch;
+function Location({ location, coordinates }) {
+  const { latitude, longitude } = coordinates;
 
-  const locationIsCoordinates = latitude && longitude;
+  const locationIsCoordinates = location === '';
 
   const mainLocation = locationIsCoordinates
     ? `${latitude}, ${longitude}`
@@ -27,15 +25,15 @@ function Location({ location }) {
   const saveLocation = () => {
     let favLocations = JSON.parse(localStorage.getItem('Favourite Locations'));
     if (favLocations) {
-      if (favLocations.includes(location)) {
+      if (favLocations.includes(coordinates.toString())) {
         setLocationIsSaved(false);
-        _.remove(favLocations, (elem) => elem === location);
+        _.remove(favLocations, (elem) => elem === coordinates.toString());
       } else {
-        favLocations.push(location);
+        favLocations.push(coordinates.toString());
         setLocationIsSaved(true);
       }
     } else {
-      favLocations = [location];
+      favLocations = [coordinates.toString()];
     }
     localStorage.setItem('Favourite Locations', JSON.stringify(favLocations));
   };
@@ -43,7 +41,7 @@ function Location({ location }) {
   useEffect(() => {
     const favLocations = JSON.parse(localStorage.getItem('Favourite Locations'));
     if (favLocations) {
-      if (favLocations.includes(location)) {
+      if (favLocations.includes(coordinates.toString())) {
         setLocationIsSaved(true);
       }
     }
@@ -79,6 +77,7 @@ function Location({ location }) {
 
 Location.propTypes = {
   location: PropTypes.string.isRequired,
+  coordinates: PropTypes.array.isRequired,
 };
 
 export default Location;

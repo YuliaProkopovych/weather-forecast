@@ -8,6 +8,7 @@ fastify.register(require('fastify-cors'), { origin: true, credentials: true });
 
 fastify.register(require('./routes/forecast'));
 fastify.register(require('./routes/solar-forecast'));
+fastify.register(require('./routes/nearby-locations'));
 
 const start = async () => {
   try {

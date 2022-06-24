@@ -5,25 +5,26 @@ const getForecastOpts = {
   schema: {
     body: {
       type: 'object',
-      required: ['location'],
     },
     response: {
-      200: { type: 'array' },
+      // 200: { type: 'object' },
     },
   },
   handler: async (req, reply) => {
     try {
+      let location = '';
       let coordinates;
-      if (!/lat=.+\&lon=.+/.test(req.body.location)) {
-        coordinates = await getCoordinatesByLocationName(req.body.location);
-      } else {
-        const [, lat, lon, ...rest ] = req.body.location.match(/lat=(.+)\&lon=(.+)/);
+      if (/[0-9]+,[0-9]+/.test(req.body.query)) {
+        const [, lat, lon, ...rest ] = req.body.query.match(/[0-9]+,[0-9]+/);
         coordinates = { lat, lon };
+      } else {
+        location = req.body.query;
+        coordinates = await getCoordinatesByLocationName(location);
       }
 
       const forecast = await getForecast(coordinates);
 
-      reply.send(forecast);
+      reply.send({ location, coordinates, forecast });
     } catch (error) {
       console.error(error);
     }

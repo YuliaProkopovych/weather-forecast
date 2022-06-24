@@ -14,7 +14,7 @@ import BackgroundBox from './components/background';
 import SolarCalendar from './pages/solarCalendar';
 import Home from './pages/home';
 import Search from './pages/search';
-import Forecast from './pages/preview';
+import Forecast from './pages/forecast';
 
 const theme = {
   global: {
