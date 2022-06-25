@@ -30,12 +30,13 @@ function Forecast() {
       const data = params.coordinates ? await getForecast(params.coordinates) : await getForecast(params.location);
       const weatherForecast = data.forecast;
       setCoordinates(data.coordinates);
-      //console.log(weatherForecast);
+      console.log(data);
 
       const formattedData = weatherForecast.map((record, index) => {
         const { date, forecast } = record;
         const symbols = {};
-        const times = getTimeStamps(date);
+        const times = getTimeStamps(date, data.dstOffset);
+        console.log(times);
         const getSymbolByTimeInForecast = (time) => (forecast.find((item) => (item.time === time))).next_6_hours.symbol;
 
         if (index === 0) {

@@ -1,11 +1,11 @@
 import { DateTime } from 'luxon';
 
-const groupForecastRecordsByDate = (forecast) => {
+const groupForecastRecordsByDate = (forecast, timezoneId) => {
   const weather = forecast.map((record) => {
     const { time, ...rest } = record;
     return {
-      date: DateTime.fromISO(time).toFormat('dd LLLL'),
-      time: DateTime.fromISO(time).toFormat('T'),
+      date: DateTime.fromISO(time, { zone: timezoneId }).toFormat('dd LLLL'),
+      time: DateTime.fromISO(time, { zone: timezoneId }).toFormat('T'),
       ...rest,
     };
   });

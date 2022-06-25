@@ -21,14 +21,16 @@ const getSunrise = async (location, firstDate, lastDate) => {
   return solarData;
 };
 
-const getTimeStamps = (date) => {
-  const midnight = DateTime.fromISO(date).toFormat('hh:mm');
-  console.log(midnight);
+const getTimeStamps = (date, dstOffset) => {
+  const midnight = DateTime.fromFormat(date, 'dd LLLL').plus({ hours: dstOffset });
+  const dawn = midnight.plus({ hours: 6 });
+  const noon = midnight.plus({ hours: 12 });
+  const dusk = midnight.plus({ hours: 18 });
   return {
-    dawn: '09:00',
-    noon: '15:00',
-    dusk: '21:00',
-    midnight: '03:00',
+    dawn: dawn.toFormat('HH:mm'),
+    noon: noon.toFormat('HH:mm'),
+    dusk: dusk.toFormat('HH:mm'),
+    midnight: midnight.toFormat('HH:mm'),
   };
 };
 

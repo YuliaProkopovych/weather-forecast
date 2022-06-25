@@ -37,7 +37,7 @@ const getTimezoneByCoordinates = async (coordinates) => {
     console.log(err);
   }
 
-  return response.data.dstOffset;
+  return { dstOffset: response.data.dstOffset, timezoneId: response.data.timezoneId };
 };
 
 module.exports = { getSunriseByCoordinatesAndDate, getTimezoneByCoordinates };
