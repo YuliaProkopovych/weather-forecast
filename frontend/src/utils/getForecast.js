@@ -9,8 +9,12 @@ const getForecast = async (query) => {
   const response = await fetch('http://127.0.0.1:3000/forecast', requestOptions);
 
   const data = await response.json();
-  const { location, coordinates, forecast } = data;
-  return { location, coordinates, forecast: groupForecastRecordsByDate(forecast) };
+  const {
+    location, coordinates, forecast, dstOffset, timezoneId,
+  } = data;
+  return {
+    location, coordinates, dstOffset, forecast: groupForecastRecordsByDate(forecast, timezoneId),
+  };
 };
 
 export default getForecast;

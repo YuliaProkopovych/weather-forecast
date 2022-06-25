@@ -18,7 +18,6 @@ async function getForecastByCoordinates(coordinates) {
     },
   );
 
-
   const forecast = response.data.properties.timeseries.map((record) => {
     const formattedRecord = {
       time: record.time,
@@ -45,7 +44,7 @@ async function getForecastByCoordinates(coordinates) {
     return formattedRecord;
   });
 //console.log(forecast);
-  forecast.pop();
+  //forecast.pop();
 
   return forecast;
 }

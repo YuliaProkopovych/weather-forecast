@@ -24,10 +24,9 @@ const getForecastOpts = {
       }
 
       const forecast = await getForecast(coordinates);
-      const dstOffset = await getTimezoneByCoordinates(coordinates);
-
+      const timezone = await getTimezoneByCoordinates(coordinates);
       reply.send({
-        location, coordinates, forecast, dstOffset,
+        location, coordinates, forecast, ...timezone,
       });
     } catch (error) {
       console.error(error);
