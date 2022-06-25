@@ -25,4 +25,19 @@ const getSunriseByCoordinatesAndDate = async (coordinates, startDate, endDate, o
   return data;
 };
 
-module.exports = getSunriseByCoordinatesAndDate;
+const getTimezoneByCoordinates = async (coordinates) => {
+  const { lat, lon } = coordinates;
+  const url = `http://api.geonames.org/timezoneJSON?lat=${lat}&lng=${lon}&username=sunnyrain`;
+  let response = {};
+
+  try {
+    response = await axios.get(url);
+    console.log(response.data);
+  } catch (err) {
+    console.log(err);
+  }
+
+  return response.data.dstOffset;
+};
+
+module.exports = { getSunriseByCoordinatesAndDate, getTimezoneByCoordinates };
