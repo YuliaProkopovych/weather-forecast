@@ -1,5 +1,5 @@
 const { getCoordinatesByLocationName } = require('../utils/geocoder');
-const getSunrise = require('../utils/getSunrise');
+const { getSunriseByCoordinatesAndDate } = require('../utils/getSunrise');
 
 const getSolarForecastOpts = {
   schema: {
@@ -13,7 +13,7 @@ const getSolarForecastOpts = {
   handler: async (req, reply) => {
     try {
       const coordinates = await getCoordinatesByLocationName(req.query.location);
-      const solarData = await getSunrise(coordinates, req.query.startDate, req.query.endDate, req.query.offset);
+      const solarData = await getSunriseByCoordinatesAndDate(coordinates, req.query.startDate, req.query.endDate, req.query.offset);
 
       reply.send(solarData);
     } catch (error) {

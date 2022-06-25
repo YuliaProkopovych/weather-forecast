@@ -1,4 +1,5 @@
 const { getCoordinatesByLocationName } = require('../utils/geocoder');
+const { getTimezoneByCoordinates } = require('../utils/getSunrise');
 const getForecast = require('../utils/getForecast');
 
 const getForecastOpts = {
@@ -23,8 +24,11 @@ const getForecastOpts = {
       }
 
       const forecast = await getForecast(coordinates);
+      const dstOffset = await getTimezoneByCoordinates(coordinates);
 
-      reply.send({ location, coordinates, forecast });
+      reply.send({
+        location, coordinates, forecast, dstOffset,
+      });
     } catch (error) {
       console.error(error);
     }
