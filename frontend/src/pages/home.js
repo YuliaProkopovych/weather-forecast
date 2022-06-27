@@ -4,7 +4,7 @@ import { Box, ResponsiveContext } from 'grommet';
 import Header from '../components/Header';
 import SearchForm from '../components/SearchForm';
 import FavouriteLocationsList from '../components/FavouriteLocationsList';
-import ResponsiveGrid from '../components/ResponsiveGrid';
+import ResponsiveHeader from '../components/ResponsiveHeader';
 import Logo from '../components/Logo';
 import NearbyLocationsList from '../components/NearbyLocations';
 
@@ -20,17 +20,19 @@ function Home() {
 
   const screenSize = useContext(ResponsiveContext);
   return (
-    <ResponsiveGrid>
-      <Header>
-        <SearchForm />
-      </Header>
-      <Logo />
-      <Box gridArea="main">
+    <>
+      <ResponsiveHeader>
+        <Header>
+          <SearchForm />
+        </Header>
+        <Logo />
+      </ResponsiveHeader>
+      <Box>
         <NearbyLocationsList />
         {favouriteLocations.length !== 0 && <FavouriteLocationsList locations={favouriteLocations} />}
       </Box>
       {screenSize !== 'small' && <Box gridArea="sidebar">Sidebar</Box>}
-    </ResponsiveGrid>
+    </>
   );
 }
 

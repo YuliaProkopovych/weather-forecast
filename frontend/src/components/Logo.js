@@ -31,7 +31,7 @@ function Logo() {
   const navigate = useNavigate();
   return (
     <Box gridArea="logo" pad={screenSize !== 'small' && { right: 'medium' }}>
-      <Box alignSelf={screenSize === 'small' ? 'center' : 'end'} align="center" onClick={() => { navigate('/'); }} focusIndicator={false} pad={{ top: 'small' }}>
+      <Box alignSelf="center" align="center" onClick={() => { navigate('/'); }} focusIndicator={false} pad={{ top: 'small' }}>
         <Grommet theme={theme} background="transparent">
           <Heading width="230px" level="2" size="80px" margin="none">Sunshower</Heading>
         </Grommet>

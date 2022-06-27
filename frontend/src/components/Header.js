@@ -1,32 +1,29 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
   Box,
-  Text,
-  ResponsiveContext,
   Card,
 } from 'grommet';
+import Description from './decription';
 
 function Header({ children, ...rest }) {
-  const screenSize = useContext(ResponsiveContext);
   return (
-    <Box
-      gridArea="header"
-      tag="header"
-      justify="start"
-      pad={{ top: 'large', right: 'medium', left: 'medium' }}
-      {...rest}
-    >
-      {screenSize !== 'small' && (
-        <Box margin={{ bottom: 'large' }}>
-          <Text color="textGray">Weather forecast powered by Norwegian Meteorological Institute</Text>
-        </Box>
-      )}
-      <Card pad="medium" background="semitransparent-white">
-        {children}
-      </Card>
-    </Box>
+    <>
+      <Description />
+      <Box
+        gridArea="header"
+        tag="header"
+        justify="start"
+        pad="small"
+        {...rest}
+      >
+
+        <Card pad="medium" background="semitransparent-white">
+          {children}
+        </Card>
+      </Box>
+    </>
   );
 }
 

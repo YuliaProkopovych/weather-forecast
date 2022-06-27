@@ -22,7 +22,8 @@ const getSunrise = async (location, firstDate, lastDate) => {
 };
 
 const getTimeStamps = (date, dstOffset) => {
-  const midnight = DateTime.fromFormat(date, 'dd LLLL').plus({ hours: dstOffset });
+  const baseTime = DateTime.fromFormat(date, 'dd LLLL').plus({ hours: dstOffset });
+  const midnight = baseTime.set({ hour: (baseTime.get('hour') % 6) });
   const dawn = midnight.plus({ hours: 6 });
   const noon = midnight.plus({ hours: 12 });
   const dusk = midnight.plus({ hours: 18 });

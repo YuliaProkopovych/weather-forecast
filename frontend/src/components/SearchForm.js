@@ -52,17 +52,18 @@ const customTheme = {
 
 function CoordinateFormField({ validate, name, id }) {
   return (
-    <FormField name={name} htmlFor={id} align="center" margin={{ bottom: '0px' }} validate={validate}>
-      <Box width={{ max: '80px' }}>
-        <TextInput name={name} id={id} placeholder={id} />
-      </Box>
-    </FormField>
+      <FormField name={name} htmlFor={id} align="center" margin={{ bottom: '0px' }} validate={validate}>
+        {/* <Box width={{ max: '120px' }}> */}
+        <Box>
+          <TextInput name={name} id={id} placeholder={id} />
+        </Box>
+      </FormField>
   );
 }
 
 function SearchForm() {
   const [suggestions, setSuggestions] = useState([]);
-  const [query, setQuery] = useState();
+  const [query, setQuery] = useState('');
 
   const boxRef = React.useRef();
   const navigate = useNavigate();
@@ -88,7 +89,6 @@ function SearchForm() {
   };
 
   const searchByCoordinates = ({ value }) => {
-    console.log(value);
     navigate(`./forecast/${encodeURIComponent(value.latitude)},${encodeURIComponent(value.longitude)}`);
   };
 
@@ -130,7 +130,7 @@ function SearchForm() {
   return (
     <Grommet theme={customTheme}>
       <Form onSubmit={searchByCoordinates} onValidate={validateSearchForm} validate="blur" direction="row">
-        <Box direction="row" align="center" gap="10px">
+        <Box direction={screenSize !== 'small' ? 'row' : 'column'} align="center" gap="10px">
           {screenSize !== 'small' && (
           <Box direction="row" align="center" gap="10px">
             <Search />
@@ -158,11 +158,13 @@ function SearchForm() {
             </FormField>
           </Box>
           <Box>
-            <Text>or enter coordinates:</Text>
-          </Box>
-          <Box direction="row" gap="10px">
-            <CoordinateFormField validate={validateLatitude} name="latitude" id="lat" label="Lat" />
-            <CoordinateFormField validate={validateLongitude} name="longitude" id="lon" label="Lon" />
+            <Box alignSelf={screenSize === 'small' && 'start'}>
+              <Text> or enter coordinates:</Text>
+            </Box>
+            <Box direction="row" gap="15px" alignSelf={screenSize === 'small' && 'stretch'} alignContent={screenSize === 'small' && 'evenly'}>
+              <CoordinateFormField validate={validateLatitude} name="latitude" id="lat" label="Lat" />
+              <CoordinateFormField validate={validateLongitude} name="longitude" id="lon" label="Lon" />
+            </Box>
           </Box>
           <Button margin={screenSize === 'small' && { vertical: 'medium' }} type="submit" label="Search" />
         </Box>
