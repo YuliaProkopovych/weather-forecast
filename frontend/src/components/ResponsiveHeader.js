@@ -4,13 +4,13 @@ import { Grid, ResponsiveContext } from 'grommet';
 
 const columns = {
   small: ['auto'],
-  medium: ['auto', 'small'],
-  large: ['medium', 'auto', 'medium'],
-  xlarge: ['medium', 'auto', 'medium'],
+  medium: ['1/3', '2/3'],
+  large: ['medium', 'auto'],
+  xlarge: ['medium', 'auto'],
 };
 
 const rows = {
-  small: ['auto', 'auto', 'auto'],
+  small: ['auto', 'auto'],
   medium: ['auto', 'auto'],
   large: ['auto', 'auto'],
   xlarge: ['auto', 'auto'],
@@ -20,24 +20,21 @@ const fixedGridAreas = {
   small: [
     { name: 'logo', start: [0, 0], end: [0, 0] },
     { name: 'header', start: [0, 1], end: [0, 1] },
-    { name: 'main', start: [0, 2], end: [0, 2] },
   ],
   medium: [
-    { name: 'header', start: [1, 0], end: [1, 0] },
     { name: 'logo', start: [0, 0], end: [0, 0] },
-    { name: 'main', start: [0, 1], end: [1, 1] },
+    { name: 'description', start: [1, 0], end: [1, 0] },
+    { name: 'header', start: [0, 1], end: [1, 1] },
   ],
   large: [
-    { name: 'logo', start: [0, 0], end: [0, 0] },
-    { name: 'header', start: [1, 0], end: [2, 0] },
-    { name: 'main', start: [0, 1], end: [1, 1] },
-    { name: 'sidebar', start: [2, 1], end: [2, 1] },
+    { name: 'logo', start: [0, 0], end: [0, 1] },
+    { name: 'description', start: [1, 0], end: [1, 0] },
+    { name: 'header', start: [1, 1], end: [1, 1] },
   ],
   xlarge: [
-    { name: 'logo', start: [0, 0], end: [0, 0] },
-    { name: 'header', start: [1, 0], end: [2, 0] },
-    { name: 'main', start: [0, 1], end: [1, 1] },
-    { name: 'sidebar', start: [2, 1], end: [2, 1] },
+    { name: 'logo', start: [0, 0], end: [0, 1] },
+    { name: 'description', start: [1, 0], end: [1, 0] },
+    { name: 'header', start: [1, 1], end: [1, 1] },
   ],
 };
 

@@ -18,7 +18,7 @@ import LunarInfo from '../components/LunarInfo';
 import Location from '../components/Location';
 import CustomIcon from '../components/icons/CustomIcon';
 import DateRangeSelect from '../components/DateRangeSelect';
-import ResponsiveGrid from '../components/ResponsiveGrid';
+import ResponsiveGrid from '../components/ResponsiveHeader';
 import Logo from '../components/Logo';
 
 function TimeText({ time }) {

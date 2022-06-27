@@ -13,7 +13,7 @@ import LocationComponent from '../components/Location';
 import CurrentConditions from '../components/CurrentConditions';
 import getForecast from '../utils/getForecast';
 import SolarCalendarLink from '../components/SolarCalendarLink';
-import ResponsiveGrid from '../components/ResponsiveGrid';
+import ResponsiveGrid from '../components/ResponsiveHeader';
 import Logo from '../components/Logo';
 
 function Forecast() {
@@ -30,13 +30,11 @@ function Forecast() {
       const data = params.coordinates ? await getForecast(params.coordinates) : await getForecast(params.location);
       const weatherForecast = data.forecast;
       setCoordinates(data.coordinates);
-      console.log(data);
 
       const formattedData = weatherForecast.map((record, index) => {
         const { date, forecast } = record;
         const symbols = {};
         const times = getTimeStamps(date, data.dstOffset);
-        console.log(times);
         const getSymbolByTimeInForecast = (time) => (forecast.find((item) => (item.time === time))).next_6_hours.symbol;
 
         if (index === 0) {
