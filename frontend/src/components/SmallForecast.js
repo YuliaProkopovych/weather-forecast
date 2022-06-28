@@ -20,13 +20,18 @@ function SmallForecast({ forecast, onClickItem }) {
     `;
 
   return (
-    <Box>
+    <Box pad={{ horizontal: 'small', vertical: 'large' }} gap="20px">
       {forecast.map((record) => (
-        <Card background="semitransparent-white" direction="column" pad={{ vertical: 'large' }} margin={{ top: '20px' }}>
+        <Card
+          gap="20px"
+          background="semitransparent-white"
+          direction="column"
+          pad={{ vertical: 'large', horizontal: 'medium' }}
+        >
           <Box pad={{ horizontal: 'medium' }}>
             <Text>{DateTime.fromFormat(record.date, 'dd MMMM').toFormat('EEEE, d MMMM')}</Text>
           </Box>
-          <Box direction="row" justify="between" pad="medium">
+          <Box direction="row" justify="between" width={{ max: '400px' }}>
             <Box direction="row" align="end">
               <Box
                 height="35px"
@@ -76,7 +81,7 @@ function SmallForecast({ forecast, onClickItem }) {
               </DetailsText>
             </Box>
           </Box>
-          <Box direction="row" justify="between" pad={{ horizontal: 'medium', top: 'large' }}>
+          <Box direction="row" justify="between" pad={{ top: 'large', horizontal: 'medium' }} width={{ max: '500px' }}>
             <Box direction="column" align="center">
               <DayTimeText>night</DayTimeText>
               {renderIcon(record.night)}
