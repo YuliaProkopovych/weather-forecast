@@ -13,9 +13,9 @@ function SolarCalendarLink({ location }) {
     <ResponsiveContext.Consumer>
       {(size) => (
         <Box
+          pad={size !== 'small' ? 'small' : 'medium'}
           direction="row"
           align="center"
-          alignSelf={size !== 'small' && 'end'}
           width={{ max: '450px' }}
           focusIndicator={false}
           onClick={() => {
@@ -23,7 +23,7 @@ function SolarCalendarLink({ location }) {
           }}
         >
           <CustomIcon flex={{ shrink: 0 }} size={size !== 'small' ? '40px' : '30px'} path="/icons/svg/calendar.svg" margin={{ right: '8px', left: '8px' }} />
-          <Text color="textGray" size={size !== 'small' ? 'medium' : 'small'}>Open solar/lunar calendar for this place</Text>
+          <Text color="textGray" size="medium">Open solar/lunar calendar</Text>
           <Box margin={size === 'small' ? { left: '10px', right: '15px' } : '0px'}><FormNextLink /></Box>
         </Box>
       )}
