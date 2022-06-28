@@ -19,7 +19,7 @@ function Header({ children, ...rest }) {
         {...rest}
       >
 
-        <Card pad="medium" background="semitransparent-white">
+        <Card pad="medium" background="semitransparent-white" width={{ max: '1000px' }}>
           {children}
         </Card>
       </Box>

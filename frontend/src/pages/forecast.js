@@ -13,7 +13,7 @@ import LocationComponent from '../components/Location';
 import CurrentConditions from '../components/CurrentConditions';
 import getForecast from '../utils/getForecast';
 import SolarCalendarLink from '../components/SolarCalendarLink';
-import ResponsiveGrid from '../components/ResponsiveHeader';
+import ResponsiveHeader from '../components/ResponsiveHeader';
 import Logo from '../components/Logo';
 
 function Forecast() {
@@ -94,15 +94,17 @@ function Forecast() {
 
   const size = useContext(ResponsiveContext);
   return (
-    <ResponsiveGrid>
-      <Header gridArea="header">
-        <Box direction="row" gap="xlarge" wrap>
-          <LocationComponent location={params.location} coordinates={coordinates} />
-          {rawForecast[0] && <CurrentConditions conditions={rawForecast[0]} />}
-        </Box>
-        <SolarCalendarLink location={params.location} />
-      </Header>
-      <Logo />
+    <>
+      <ResponsiveHeader>
+        <Header>
+          <Box direction={size !== 'small' ? 'row' : 'column'} gap="15px" wrap>
+            <LocationComponent location={params.location} coordinates={coordinates} />
+            {rawForecast[0] && <CurrentConditions conditions={rawForecast[0]} />}
+          </Box>
+          <SolarCalendarLink location={params.location} />
+        </Header>
+        <Logo />
+      </ResponsiveHeader>
       {size !== 'small' ? (
         <Box pad="medium" gridArea="main">
           <DataTable
@@ -139,7 +141,7 @@ function Forecast() {
         />
       </Layer>
       )}
-    </ResponsiveGrid>
+    </>
   );
 }
 

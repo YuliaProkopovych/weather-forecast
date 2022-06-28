@@ -49,27 +49,31 @@ function Location({ location, coordinates }) {
 
   const screenSize = useContext(ResponsiveContext);
   return (
-    <Box>
-      <Box direction="row" align="center">
+    <Box direction="row" flex="grow" pad={screenSize !== 'small' ? 'small' : 'medium'} width={{ max: '450px' }}>
+      <Box direction="row" flex="grow">
         {screenSize !== 'small' ? (
           <CustomIcon size="60px" path="/icons/svg/map4.svg" onClick={loadSearchComponent} margin={{ right: '10px' }} focusIndicator={false} />
         ) : (
-          <CustomIcon size="25px" path="/icons/svg/search.svg" onClick={loadSearchComponent} margin={{ left: '10px', right: '10px' }} focusIndicator={false} />
+          <CustomIcon size="35px" path="/icons/svg/map4.svg" onClick={loadSearchComponent} margin={{ left: '8px', right: '8px' }} focusIndicator={false} />
         )}
-        <Box direction="row" align="center" justify="between" flex="grow">
+        <Box direction="row" justify="between">
           <Box direction="column">
             <Box direction="row" align="center">
-              <Heading size={screenSize} margin={{ bottom: '0px', top: '0px', right: '35px' }} level="3">
+              <Heading size={screenSize} margin={{ bottom: 'small', top: '0px' }} level="3">
                 {mainLocation}
               </Heading>
-              {screenSize !== 'small' && (
-                <CustomIcon path={locationIsSaved ? '/icons/svg/push-pin-color.svg' : '/icons/svg/push-pin.svg'} size="25px" onClick={saveLocation} />
-              ) }
             </Box>
             <Text size="small">{locationDetails}</Text>
           </Box>
-          {screenSize === 'small' && <Box pad="medium" alignSelf="end"><CustomIcon path={locationIsSaved ? '/icons/svg/push-pin-color.svg' : '/icons/svg/push-pin.svg'} size="22px" onClick={saveLocation} /></Box> }
         </Box>
+      </Box>
+      <Box pad="small" flex="grow">
+        <CustomIcon
+          path={locationIsSaved ? '/icons/svg/push-pin-color.svg' : '/icons/svg/push-pin.svg'}
+          size="22px"
+          onClick={saveLocation}
+          focusIndicator={false}
+        />
       </Box>
     </Box>
   );
