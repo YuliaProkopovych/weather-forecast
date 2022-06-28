@@ -106,9 +106,9 @@ function Forecast() {
         <Logo />
       </ResponsiveHeader>
       {size !== 'small' ? (
-        <Box pad="medium" gridArea="main">
+        <Box pad={size !== 'medium' ? 'medium' : 'small'} gridArea="main">
           <DataTable
-            pad="medium"
+            pad={{ horizontal: 'small', vertical: 'medium' }}
             background="semitransparent-white"
             columns={size !== 'medium' ? wideColumns : mediumColumns}
             data={weather}
