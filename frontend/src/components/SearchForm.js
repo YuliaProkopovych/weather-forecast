@@ -54,7 +54,7 @@ function CoordinateFormField({ validate, name, id }) {
   return (
       <FormField name={name} htmlFor={id} align="center" margin={{ bottom: '0px' }} validate={validate}>
         {/* <Box width={{ max: '120px' }}> */}
-        <Box>
+        <Box width={{ max: '180px' }}>
           <TextInput name={name} id={id} placeholder={id} />
         </Box>
       </FormField>
@@ -130,43 +130,45 @@ function SearchForm() {
   return (
     <Grommet theme={customTheme}>
       <Form onSubmit={searchByCoordinates} onValidate={validateSearchForm} validate="blur" direction="row">
-        <Box direction={screenSize !== 'small' ? 'row' : 'column'} align="center" gap="10px">
-          {screenSize !== 'small' && (
-          <Box direction="row" align="center" gap="10px">
-            <Search />
-            <Text>Select location</Text>
+        <Box direction={screenSize !== 'small' ? 'row' : 'column'} gap="10px" pad="medium" align="stretch">
+          <Box direction="row" wrap gap="15px">
+            {screenSize !== 'small' && (
+            <Box direction="row" align="center" gap="10px">
+              <Search />
+              <Text>Select location</Text>
+            </Box>
+            )}
+            <Box
+              ref={boxRef}
+              wrap
+            >
+              <FormField name="select" htmlFor="select" validate={validateSelectField} margin={{ bottom: '0px' }}>
+                <TextInput
+                  id="select"
+                  name="select"
+                  type="search"
+                  icon={screenSize === 'small' && <Search />}
+                  dropTarget={boxRef.current}
+                  onChange={(event) => { setQuery(event.target.value); loadSuggestions(event.target.value); }}
+                  value={query}
+                  onSuggestionSelect={(event) => selectPlace(event.suggestion)}
+                  placeholder={screenSize === 'small' ? 'Select location...' : 'e. g. London...'}
+                  suggestions={suggestions}
+                />
+              </FormField>
+            </Box>
           </Box>
-          )}
-          <Box
-            align="center"
-            ref={boxRef}
-            wrap
-          >
-            <FormField name="select" htmlFor="select" validate={validateSelectField} margin={{ bottom: '0px' }}>
-              <TextInput
-                id="select"
-                name="select"
-                type="search"
-                icon={screenSize === 'small' && <Search />}
-                dropTarget={boxRef.current}
-                onChange={(event) => { setQuery(event.target.value); loadSuggestions(event.target.value); }}
-                value={query}
-                onSuggestionSelect={(event) => selectPlace(event.suggestion)}
-                placeholder={screenSize === 'small' ? 'Select location...' : 'e. g. London...'}
-                suggestions={suggestions}
-              />
-            </FormField>
-          </Box>
-          <Box>
-            <Box alignSelf={screenSize === 'small' && 'start'}>
+          <Box direction="row" wrap align="center" gap="15px">
+            {/* <Box alignSelf={screenSize === 'small' && 'start'}> */}
+            <Box>
               <Text> or enter coordinates:</Text>
             </Box>
-            <Box direction="row" gap="15px" alignSelf={screenSize === 'small' && 'stretch'} alignContent={screenSize === 'small' && 'evenly'}>
+            <Box direction="row" flex="grow" alignSelf={screenSize === 'small' && 'stretch'} gap="15px" alignContent={screenSize === 'small' && 'evenly'}>
               <CoordinateFormField validate={validateLatitude} name="latitude" id="lat" label="Lat" />
               <CoordinateFormField validate={validateLongitude} name="longitude" id="lon" label="Lon" />
             </Box>
           </Box>
-          <Button margin={screenSize === 'small' && { vertical: 'medium' }} type="submit" label="Search" />
+          <Button alignSelf="center" margin={screenSize === 'small' && { vertical: 'medium' }} type="submit" label="Search" />
         </Box>
       </Form>
     </Grommet>
