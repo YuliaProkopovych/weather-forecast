@@ -8,6 +8,7 @@ import _ from 'lodash';
 import CustomIcon from './icons/CustomIcon';
 
 function Location({ location, coordinates }) {
+  console.log('location coords', coordinates);
   const { latitude, longitude } = coordinates;
 
   const locationIsCoordinates = location === '';
@@ -49,7 +50,7 @@ function Location({ location, coordinates }) {
 
   const screenSize = useContext(ResponsiveContext);
   return (
-    <Box direction="row" flex="grow" pad={screenSize !== 'small' ? 'small' : 'medium'} width={{ max: '450px' }}>
+    <Box direction="row" flex="grow" width={{ max: '450px' }}>
       <Box direction="row" flex="grow">
         {screenSize !== 'small' ? (
           <CustomIcon size="60px" path="/icons/svg/map4.svg" onClick={loadSearchComponent} margin={{ right: '10px' }} focusIndicator={false} />
