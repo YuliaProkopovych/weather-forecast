@@ -30,6 +30,7 @@ function Forecast() {
       const data = params.coordinates ? await getForecast(params.coordinates) : await getForecast(params.location);
       const weatherForecast = data.forecast;
       setCoordinates(data.coordinates);
+      console.log(data.coordinates);
 
       const formattedData = weatherForecast.map((record, index) => {
         const { date, forecast } = record;

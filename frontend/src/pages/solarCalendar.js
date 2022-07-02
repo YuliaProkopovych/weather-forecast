@@ -32,6 +32,7 @@ function TimeText({ time }) {
 function SolarCalendar() {
   const params = useParams();
   const [data, setData] = useState({});
+  const [coordinates, setCoordinates] = useState({});
   const [startDate, setStartDate] = useState(params.startDate ? decodeURIComponent(params.startDate)
     : DateTime.now().toISO());
   const [endDate, setEndDate] = useState(params.endDate ? decodeURIComponent(params.endDate)
@@ -40,8 +41,10 @@ function SolarCalendar() {
   useEffect(() => {
     async function getSolarData() {
       const place = decodeURIComponent(params.location);
-      const solarData = await getSunrise(place, startDate, endDate);
-      setData(solarData);
+      const dataObject = await getSunrise(place, startDate, endDate);
+      console.log(dataObject);
+      setData(dataObject.solarData);
+      setCoordinates(dataObject.coordinates);
     }
     getSolarData();
   }, [startDate, endDate]);
@@ -51,10 +54,11 @@ function SolarCalendar() {
     setEndDate(newEndDate);
   };
   const screenSize = useContext(ResponsiveContext);
+  console.log('solar coords', coordinates);
   return (
     <ResponsiveGrid>
-      <Header gridArea="header">
-        <Location location={params.location} />
+      <Header>
+        <Location location={params.location} coordinates={coordinates} />
         <DateRangeSelect startDate={startDate} endDate={endDate} updateInterval={setNewDates} />
       </Header>
       <Logo />
