@@ -1,25 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { DateTime } from 'luxon';
 
 import {
-  DateInput, Grommet,
+  DateInput, Grommet, ResponsiveContext, Box, Text, Heading,
 } from 'grommet';
 
 import CustomIcon from './icons/CustomIcon';
 
 const theme = {
+  text: {
+    large: {
+      size: '18px',
+    },
+  },
   button: {
     size: {
       large: {
         border: {
           radius: '1px',
         },
-        // pad: {
-        //   vertical: '0px',
-        //   horizontal: '0px',
-        // },
+        pad: {
+          vertical: '0px',
+          horizontal: '0px',
+        },
       },
     },
     border: {
@@ -53,19 +58,26 @@ function DateRangeSelect({ startDate, endDate, updateInterval }) {
     chromatic: { disable: true },
   };
 
+  const size = useContext(ResponsiveContext);
+
   return (
-    <Grommet theme={theme}>
-      <DateInput
-        value={value}
-        buttonProps={{
-          pad: 'medium',
-          size: 'large',
-          label: `${DateTime.fromISO(value[0]).toFormat('d MMM')} - ${DateTime.fromISO(value[1]).toFormat('d MMM')}`,
-          icon: <CustomIcon size="40px" path="/icons/svg/calendar7.svg" />,
-        }}
-        onChange={onChange}
-      />
-    </Grommet>
+    <Box justify="center" pad={size !== 'small' ? '0px' : { top: 'large', horizontal: 'medium' }}>
+      <Box>
+        <Heading level="5" margin={{ top: '0px', bottom: 'medium' }}>Select time period:</Heading>
+      </Box>
+      <Grommet theme={theme} flex>
+        <DateInput
+          value={value}
+          buttonProps={{
+            pad: 'medium',
+            size: 'large',
+            label: `${DateTime.fromISO(value[0]).toFormat('d MMMM')} - ${DateTime.fromISO(value[1]).toFormat('d MMMM')}`,
+            icon: <CustomIcon size="40px" path="/icons/svg/calendar7.svg" />,
+          }}
+          onChange={onChange}
+        />
+      </Grommet>
+    </Box>
   );
 }
 

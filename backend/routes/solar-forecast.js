@@ -13,8 +13,9 @@ const getSolarForecastOpts = {
   },
   handler: async (req, reply) => {
     try {
-      const coordinates = locationCache.getCoordinates()
+      const coordinates = Object.keys(locationCache.getCoordinates()).length !== 0
         ? locationCache.getCoordinates() : await getCoordinatesByLocationName(req.query.location);
+
       const solarData = await getSunriseByCoordinatesAndDate(coordinates, req.query.startDate, req.query.endDate, req.query.offset);
 
       reply.send({ solarData, coordinates });
