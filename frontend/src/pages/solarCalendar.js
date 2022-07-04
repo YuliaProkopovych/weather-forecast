@@ -18,7 +18,7 @@ import LunarInfo from '../components/LunarInfo';
 import Location from '../components/Location';
 import CustomIcon from '../components/icons/CustomIcon';
 import DateRangeSelect from '../components/DateRangeSelect';
-import ResponsiveGrid from '../components/ResponsiveHeader';
+import ResponsiveHeader from '../components/ResponsiveHeader';
 import Logo from '../components/Logo';
 
 function TimeText({ time }) {
@@ -54,18 +54,22 @@ function SolarCalendar() {
     setEndDate(newEndDate);
   };
   const screenSize = useContext(ResponsiveContext);
-  console.log('solar coords', coordinates);
+
   return (
-    <ResponsiveGrid>
-      <Header>
-        <Location location={params.location} coordinates={coordinates} />
-        <DateRangeSelect startDate={startDate} endDate={endDate} updateInterval={setNewDates} />
-      </Header>
-      <Logo />
-      <Box pad="medium" gridArea="main">
-        <Grid columns={screenSize !== 'small' ? '330px' : '100%'} gap="small">
+    <>
+      <ResponsiveHeader>
+        <Header>
+          <Box direction="row" wrap align="center">
+            <Location location={params.location} coordinates={coordinates} />
+            <DateRangeSelect startDate={startDate} endDate={endDate} updateInterval={setNewDates} />
+          </Box>
+        </Header>
+        <Logo />
+      </ResponsiveHeader>
+      <Box pad={screenSize !== 'small' ? 'medium' : 'small'}>
+        <Grid columns="330px" gap="small">
           {data.length && data.map((item) => (
-            <Box pad="small" width={{ min: '330px' }}>
+            <Box width={{ min: '330px' }}>
               <Card pad="medium" background="semitransparent-white">
                 <Heading alignSelf="center" level="3">{(DateTime.fromISO(item.date)).toFormat('dd MMMM')}</Heading>
                 { item.sunrise ? (
@@ -113,7 +117,7 @@ function SolarCalendar() {
           ))}
         </Grid>
       </Box>
-    </ResponsiveGrid>
+    </>
   );
 }
 

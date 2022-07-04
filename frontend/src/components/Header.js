@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import {
   Box,
   Card,
+  ResponsiveContext,
 } from 'grommet';
 import Description from './decription';
 
 function Header({ children, ...rest }) {
+  const screenSize = useContext(ResponsiveContext);
   return (
     <>
       <Description />
@@ -19,7 +21,7 @@ function Header({ children, ...rest }) {
         {...rest}
       >
 
-        <Card pad="medium" background="semitransparent-white" width={{ max: '1000px' }}>
+        <Card pad={screenSize === 'small' ? { vertical: 'large', horizontal: 'medium' } : 'medium'} background="semitransparent-white" width={{ max: '1000px' }}>
           {children}
         </Card>
       </Box>
