@@ -43,8 +43,6 @@ async function getForecastByCoordinates(coordinates) {
 
     return formattedRecord;
   });
-//console.log(forecast);
-  //forecast.pop();
 
   return forecast;
 }
