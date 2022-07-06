@@ -1,5 +1,5 @@
 const { getCoordinatesByLocationName } = require('../utils/geocoder');
-const { getSunriseByCoordinatesAndDate } = require('../utils/getSunrise');
+const { getSunriseByCoordinatesAndDate, getTimezoneByCoordinates } = require('../utils/getSunrise');
 const locationCache = require('../utils/locationCache');
 
 const getSolarForecastOpts = {
@@ -8,7 +8,6 @@ const getSolarForecastOpts = {
       location: { type: 'string' },
       startDate: { type: 'string' },
       endDate: { type: 'string' },
-      offset: { type: 'string' },
     },
   },
   handler: async (req, reply) => {
@@ -16,7 +15,21 @@ const getSolarForecastOpts = {
       const coordinates = Object.keys(locationCache.getCoordinates()).length !== 0
         ? locationCache.getCoordinates() : await getCoordinatesByLocationName(req.query.location);
 
-      const solarData = await getSunriseByCoordinatesAndDate(coordinates, req.query.startDate, req.query.endDate, req.query.offset);
+      let offset = locationCache.getTimezone().dstOffset !== undefined
+        ? locationCache.getTimezone().dstOffset : (await getTimezoneByCoordinates(coordinates)).dstOffset;
+
+      let offsetString = '';
+
+      if (Math.abs(offset) <= 10) {
+        offsetString = `0${Math.abs(offset)}:00`;
+      }
+      if (offset >= 0) {
+        offsetString = `+${offsetString}`;
+      } else {
+        offset = `-${offsetString}`;
+      }
+
+      const solarData = await getSunriseByCoordinatesAndDate(coordinates, req.query.startDate, req.query.endDate, offsetString);
 
       reply.send({ solarData, coordinates });
     } catch (error) {

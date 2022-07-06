@@ -32,7 +32,6 @@ const getTimezoneByCoordinates = async (coordinates) => {
 
   try {
     response = await axios.get(url);
-    console.log(response.data);
   } catch (err) {
     console.log(err);
   }
