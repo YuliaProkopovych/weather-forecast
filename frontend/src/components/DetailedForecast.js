@@ -56,15 +56,15 @@ function DetailedForecast({ forecastRecord, closeItself }) {
   ];
 
   return (
-    <Box pad="medium">
+    <Box pad="medium" gap="25px">
       <Box direction="row" justify="between" pad="small">
         <Heading level="2" margin="none">{forecastRecord.date}</Heading>
         <Box onClick={() => closeItself()} focusIndicator={false}>
           <Close />
         </Box>
       </Box>
-      <Box>
-        <DataTable columns={columns} data={forecastRecord.forecast} size={screenSize !== 'small' ? 'medium' : '100%'} />
+      <Box overflow="scroll">
+        <DataTable columns={columns} data={forecastRecord.forecast} />
       </Box>
     </Box>
   );
