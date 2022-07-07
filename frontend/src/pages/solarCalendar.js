@@ -14,20 +14,12 @@ import _ from 'lodash';
 
 import { getSunrise } from '../utils/getSunrise';
 import Header from '../components/Header';
-import LunarInfo from '../components/LunarInfo';
+import { LunarInfo, TimeText } from '../components/LunarInfo';
 import Location from '../components/Location';
 import CustomIcon from '../components/icons/CustomIcon';
 import DateRangeSelect from '../components/DateRangeSelect';
 import ResponsiveHeader from '../components/ResponsiveHeader';
 import Logo from '../components/Logo';
-
-function TimeText({ time }) {
-  return (
-    <Text size="15px">
-      { DateTime.fromISO(time).toFormat('H:mm')}
-    </Text>
-  );
-}
 
 function SolarCalendar() {
   const params = useParams();
@@ -38,13 +30,15 @@ function SolarCalendar() {
   const [endDate, setEndDate] = useState(params.endDate ? decodeURIComponent(params.endDate)
     : DateTime.now().plus({ days: 5 }).toISO());
 
+  const [timezone, setTimezone] = useState({});
+
   useEffect(() => {
     async function getSolarData() {
       const place = decodeURIComponent(params.location);
       const dataObject = await getSunrise(place, startDate, endDate);
-      console.log(dataObject);
       setData(dataObject.solarData);
       setCoordinates(dataObject.coordinates);
+      setTimezone(dataObject.timezone);
     }
     getSolarData();
   }, [startDate, endDate]);
@@ -78,21 +72,21 @@ function SolarCalendar() {
                       <Text size="16px">Sunrise</Text>
                       <Box direction="row" align="end">
                         <CustomIcon margin={{ right: '5px' }} path="/icons/svg/sunrise.svg" size="40px" />
-                        <TimeText time={item.sunrise.time} />
+                        <TimeText time={item.sunrise.time} timezoneId={timezone.timezoneId} />
                       </Box>
                     </Box>
                     <Box align="center">
                       <Text size="16px">Solar noon</Text>
                       <Box direction="row" align="end">
                         <CustomIcon margin={{ right: '5px' }} path="/icons/svg/sunnoon.svg" size="40px" />
-                        <TimeText time={item.solarnoon.time} />
+                        <TimeText time={item.solarnoon.time} timezoneId={timezone.timezoneId} />
                       </Box>
                     </Box>
                     <Box align="center">
                       <Text size="16px">Sunset</Text>
                       <Box direction="row" align="end">
                         <CustomIcon margin={{ right: '5px' }} path="/icons/svg/sunset.svg" size="40px" />
-                        <TimeText time={item.sunset.time} />
+                        <TimeText time={item.sunset.time} timezoneId={timezone.timezoneId} />
                       </Box>
                     </Box>
                   </Box>
@@ -110,7 +104,7 @@ function SolarCalendar() {
                   </Box>
                 </Box>
                 <Box direction="row" pad={{ top: 'medium' }} align="end" justify="between">
-                  <LunarInfo moonphase={item.moonposition.phase} moonrise={item.moonrise} moonset={item.moonset} />
+                  <LunarInfo moonphase={item.moonposition.phase} moonrise={item.moonrise.time} moonset={item.moonset} timezoneId={timezone.timezoneId} />
                 </Box>
               </Card>
             </Box>

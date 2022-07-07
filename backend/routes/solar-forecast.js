@@ -15,23 +15,24 @@ const getSolarForecastOpts = {
       const coordinates = Object.keys(locationCache.getCoordinates()).length !== 0
         ? locationCache.getCoordinates() : await getCoordinatesByLocationName(req.query.location);
 
-      let offset = locationCache.getTimezone().dstOffset !== undefined
-        ? locationCache.getTimezone().dstOffset : (await getTimezoneByCoordinates(coordinates)).dstOffset;
+      const timezone = Object.keys(locationCache.getTimezone()).length !== 0
+        ? locationCache.getTimezone() : (await getTimezoneByCoordinates(coordinates));
 
-      let offsetString = '';
+      const offset = timezone.dstOffset;
+      let offsetString = `${Math.abs(Math.trunc(offset))}:${60 * (offset % 1)}`;
 
-      if (Math.abs(offset) <= 10) {
-        offsetString = `0${Math.abs(offset)}:00`;
+      if (Math.abs(offset) < 10) {
+        offsetString = `0${offsetString}`;
       }
       if (offset >= 0) {
         offsetString = `+${offsetString}`;
       } else {
-        offset = `-${offsetString}`;
+        offsetString = `-${offsetString}`;
       }
 
       const solarData = await getSunriseByCoordinatesAndDate(coordinates, req.query.startDate, req.query.endDate, offsetString);
 
-      reply.send({ solarData, coordinates });
+      reply.send({ solarData, coordinates, timezone });
     } catch (error) {
       console.error(error);
     }
