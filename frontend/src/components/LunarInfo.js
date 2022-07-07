@@ -9,41 +9,61 @@ import { DateTime } from 'luxon';
 
 import CustomIcon from './icons/CustomIcon';
 
-function TimeText({ time }) {
+function TimeText({ time, timezoneId }) {
   return (
     <Text size="15px">
-      { DateTime.fromISO(time).toFormat('H:mm')}
+      { DateTime.fromISO(time, { zone: timezoneId }).toFormat('H:mm')}
     </Text>
   );
 }
 
-function MoonRise({ time }) {
+TimeText.propTypes = {
+  time: PropTypes.string.isRequired,
+  timezoneId: PropTypes.string,
+};
+
+function MoonRise({ time, timezoneId }) {
   return (
     <Box align="center">
       <Text size="16px">Moonrise</Text>
       <Box direction="row" align="end">
-        <TimeText time={time} />
+        <TimeText time={time} timezoneId={timezoneId} />
       </Box>
     </Box>
   );
 }
 
-function MoonSet({ time }) {
+MoonRise.propTypes = {
+  time: PropTypes.string.isRequired,
+  timezoneId: PropTypes.string,
+};
+
+function MoonSet({ time, timezoneId }) {
   return (
     <Box align="center">
       <Text size="16px">Moonset</Text>
       <Box direction="row" align="end">
-        <TimeText time={time} />
+        <TimeText time={time} timezoneId={timezoneId} />
       </Box>
     </Box>
   );
 }
 
-function LunarInfo({ moonphase, moonrise, moonset }) {
+MoonSet.propTypes = {
+  time: PropTypes.string.isRequired,
+  timezoneId: PropTypes.string,
+};
+
+function LunarInfo({
+  moonphase,
+  moonrise,
+  moonset,
+  timezoneId
+}) {
   // 0-1 1-8 8-16 16-24 24-25
   // 25-26 26-33 33-41 41-49 49-50
   let rotate = false;
-  let description = "";
+  let description = '';
 
   // 0..25: "waxing crescent"
   // 25..50: "waxing gibbous"
@@ -132,20 +152,20 @@ function LunarInfo({ moonphase, moonrise, moonset }) {
         <CustomIcon style={{ transform: `rotate(${rotate ? 180 : 0}deg)` }} size="40px" path={`/icons/svg/${icon}.svg`} />
       </Box>
       { ((moonrise && moonset) && (
-        DateTime.fromISO(moonrise.time).startOf('hour') < DateTime.fromISO(moonset.time).startOf('hour') ? (
+        DateTime.fromISO(moonrise, { zone: timezoneId }).startOf('hour') < DateTime.fromISO(moonset.time, { zone: timezoneId }).startOf('hour') ? (
           <Box direction="row" pad={{ top: 'medium' }} gap="large">
-            <MoonRise time={moonrise.time} />
-            <MoonSet time={moonset.time} />
+            <MoonRise time={moonrise} timezoneId={timezoneId} />
+            <MoonSet time={moonset.time} timezoneId={timezoneId} />
           </Box>
         ) : (
           <Box direction="row" pad={{ top: 'medium' }} gap="large">
-            <MoonSet time={moonset.time} />
-            <MoonRise time={moonrise.time} />
+            <MoonSet time={moonset.time} timezoneId={timezoneId} />
+            <MoonRise time={moonrise} timezoneId={timezoneId} />
           </Box>
         ))) || (
         <Box direction="row" pad={{ top: 'medium' }}>
-          { moonset && <MoonSet time={moonset.time} /> }
-          { moonrise && <MoonRise time={moonrise.time} /> }
+          { moonset && <MoonSet time={moonset.time} timezoneId={timezoneId} /> }
+          { moonrise && <MoonRise time={moonrise} timezoneId={timezoneId} /> }
         </Box>
       )}
     </Box>
@@ -154,6 +174,8 @@ function LunarInfo({ moonphase, moonrise, moonset }) {
 
 LunarInfo.propTypes = {
   moonphase: PropTypes.string.isRequired,
+  moonrise: PropTypes.string.isRequired,
+  moonset: PropTypes.string.isRequired,
 };
 
-export default LunarInfo;
+export { LunarInfo, TimeText };
