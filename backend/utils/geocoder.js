@@ -7,8 +7,10 @@ const getCoordinatesByLocationName = async (query) => {
     lang: 'en-US',
     apiKey: process.env.HERE_API_KEY,
   });
-  const res = await axios.get(`https://geocode.search.hereapi.com/v1/geocode?${queryparams.toString()}`);
 
+  const start = new Date();
+  const res = await axios.get(`https://geocode.search.hereapi.com/v1/geocode?${queryparams.toString()}`);
+  console.log('Geocoder request took:', new Date() - start, 'ms');
   const coordinates = {
     lat: Math.round(res.data.items[0].position.lat * 100) / 100,
     lon: Math.round(res.data.items[0].position.lng * 100) / 100,

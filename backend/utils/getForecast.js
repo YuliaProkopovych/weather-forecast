@@ -6,6 +6,8 @@ async function getForecastByCoordinates(coordinates) {
   });
   const url = `https://api.met.no/weatherapi/locationforecast/2.0/compact?${params.toString()}`;
 
+
+  const start = new Date();
   const response = await axios.get(
     url,
     {
@@ -17,6 +19,7 @@ async function getForecastByCoordinates(coordinates) {
       },
     },
   );
+  console.log('Forecast request took:', new Date() - start, 'ms');
 
   const forecast = response.data.properties.timeseries.map((record) => {
     const formattedRecord = {

@@ -16,8 +16,8 @@ const getSunrise = async (location, firstDate, lastDate) => {
   return solarData;
 };
 
-const getTimeStamps = (date, dstOffset) => {
-  const baseTime = DateTime.fromFormat(date, 'dd LLLL').plus({ hours: dstOffset });
+const getTimeStamps = (date, offset) => {
+  const baseTime = DateTime.fromFormat(date, 'dd LLLL').plus({ hours: offset });
   const midnight = baseTime.set({ hour: (baseTime.get('hour') % 6) });
   const dawn = midnight.plus({ hours: 6 });
   const noon = midnight.plus({ hours: 12 });

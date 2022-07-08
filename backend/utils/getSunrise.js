@@ -6,6 +6,7 @@ const getSunriseByCoordinatesAndDate = async (coordinates, startDate, endDate, o
   const start = luxon.DateTime.fromFormat(startDate, 'yyyy-MM-dd');
   const interval = (end.diff(start, 'days')).days + 1;
 
+  const start1 = new Date();
   const request = axios.get(
     `https://api.met.no/weatherapi/sunrise/2.0/.json?lat=${coordinates.lat}&lon=${coordinates.lon}&date=${startDate}&offset=${offset}&days=${interval}`,
     {
@@ -17,6 +18,7 @@ const getSunriseByCoordinatesAndDate = async (coordinates, startDate, endDate, o
       },
     },
   );
+  console.log('Sunrise request took:', new Date() - start1, 'ms');
 
   const response = await request;
   const data = response.data.location.time;
@@ -27,16 +29,20 @@ const getSunriseByCoordinatesAndDate = async (coordinates, startDate, endDate, o
 
 const getTimezoneByCoordinates = async (coordinates) => {
   const { lat, lon } = coordinates;
-  const url = `http://api.geonames.org/timezoneJSON?lat=${lat}&lng=${lon}&username=sunnyrain`;
+  const url = `https://www.timeapi.io/api/TimeZone/coordinate?latitude=${lat}&longitude=${lon}`;
   let response = {};
 
   try {
+    const start = new Date();
     response = await axios.get(url);
+    console.log('Timezone request took:', new Date() - start, 'ms');
   } catch (err) {
     console.log(err);
   }
 
-  return { dstOffset: response.data.dstOffset, timezoneId: response.data.timezoneId };
+  const currentOffset = parseFloat(response.data.currentUtcOffset.seconds) / 3600;
+
+  return { offset: currentOffset, timezoneId: response.data.timeZone };
 };
 
 module.exports = { getSunriseByCoordinatesAndDate, getTimezoneByCoordinates };
