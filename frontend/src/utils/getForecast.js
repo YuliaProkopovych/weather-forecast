@@ -10,10 +10,10 @@ const getForecast = async (query) => {
 
   const data = await response.json();
   const {
-    location, coordinates, forecast, dstOffset, timezoneId,
+    location, coordinates, forecast, offset, timezoneId,
   } = data;
   return {
-    location, coordinates, dstOffset, forecast: groupForecastRecordsByDate(forecast, timezoneId),
+    location, coordinates, offset, forecast: groupForecastRecordsByDate(forecast, timezoneId),
   };
 };
 

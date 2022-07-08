@@ -18,11 +18,14 @@ const getSolarForecastOpts = {
       const timezone = Object.keys(locationCache.getTimezone()).length !== 0
         ? locationCache.getTimezone() : (await getTimezoneByCoordinates(coordinates));
 
-      const offset = timezone.dstOffset;
+      const { offset } = timezone;
       let offsetString = `${Math.abs(Math.trunc(offset))}:${60 * (offset % 1)}`;
 
       if (Math.abs(offset) < 10) {
         offsetString = `0${offsetString}`;
+      }
+      if (offset % 1 === 0) {
+        offsetString = `${offsetString}0`;
       }
       if (offset >= 0) {
         offsetString = `+${offsetString}`;

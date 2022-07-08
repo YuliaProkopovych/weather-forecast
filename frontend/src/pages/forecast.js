@@ -35,7 +35,7 @@ function Forecast() {
       const formattedData = weatherForecast.map((record, index) => {
         const { date, forecast } = record;
         const symbols = {};
-        const times = getTimeStamps(date, data.dstOffset);
+        const times = getTimeStamps(date, data.offset);
         const getSymbolByTimeInForecast = (time) => (forecast.find((item) => (item.time === time))).next_6_hours.symbol;
 
         if (index === 0) {
