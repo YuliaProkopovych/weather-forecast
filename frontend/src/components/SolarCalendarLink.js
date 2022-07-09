@@ -7,7 +7,7 @@ import {
 import { FormNextLink } from 'grommet-icons';
 import CustomIcon from './icons/CustomIcon';
 
-function SolarCalendarLink({ location }) {
+function SolarCalendarLink({ locationName, coordinates }) {
   const navigate = useNavigate();
   return (
     <ResponsiveContext.Consumer>
@@ -19,7 +19,11 @@ function SolarCalendarLink({ location }) {
           width={{ max: '450px' }}
           focusIndicator={false}
           onClick={() => {
-            navigate(`../../solar-calendar/${encodeURIComponent(location)}`);
+            if (locationName) {
+              navigate(`../../solar-calendar/${encodeURIComponent(locationName)}`, { state: coordinates });
+            } else {
+              navigate(`../../solar-calendar/${encodeURIComponent(coordinates.lat)},${encodeURIComponent(coordinates.lon)}`);
+            }
           }}
         >
           <CustomIcon flex={{ shrink: 0 }} size={size !== 'small' ? '40px' : '30px'} path="/icons/svg/calendar.svg" margin={{ right: '8px', left: '8px' }} />
@@ -33,7 +37,8 @@ function SolarCalendarLink({ location }) {
 }
 
 SolarCalendarLink.propTypes = {
-  location: PropTypes.string.isRequired,
+  locationName: PropTypes.string.isRequired,
+  coordinates: PropTypes.object.isRequired,
 };
 
 export default SolarCalendarLink;

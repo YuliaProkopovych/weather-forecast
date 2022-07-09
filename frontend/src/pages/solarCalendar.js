@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import {
   Box,
   Text,
@@ -23,7 +23,9 @@ import Logo from '../components/Logo';
 
 function SolarCalendar() {
   const params = useParams();
+  const locationData = useLocation();
   const [data, setData] = useState({});
+  const [locationName, setLocationName] = useState('');
   const [coordinates, setCoordinates] = useState({});
   const [startDate, setStartDate] = useState(params.startDate ? decodeURIComponent(params.startDate)
     : DateTime.now().toISO());
@@ -34,10 +36,17 @@ function SolarCalendar() {
 
   useEffect(() => {
     async function getSolarData() {
-      const place = decodeURIComponent(params.location);
-      const dataObject = await getSunrise(place, startDate, endDate);
+      let dataObject = {};
+      if (locationData.state) {
+        setCoordinates(locationData.state);
+        setLocationName(params.location);
+        dataObject = await getSunrise(locationData.state, startDate, endDate);
+      } else {
+        const coords = { lat: params.location.split(',')[0], lon: params.location.split(',')[1] };
+        setCoordinates(coords);
+        dataObject = await getSunrise(coords, startDate, endDate);
+      }
       setData(dataObject.solarData);
-      setCoordinates(dataObject.coordinates);
       setTimezone(dataObject.timezone);
     }
     getSolarData();
@@ -54,7 +63,7 @@ function SolarCalendar() {
       <ResponsiveHeader>
         <Header>
           <Box direction="row" wrap align="center">
-            <Location location={params.location} coordinates={coordinates} />
+            <Location location={locationName} coordinates={coordinates} />
             <DateRangeSelect startDate={startDate} endDate={endDate} updateInterval={setNewDates} />
           </Box>
         </Header>

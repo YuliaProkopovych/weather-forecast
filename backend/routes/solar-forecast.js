@@ -1,19 +1,20 @@
-const { getCoordinatesByLocationName } = require('../utils/geocoder');
 const { getSunriseByCoordinatesAndDate, getTimezoneByCoordinates } = require('../utils/getSunrise');
 const locationCache = require('../utils/locationCache');
 
 const getSolarForecastOpts = {
   schema: {
     querystring: {
-      location: { type: 'string' },
+      coordinates: { type: 'string' },
       startDate: { type: 'string' },
       endDate: { type: 'string' },
     },
   },
   handler: async (req, reply) => {
     try {
-      const coordinates = Object.keys(locationCache.getCoordinates()).length !== 0
-        ? locationCache.getCoordinates() : await getCoordinatesByLocationName(req.query.location);
+      // const coordinates = Object.keys(locationCache.getCoordinates()).length !== 0
+      //   ? locationCache.getCoordinates() : await getCoordinatesByLocationName(req.query.location);
+
+      const coordinates = { lat: req.query.coordinates.split(',')[0], lon: req.query.coordinates.split(',')[1] };
 
       const timezone = Object.keys(locationCache.getTimezone()).length !== 0
         ? locationCache.getTimezone() : (await getTimezoneByCoordinates(coordinates));
