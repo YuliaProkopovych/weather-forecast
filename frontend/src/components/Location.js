@@ -8,13 +8,12 @@ import _ from 'lodash';
 import CustomIcon from './icons/CustomIcon';
 
 function Location({ location, coordinates }) {
-  console.log('location coords', coordinates);
-  const { latitude, longitude } = coordinates;
+  const coordinatesString = `${coordinates.lat}, ${coordinates.lon}`;
 
   const locationIsCoordinates = location === '';
 
   const mainLocation = locationIsCoordinates
-    ? `${latitude}, ${longitude}`
+    ? coordinatesString
     : location.split(', ')[0];
 
   const locationDetails = locationIsCoordinates
@@ -22,19 +21,19 @@ function Location({ location, coordinates }) {
     : location.replace(`${mainLocation}, `, '');
 
   const [locationIsSaved, setLocationIsSaved] = useState(false);
-  const loadSearchComponent = () => {};
+  const loadSearchComponent = () => {};//todo
   const saveLocation = () => {
     let favLocations = JSON.parse(localStorage.getItem('Favourite Locations'));
     if (favLocations) {
-      if (favLocations.includes(coordinates.toString())) {
+      if (favLocations.includes(coordinatesString)) {
         setLocationIsSaved(false);
-        _.remove(favLocations, (elem) => elem === coordinates.toString());
+        _.remove(favLocations, (elem) => elem === coordinatesString);
       } else {
-        favLocations.push(coordinates.toString());
+        favLocations.push(coordinatesString);
         setLocationIsSaved(true);
       }
     } else {
-      favLocations = [coordinates.toString()];
+      favLocations = [coordinatesString];
     }
     localStorage.setItem('Favourite Locations', JSON.stringify(favLocations));
   };
@@ -42,7 +41,7 @@ function Location({ location, coordinates }) {
   useEffect(() => {
     const favLocations = JSON.parse(localStorage.getItem('Favourite Locations'));
     if (favLocations) {
-      if (favLocations.includes(coordinates.toString())) {
+      if (favLocations.includes(coordinatesString)) {
         setLocationIsSaved(true);
       }
     }
