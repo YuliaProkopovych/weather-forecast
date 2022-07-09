@@ -1,23 +1,23 @@
 const axios = require('axios');
 
-const getCoordinatesByLocationName = async (query) => {
-  const queryparams = new URLSearchParams({
-    limit: 1,
-    q: query,
-    lang: 'en-US',
-    apiKey: process.env.HERE_API_KEY,
-  });
+// const getCoordinatesByLocationName = async (query) => {
+//   const queryparams = new URLSearchParams({
+//     limit: 1,
+//     q: query,
+//     lang: 'en-US',
+//     apiKey: process.env.HERE_API_KEY,
+//   });
 
-  const start = new Date();
-  const res = await axios.get(`https://geocode.search.hereapi.com/v1/geocode?${queryparams.toString()}`);
-  console.log('Geocoder request took:', new Date() - start, 'ms');
-  const coordinates = {
-    lat: Math.round(res.data.items[0].position.lat * 100) / 100,
-    lon: Math.round(res.data.items[0].position.lng * 100) / 100,
-  };
+//   const start = new Date();
+//   const res = await axios.get(`https://geocode.search.hereapi.com/v1/geocode?${queryparams.toString()}`);
+//   console.log('Geocoder request took:', new Date() - start, 'ms');
+//   const coordinates = {
+//     lat: Math.round(res.data.items[0].position.lat * 100) / 100,
+//     lon: Math.round(res.data.items[0].position.lng * 100) / 100,
+//   };
 
-  return coordinates;
-};
+//   return coordinates;
+// };
 
 const getNearbyLocationsByCoordinates = async (lat, lon) => {
   let latitudePlus = '';
@@ -52,4 +52,4 @@ const getNearbyLocationsByCoordinates = async (lat, lon) => {
   return locations;
 };
 
-module.exports = { getCoordinatesByLocationName, getNearbyLocationsByCoordinates };
+module.exports = { getNearbyLocationsByCoordinates };

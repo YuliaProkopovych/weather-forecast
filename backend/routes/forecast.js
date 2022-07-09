@@ -1,4 +1,3 @@
-const { getCoordinatesByLocationName } = require('../utils/geocoder');
 const { getTimezoneByCoordinates } = require('../utils/getSunrise');
 const getForecast = require('../utils/getForecast');
 const locationCache = require('../utils/locationCache');
@@ -14,15 +13,18 @@ const getForecastOpts = {
   },
   handler: async (req, reply) => {
     try {
-      let location = '';
-      let coordinates;
-      if (/[0-9]+,[0-9]+/.test(req.body.query)) {
-        const [, lat, lon, ...rest] = req.body.query.match(/[0-9]+,[0-9]+/);
-        coordinates = { lat, lon };
-      } else {
-        location = req.body.query;
-        coordinates = await getCoordinatesByLocationName(location);
-      }
+      //let location = '';
+      // let coordinates;
+      // if (/[0-9]+,[0-9]+/.test(req.body.query)) {
+      //   const [, lat, lon, ...rest] = req.body.query.match(/[0-9]+,[0-9]+/);
+      //   coordinates = { lat, lon };
+      // } else {
+      //   console.log(req.body.query);
+      //   //location = req.body.query;
+      //   coordinates = req.body.query;
+      // }
+
+      const coordinates = req.body.query;
 
       const forecast = await getForecast(coordinates);
       const timezone = await getTimezoneByCoordinates(coordinates);
@@ -31,7 +33,7 @@ const getForecastOpts = {
       locationCache.setCoordinates(coordinates);
 
       reply.send({
-        location, coordinates, forecast, ...timezone,
+        coordinates, forecast, ...timezone,
       });
     } catch (error) {
       console.error(error);

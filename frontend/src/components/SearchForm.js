@@ -64,6 +64,7 @@ function CoordinateFormField({ validate, name, id }) {
 function SearchForm() {
   const [suggestions, setSuggestions] = useState([]);
   const [query, setQuery] = useState('');
+  const [locations, setLocations] = useState([]);
 
   const boxRef = React.useRef();
   const navigate = useNavigate();
@@ -75,7 +76,9 @@ function SearchForm() {
       }
 
       try {
-        const newSuggestions = await locationAutocomplete(value);
+        const newLocations = await locationAutocomplete(value);
+        setLocations(newLocations);
+        const newSuggestions = newLocations.map((location) => (location.name));
         setSuggestions(newSuggestions);
       } catch (error) {
         console.error(error);
@@ -85,7 +88,8 @@ function SearchForm() {
   );
 
   const selectPlace = (value) => {
-    navigate(`./forecast/${encodeURIComponent(value)}`);
+    const { coordinates } = locations.filter((location) => (location.name === value))[0];
+    navigate(`./forecast/${encodeURIComponent(value)}`, { state: coordinates });
   };
 
   const searchByCoordinates = ({ value }) => {
@@ -93,7 +97,7 @@ function SearchForm() {
   };
 
   const validateSearchForm = (validationResults) => {
-    console.log(validationResults);
+    //console.log(validationResults);
   };
 
   const validateSelectField = (fieldValue, formValue) => {
@@ -159,7 +163,6 @@ function SearchForm() {
             </Box>
           </Box>
           <Box direction="row" wrap align="center" gap="15px">
-            {/* <Box alignSelf={screenSize === 'small' && 'start'}> */}
             <Box>
               <Text> or enter coordinates:</Text>
             </Box>

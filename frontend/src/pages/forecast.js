@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import {
   Box, DataTable, Layer, ResponsiveContext,
 } from 'grommet';
@@ -18,6 +18,7 @@ import Logo from '../components/Logo';
 
 function Forecast() {
   const params = useParams();
+  const locationData = useLocation();
   const [show, setShow] = useState(false);
 
   const [clicked, setClicked] = useState({});
@@ -27,10 +28,16 @@ function Forecast() {
 
   useEffect(() => {
     async function getWeatherForecast() {
-      const data = params.coordinates ? await getForecast(params.coordinates) : await getForecast(params.location);
+      let data = {};
+      if (params.coordinates) {
+        setCoordinates(params.coordinates);
+        data = await getForecast(params.coordinates);
+      } else {
+        setCoordinates(locationData.state);
+        data = await getForecast(locationData.state);
+      }
+
       const weatherForecast = data.forecast;
-      setCoordinates(data.coordinates);
-      console.log(data.coordinates);
 
       const formattedData = weatherForecast.map((record, index) => {
         const { date, forecast } = record;
