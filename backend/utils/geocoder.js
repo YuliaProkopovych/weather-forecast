@@ -16,6 +16,8 @@ const axios = require('axios');
 //     lon: Math.round(res.data.items[0].position.lng * 100) / 100,
 //   };
 
+//   const res1 = await axios.get(`https://revgeocode.search.hereapi.com/v1/revgeocode?at=${res.data.items[0].position.lat},${res.data.items[0].position.lng}&limit=50&lang=en-US&apiKey=${process.env.HERE_API_KEY}&types=city`);
+//   console.log(res1.data.items);
 //   return coordinates;
 // };
 

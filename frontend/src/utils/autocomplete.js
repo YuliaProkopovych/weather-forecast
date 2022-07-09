@@ -9,7 +9,6 @@ const locationAutocomplete = async (query) => {
       name: `${item.city}, ${item.district}, ${item.state}, ${item.country}`,
       coordinates: { lat: item.lat, lon: item.lon },
     };
-    console.log(formattedItem);
     return formattedItem;
   });
   return locations;

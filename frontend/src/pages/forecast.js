@@ -25,16 +25,19 @@ function Forecast() {
   const [rawForecast, setRawForecast] = useState([]);
   const [weather, setWeather] = useState([]);
   const [coordinates, setCoordinates] = useState({});
+  const [locationName, setLocationName] = useState('');
 
   useEffect(() => {
     async function getWeatherForecast() {
       let data = {};
-      if (params.coordinates) {
-        setCoordinates(params.coordinates);
-        data = await getForecast(params.coordinates);
-      } else {
+      if (locationData.state) {
         setCoordinates(locationData.state);
+        setLocationName(params.location);
         data = await getForecast(locationData.state);
+      } else {
+        const coords = { lat: params.location.split(',')[0], lon: params.location.split(',')[1] };
+        setCoordinates(coords);
+        data = await getForecast(coords);
       }
 
       const weatherForecast = data.forecast;
@@ -106,7 +109,7 @@ function Forecast() {
       <ResponsiveHeader>
         <Header>
           <Box direction={size !== 'small' ? 'row' : 'column'} gap="15px" wrap>
-            <LocationComponent location={params.location} coordinates={coordinates} />
+            <LocationComponent location={locationName} coordinates={coordinates} />
             {rawForecast[0] && <CurrentConditions conditions={rawForecast[0]} />}
           </Box>
           <SolarCalendarLink location={params.location} />
