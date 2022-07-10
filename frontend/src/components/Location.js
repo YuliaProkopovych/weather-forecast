@@ -27,7 +27,7 @@ function Location({ location, coordinates }) {
     let favLocations = JSON.parse(localStorage.getItem('Favourite Locations'));
     const locationObject = {
       coordinates: coordinatesString,
-      name: locationIsCoordinates ? undefined : mainLocation,
+      name: locationIsCoordinates ? undefined : location,
     };
     if (favLocations) {
       if (favLocations.find(((savedLocation) => savedLocation.coordinates === coordinatesString))) {
@@ -39,6 +39,7 @@ function Location({ location, coordinates }) {
       }
     } else {
       favLocations = [locationObject];
+      setLocationIsSaved(true);
     }
     localStorage.setItem('Favourite Locations', JSON.stringify(favLocations));
   };

@@ -33,6 +33,7 @@ function Forecast() {
       if (locationData.state) {
         setCoordinates(locationData.state);
         setLocationName(params.location);
+        console.log(locationData.state);
         data = await getForecast(locationData.state);
       } else {
         const coords = { lat: params.location.split(',')[0], lon: params.location.split(',')[1] };

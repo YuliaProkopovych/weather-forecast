@@ -9,13 +9,19 @@ import {
 
 import CustomIcon from './icons/CustomIcon';
 
-function FavouriteLocationItem({ location }) {
+function FavouriteLocationItem({ location, coordinatesString }) {
   const navigate = useNavigate();
   const [scale, setScale] = useState(1);
-  console.log(location);
+  const locationName = location ? location : 'Geographical point at ' + coordinatesString;
+  const coordinates = { lat: coordinatesString.split(', ')[0], lon: coordinatesString.split(', ')[1] };
+  console.log('coordinatesString.split(', ')[1]', coordinatesString.split(', ')[1]);
 
-  const redirectToForecast = (locationName) => {
-    navigate(`../../forecast/${encodeURIComponent(locationName)}`);
+  const redirectToForecast = () => {
+    if (location) {
+      navigate(`../../forecast/${encodeURIComponent(location)}`, { state: coordinates });
+    } else {
+      navigate(`./forecast/${encodeURIComponent(coordinatesString)}`);
+    }
   };
 
   return (
@@ -25,18 +31,19 @@ function FavouriteLocationItem({ location }) {
         gap="medium"
         align="center"
         onClick={(event) => {
-          redirectToForecast(event.item);
+          redirectToForecast();
         }}
       >
         <CustomIcon flex={{ shrink: 0 }} size="35px" path="/icons/svg/place.svg" style={{ transform: `scale(${scale})` }} />
-        <Text weight="bold">{location.title}</Text>
+        <Text weight="bold">{locationName}</Text>
       </Box>
     </div>
   );
 }
 
 FavouriteLocationItem.propTypes = {
-  location: PropTypes.objectOf(PropTypes.array).isRequired,
+  location: PropTypes.string.isRequired,
+  coordinatesString: PropTypes.string.isRequired,
 };
 
 export default FavouriteLocationItem;
