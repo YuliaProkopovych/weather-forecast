@@ -22,18 +22,23 @@ function Location({ location, coordinates }) {
 
   const [locationIsSaved, setLocationIsSaved] = useState(false);
   const loadSearchComponent = () => {};//todo
+
   const saveLocation = () => {
     let favLocations = JSON.parse(localStorage.getItem('Favourite Locations'));
+    const locationObject = {
+      coordinates: coordinatesString,
+      name: locationIsCoordinates ? undefined : mainLocation,
+    };
     if (favLocations) {
-      if (favLocations.includes(coordinatesString)) {
+      if (favLocations.find(((savedLocation) => savedLocation.coordinates === coordinatesString))) {
         setLocationIsSaved(false);
-        _.remove(favLocations, (elem) => elem === coordinatesString);
+        _.remove(favLocations, (elem) => elem.coordinates === coordinatesString);
       } else {
-        favLocations.push(coordinatesString);
+        favLocations.push(locationObject);
         setLocationIsSaved(true);
       }
     } else {
-      favLocations = [coordinatesString];
+      favLocations = [locationObject];
     }
     localStorage.setItem('Favourite Locations', JSON.stringify(favLocations));
   };
@@ -41,7 +46,7 @@ function Location({ location, coordinates }) {
   useEffect(() => {
     const favLocations = JSON.parse(localStorage.getItem('Favourite Locations'));
     if (favLocations) {
-      if (favLocations.includes(coordinatesString)) {
+      if (favLocations.find(((savedLocation) => savedLocation.coordinates === coordinatesString))) {
         setLocationIsSaved(true);
       }
     }
