@@ -32,7 +32,6 @@ function NearbyLocationsList() {
       const locations = await getNearbyLocationsList();
 
       setNearbyLocations(locations);
-      console.log(locations);
     }
     getNearbyLocations();
   }, []);
@@ -43,10 +42,10 @@ function NearbyLocationsList() {
         <Heading level="3">Places nearby</Heading>
         <Box>
           <List
-            data={nearbyLocations.map((item) => ({ title: `${item.name}, ${item.region}, ${item.country}`, coordinates: [item.latitude, item.longitude] }))}
+            data={nearbyLocations.map((item) => ({ name: `${item.name}, ${item.region}, ${item.country}`, coordinates: `${item.latitude},${item.longitude}` }))}
           >
             {(datum) => (
-              <LocationListItem location={datum} />
+              <LocationListItem location={datum.name} coordinatesString={datum.coordinates} />
             )}
           </List>
         </Box>
