@@ -112,7 +112,7 @@ function Forecast() {
             <LocationComponent location={locationName} coordinates={coordinates} />
             {rawForecast[0] && <CurrentConditions conditions={rawForecast[0]} />}
           </Box>
-          <SolarCalendarLink location={params.location} />
+          <SolarCalendarLink locationName={locationName} coordinates={coordinates} />
         </Header>
         <Logo />
       </ResponsiveHeader>
