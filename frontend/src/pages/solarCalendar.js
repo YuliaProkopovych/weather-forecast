@@ -57,7 +57,6 @@ function SolarCalendar() {
     setEndDate(newEndDate);
   };
   const screenSize = useContext(ResponsiveContext);
-
   return (
     <>
       <ResponsiveHeader>
