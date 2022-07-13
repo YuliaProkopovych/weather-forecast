@@ -1,48 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import LocationsList from './LocationsList';
 
-import {
-  Grommet,
-  Box,
-  List,
-  Heading,
-} from 'grommet';
+function FavouriteLocationsList() {
+  const [favouriteLocations, setFavouriteLocations] = useState([]);
 
-import FavouriteLocationItem from './LocationListItem';
-
-const theme = {
-  list: {
-    item: {
-      pad: { horizontal: 'small' },
-      background: ['rgba(255,255,255,0.6)', 'light-2'],
-      border: false,
-      default: {},
-      extend: `&:hover{
-        background: #fff;
-      }`,
-    },
-  },
-};
-
-function FavouriteLocationsList({ locations }) {
+  useEffect(() => {
+    const favLocations = JSON.parse(localStorage.getItem('Favourite Locations'));
+    if (favLocations) {
+      setFavouriteLocations(favLocations);
+      console.log(favLocations);
+    }
+  }, []);
   return (
-    <Box pad="medium" flex={{ grow: 1 }}>
-      <Heading level="3">Saved locations</Heading>
-      <Grommet theme={theme} background={{ color: 'transparent' }}>
-        <Box>
-          <List
-            data={locations}
-          >
-            {(datum) => <FavouriteLocationItem location={datum.name} coordinatesString={datum.coordinates} />}
-          </List>
-        </Box>
-      </Grommet>
-    </Box>
+    <LocationsList listHeader="Saved locations" locations={favouriteLocations} />
   );
 }
-
-FavouriteLocationsList.propTypes = {
-  locations: PropTypes.objectOf(PropTypes.array).isRequired,
-};
 
 export default FavouriteLocationsList;

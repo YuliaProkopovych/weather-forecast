@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Box, List, Heading } from 'grommet';
+import { useParams } from 'react-router-dom';
 
 import autocomplete from '../utils/autocomplete';
+import ResponsiveHeader from '../components/ResponsiveHeader';
 import Header from '../components/Header';
+import SearchForm from '../components/SearchForm';
+import Logo from '../components/Logo';
+import LocationsList from '../components/LocationsList';
 
 function Search() {
   const params = useParams();
-  const navigate = useNavigate();
   const [locations, setLocations] = useState([]);
 
   useEffect(() => {
@@ -21,18 +23,15 @@ function Search() {
   }, []);
 
   return (
-    <Box>
-      <Header />
-      <Box pad="medium">
-        <Heading level="3">Search results</Heading>
-        <List
-          data={locations}
-          onClickItem={(event) => {
-            navigate(`../../forecast/${encodeURIComponent(event.target.innerText)}`);
-          }}
-        />
-      </Box>
-    </Box>
+    <>
+      <ResponsiveHeader>
+        <Header>
+          <SearchForm />
+        </Header>
+        <Logo />
+      </ResponsiveHeader>
+      <LocationsList listHeader={`Search results for "${params.location}"`} locations={locations} />
+    </>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Box, ResponsiveContext } from 'grommet';
 
 import Header from '../components/Header';
@@ -6,18 +6,9 @@ import SearchForm from '../components/SearchForm';
 import FavouriteLocationsList from '../components/FavouriteLocationsList';
 import ResponsiveHeader from '../components/ResponsiveHeader';
 import Logo from '../components/Logo';
-import NearbyLocationsList from '../components/NearbyLocations';
+import NearbyLocationsList from '../components/NearbyLocationsList';
 
 function Home() {
-  const [favouriteLocations, setFavouriteLocations] = useState([]);
-
-  useEffect(() => {
-    const favLocations = JSON.parse(localStorage.getItem('Favourite Locations'));
-    if (favLocations) {
-      setFavouriteLocations(favLocations);
-    }
-  }, []);
-
   const screenSize = useContext(ResponsiveContext);
   return (
     <>
@@ -29,7 +20,7 @@ function Home() {
       </ResponsiveHeader>
       <Box direction="row" wrap align="stretch">
         <NearbyLocationsList />
-        {favouriteLocations.length !== 0 && <FavouriteLocationsList locations={favouriteLocations} />}
+        <FavouriteLocationsList />
       </Box>
       {screenSize !== 'small' && <Box gridArea="sidebar">Sidebar</Box>}
     </>

@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useContext } from 'react';
 import {
-  Box, Grommet, TextInput, Text, Form, FormField, Button, ResponsiveContext,
+  Box, Grommet, TextInput, Text, Form, FormField, Button, ResponsiveContext, Keyboard,
 } from 'grommet';
 import _ from 'lodash';
 
@@ -52,12 +52,11 @@ const customTheme = {
 
 function CoordinateFormField({ validate, name, id }) {
   return (
-      <FormField name={name} htmlFor={id} align="center" margin={{ bottom: '0px' }} validate={validate}>
-        {/* <Box width={{ max: '120px' }}> */}
-        <Box width={{ max: '180px' }}>
-          <TextInput name={name} id={id} placeholder={id} />
-        </Box>
-      </FormField>
+    <FormField name={name} htmlFor={id} align="center" margin={{ bottom: '0px' }} validate={validate}>
+      <Box width={{ max: '180px' }}>
+        <TextInput name={name} id={id} placeholder={id} />
+      </Box>
+    </FormField>
   );
 }
 
@@ -142,25 +141,27 @@ function SearchForm() {
               <Text>Select location</Text>
             </Box>
             )}
-            <Box
-              ref={boxRef}
-              wrap
-            >
-              <FormField name="select" htmlFor="select" validate={validateSelectField} margin={{ bottom: '0px' }}>
-                <TextInput
-                  id="select"
-                  name="select"
-                  type="search"
-                  icon={screenSize === 'small' && <Search />}
-                  dropTarget={boxRef.current}
-                  onChange={(event) => { setQuery(event.target.value); loadSuggestions(event.target.value); }}
-                  value={query}
-                  onSuggestionSelect={(event) => selectPlace(event.suggestion)}
-                  placeholder={screenSize === 'small' ? 'Select location...' : 'e. g. London...'}
-                  suggestions={suggestions}
-                />
-              </FormField>
-            </Box>
+            <Keyboard onEnter={() => navigate(`./search/${encodeURIComponent(query)}`)}>
+              <Box
+                ref={boxRef}
+                wrap
+              >
+                <FormField name="select" htmlFor="select" validate={validateSelectField} margin={{ bottom: '0px' }}>
+                  <TextInput
+                    id="select"
+                    name="select"
+                    type="search"
+                    icon={screenSize === 'small' && <Search />}
+                    dropTarget={boxRef.current}
+                    onChange={(event) => { setQuery(event.target.value); loadSuggestions(event.target.value); }}
+                    value={query}
+                    onSuggestionSelect={(event) => selectPlace(event.suggestion)}
+                    placeholder={screenSize === 'small' ? 'Select location...' : 'e. g. London...'}
+                    suggestions={suggestions}
+                  />
+                </FormField>
+              </Box>
+            </Keyboard>
           </Box>
           <Box direction="row" wrap align="center" gap="15px">
             <Box>
