@@ -9,6 +9,7 @@ import {
 
 import LocationListItem from './LocationListItem';
 import getNearbyLocationsList from '../utils/getNearbyLocationsList';
+import formatLocations from '../utils/formatLocations';
 
 const theme = {
   list: {
@@ -29,7 +30,8 @@ function NearbyLocationsList() {
 
   useEffect(() => {
     async function getNearbyLocations() {
-      const locations = await getNearbyLocationsList();
+      const rawLocations = await getNearbyLocationsList();
+      const locations = formatLocations(rawLocations);
 
       setNearbyLocations(locations);
     }
@@ -37,20 +39,20 @@ function NearbyLocationsList() {
   }, []);
 
   return (
-    <Grommet theme={theme} background={{ color: 'transparent' }}>
-      <Box pad="medium">
-        <Heading level="3">Places nearby</Heading>
+    <Box pad="medium" flex={{ grow: 1 }}>
+      <Heading level="3">Places nearby</Heading>
+      <Grommet theme={theme} background={{ color: 'transparent' }}>
         <Box>
           <List
-            data={nearbyLocations.map((item) => ({ name: `${item.name}, ${item.region}, ${item.country}`, coordinates: `${item.latitude},${item.longitude}` }))}
+            data={nearbyLocations}
           >
             {(datum) => (
-              <LocationListItem location={datum.name} coordinatesString={datum.coordinates} />
+              <LocationListItem location={datum.name} coordinatesString={`${datum.coordinates.lat}, ${datum.coordinates.lon}`} />
             )}
           </List>
         </Box>
-      </Box>
-    </Grommet>
+      </Grommet>
+    </Box>
   );
 }
 

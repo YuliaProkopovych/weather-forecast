@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-//import { useNavigate } from 'react-router-dom';
 
 import {
   Grommet,
@@ -26,31 +25,19 @@ const theme = {
 };
 
 function FavouriteLocationsList({ locations }) {
- // const navigate = useNavigate();
-
-  // const redirectToForecast = (location) => {
-  //   navigate(`../../forecast/${encodeURIComponent(location)}`);
-  // };
-
   return (
-    <Grommet theme={theme} background={{ color: 'transparent' }}>
-      <Box pad="medium">
-        <Heading level="3">Saved locations</Heading>
+    <Box pad="medium" flex={{ grow: 1 }}>
+      <Heading level="3">Saved locations</Heading>
+      <Grommet theme={theme} background={{ color: 'transparent' }}>
         <Box>
           <List
             data={locations}
-            // onClickItem={(event) => {
-            //   redirectToForecast(event.item);
-            // }}
           >
-            {(datum) => {
-              console.log(datum, 'datum');
-              return <FavouriteLocationItem location={datum.name} coordinatesString={datum.coordinates} />;
-            }}
+            {(datum) => <FavouriteLocationItem location={datum.name} coordinatesString={datum.coordinates} />}
           </List>
         </Box>
-      </Box>
-    </Grommet>
+      </Grommet>
+    </Box>
   );
 }
 

@@ -27,7 +27,7 @@ function Home() {
         </Header>
         <Logo />
       </ResponsiveHeader>
-      <Box>
+      <Box direction="row" wrap align="stretch">
         <NearbyLocationsList />
         {favouriteLocations.length !== 0 && <FavouriteLocationsList locations={favouriteLocations} />}
       </Box>
