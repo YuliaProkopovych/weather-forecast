@@ -20,17 +20,17 @@ function FavouriteLocationItem({ location, coordinatesString }) {
     if (location) {
       navigate(`../../forecast/${encodeURIComponent(location)}`, { state: coordinates });
     } else {
-      navigate(`./forecast/${encodeURIComponent(coordinatesString)}`);
+      navigate(`./forecast/${encodeURIComponent(coordinatesString.replace(' ', ''))}`);
     }
   };
 
   return (
-    <div onMouseOver={() => { setScale(1.1); }} onMouseLeave={() => { setScale(1); }} onClick={() => redirectToForecast(location.title)}> {/* eslint-disable-line */}
+    <div onMouseOver={() => { setScale(1.1); }} onMouseLeave={() => { setScale(1); }} onClick={() => redirectToForecast()}> {/* eslint-disable-line */}
       <Box
         direction="row"
         gap="medium"
         align="center"
-        onClick={(event) => {
+        onClick={() => {
           redirectToForecast();
         }}
       >
