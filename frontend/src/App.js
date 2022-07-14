@@ -15,6 +15,7 @@ import SolarCalendar from './pages/solarCalendar';
 import Home from './pages/home';
 import Search from './pages/search';
 import Forecast from './pages/forecast';
+import Error from './pages/error'
 
 const theme = {
   global: {
@@ -45,6 +46,7 @@ function App() {
               <Route path="/forecast/:location" element={<Forecast />} />
               <Route path="/search/:location" element={<Search />} />
               <Route path="/solar-calendar/:location" element={<SolarCalendar />} />
+              <Route path="/*" element={<Error />} />
             </Routes>
           </Router>
         </Box>
