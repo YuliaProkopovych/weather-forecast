@@ -1,9 +1,11 @@
+import config from '../../config';
+
 const getNearbyLocationsList = async () => {
   const requestOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   };
-  const url = `http://localhost:7402/nearby-locations`;
+  const url = `${config.apiURL}/nearby-locations`;
   const response = await fetch(url, requestOptions);
   const locationsList = await response.json();
 

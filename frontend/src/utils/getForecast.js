@@ -1,4 +1,5 @@
 import groupForecastRecordsByDate from './groupForecastRecordsByDate';
+import config from '../../config';
 
 const getForecast = async (query) => {
   const requestOptions = {
@@ -6,7 +7,7 @@ const getForecast = async (query) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query }),
   };
-  const response = await fetch('http://localhost:7402/forecast', requestOptions);
+  const response = await fetch(`${config.apiURL}/forecast`, requestOptions);
 
   const data = await response.json();
   const {
