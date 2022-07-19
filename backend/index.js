@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const fastify = require('fastify')({ logger: true });
 
-const PORT = process.env.PORT || 3000;
+const PORT = 7402;
 
 fastify.register(require('fastify-cors'), { origin: true, credentials: true });
 
