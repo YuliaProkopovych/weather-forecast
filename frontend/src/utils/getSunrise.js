@@ -8,7 +8,7 @@ const getSunrise = async (coordinates, firstDate, lastDate) => {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   };
-  const url = `http://127.0.0.1:3000/solar-forecast?coordinates=${coordinates.lat},${coordinates.lon}&startDate=${startDate}&endDate=${endDate}`;
+  const url = `http://localhost:7402/solar-forecast?coordinates=${coordinates.lat},${coordinates.lon}&startDate=${startDate}&endDate=${endDate}`;
   const response = await fetch(url, requestOptions);
 
   const solarData = await response.json();

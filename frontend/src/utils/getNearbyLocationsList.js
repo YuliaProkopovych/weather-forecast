@@ -3,7 +3,7 @@ const getNearbyLocationsList = async () => {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   };
-  const url = `http://127.0.0.1:3000/nearby-locations`;
+  const url = `http://localhost:7402/nearby-locations`;
   const response = await fetch(url, requestOptions);
   const locationsList = await response.json();
 
