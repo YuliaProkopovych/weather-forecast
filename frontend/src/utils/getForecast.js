@@ -1,5 +1,5 @@
 import groupForecastRecordsByDate from './groupForecastRecordsByDate';
-import config from '../../config';
+import config from '../config';
 
 const getForecast = async (query) => {
   const requestOptions = {

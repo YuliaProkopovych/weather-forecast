@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import config from '../../config';
+import config from '../config';
 
 const getSunrise = async (coordinates, firstDate, lastDate) => {
   const startDate = DateTime.fromISO(firstDate).toFormat('yyyy-MM-dd');
