@@ -8,11 +8,10 @@ function FavouriteLocationsList() {
     const favLocations = JSON.parse(localStorage.getItem('Favourite Locations'));
     if (favLocations) {
       setFavouriteLocations(favLocations);
-      console.log(favLocations);
     }
   }, []);
   return (
-    <LocationsList listHeader="Saved locations" locations={favouriteLocations} />
+    <LocationsList errorMessage="You have no saved locations yet!" listHeader="Saved locations" locations={favouriteLocations} />
   );
 }
 

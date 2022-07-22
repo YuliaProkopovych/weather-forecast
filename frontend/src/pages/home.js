@@ -22,7 +22,6 @@ function Home() {
         <NearbyLocationsList />
         <FavouriteLocationsList />
       </Box>
-      {screenSize !== 'small' && <Box gridArea="sidebar">Sidebar</Box>}
     </>
   );
 }

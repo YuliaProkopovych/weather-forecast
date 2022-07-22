@@ -18,7 +18,7 @@ function NearbyLocationsList() {
   }, []);
 
   return (
-    <LocationsList listHeader="Places nearby" locations={nearbyLocations} />
+    <LocationsList errorMessage="Can't load locations near you!" listHeader="Places nearby" locations={nearbyLocations} />
   );
 }
 

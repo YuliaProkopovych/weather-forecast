@@ -5,6 +5,7 @@ import {
   Grommet,
   Box,
   List,
+  Text,
   Heading,
 } from 'grommet';
 
@@ -24,20 +25,24 @@ const theme = {
   },
 };
 
-function LocationsList({ listHeader, locations }) {
+function LocationsList({ listHeader, locations, errorMessage }) {
   return (
     <Box pad="medium" flex={{ grow: 1 }}>
       <Heading level="3">{listHeader}</Heading>
       <Grommet theme={theme} background={{ color: 'transparent' }}>
         <Box>
-          <List
-            data={locations}
-          >
-            {(datum) => {
-              const coordinatesString = datum.coordinates.lat ? `${datum.coordinates.lat}, ${datum.coordinates.lon}` : datum.coordinates;
-              return <LocationListItem location={datum.name} coordinatesString={coordinatesString} />;
-            }}
-          </List>
+          {locations.length === 0 ? (
+            <Text>{errorMessage}</Text>
+          ) : (
+            <List
+              data={locations}
+            >
+              {(datum) => {
+                const coordinatesString = datum.coordinates.lat ? `${datum.coordinates.lat}, ${datum.coordinates.lon}` : datum.coordinates;
+                return <LocationListItem location={datum.name} coordinatesString={coordinatesString} />;
+              }}
+            </List>
+          )}
         </Box>
       </Grommet>
     </Box>
@@ -47,6 +52,7 @@ function LocationsList({ listHeader, locations }) {
 LocationsList.propTypes = {
   locations: PropTypes.objectOf(PropTypes.array).isRequired,
   listHeader: PropTypes.string.isRequired,
+  errorMessage: PropTypes.string.isRequired,
 };
 
 export default LocationsList;

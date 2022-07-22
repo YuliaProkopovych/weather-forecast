@@ -9,15 +9,19 @@ import {
   Route,
 } from 'react-router-dom';
 
+import { grommet } from 'grommet/themes';
+import { deepMerge } from 'grommet/utils';
+
 import BackgroundBox from './components/background';
 
 import SolarCalendar from './pages/solarCalendar';
 import Home from './pages/home';
 import Search from './pages/search';
 import Forecast from './pages/forecast';
-import Error from './pages/error'
+import Error from './pages/error';
+import Footer from './components/footer';
 
-const theme = {
+const theme = deepMerge(grommet, {
   global: {
     colors: {
       belowZero: '#0202a1',
@@ -33,13 +37,17 @@ const theme = {
       height: '20px',
     },
   },
-};
+  anchor: {
+    color: 'textGray',
+    fontWeight: 400,
+  },
+});
 
 function App() {
   return (
     <Grommet theme={theme} full>
-      <BackgroundBox style={{ minHeight: '100%' }}>
-        <Box fill="horizontal">
+      <BackgroundBox style={{ minHeight: '100%' }} direction="column" align="stretch">
+        <Box fill="horizontal" flex={{ grow: 1 }}>
           <Router>
             <Routes>
               <Route exact path="/" element={<Home />} />
@@ -50,6 +58,7 @@ function App() {
             </Routes>
           </Router>
         </Box>
+        <Footer />
       </BackgroundBox>
     </Grommet>
   );

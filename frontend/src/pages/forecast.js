@@ -33,7 +33,6 @@ function Forecast() {
       if (locationData.state) {
         setCoordinates(locationData.state);
         setLocationName(params.location);
-        console.log(locationData.state);
         data = await getForecast(locationData.state);
       } else {
         const coords = { lat: params.location.split(',')[0], lon: params.location.split(',')[1] };
@@ -118,7 +117,7 @@ function Forecast() {
         <Logo />
       </ResponsiveHeader>
       {size !== 'small' ? (
-        <Box pad={size !== 'medium' ? 'medium' : 'small'} gridArea="main">
+        <Box pad={size !== 'medium' ? 'medium' : 'small'}>
           <DataTable
             pad={{ horizontal: 'small', vertical: 'medium' }}
             background="semitransparent-white"

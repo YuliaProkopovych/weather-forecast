@@ -19,7 +19,7 @@ function TimeText({ time, timezoneId }) {
 
 TimeText.propTypes = {
   time: PropTypes.string.isRequired,
-  timezoneId: PropTypes.string,
+  timezoneId: PropTypes.string.isRequired,
 };
 
 function MoonRise({ time, timezoneId }) {
@@ -35,7 +35,7 @@ function MoonRise({ time, timezoneId }) {
 
 MoonRise.propTypes = {
   time: PropTypes.string.isRequired,
-  timezoneId: PropTypes.string,
+  timezoneId: PropTypes.string.isRequired,
 };
 
 function MoonSet({ time, timezoneId }) {
@@ -51,14 +51,14 @@ function MoonSet({ time, timezoneId }) {
 
 MoonSet.propTypes = {
   time: PropTypes.string.isRequired,
-  timezoneId: PropTypes.string,
+  timezoneId: PropTypes.string.isRequired,
 };
 
 function LunarInfo({
   moonphase,
   moonrise,
   moonset,
-  timezoneId
+  timezoneId,
 }) {
   // 0-1 1-8 8-16 16-24 24-25
   // 25-26 26-33 33-41 41-49 49-50
@@ -176,6 +176,7 @@ LunarInfo.propTypes = {
   moonphase: PropTypes.string.isRequired,
   moonrise: PropTypes.string.isRequired,
   moonset: PropTypes.string.isRequired,
+  timezoneId: PropTypes.string.isRequired,
 };
 
 export { LunarInfo, TimeText };

@@ -12,7 +12,7 @@ function Description() {
     screenSize !== 'small'
       && (
       <Box grid-area="description" alignSelf={screenSize === 'medium' ? 'end' : 'start'} pad={screenSize === 'medium' ? { bottom: 'large' } : 'medium'}>
-        <Text color="textGray">Weather forecast powered by Norwegian Meteorological Institute</Text>
+        <Text color="light">Weather forecast powered by Norwegian Meteorological Institute</Text>
       </Box>
       )
   );

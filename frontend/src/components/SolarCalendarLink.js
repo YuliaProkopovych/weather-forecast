@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import PropTypes, { number } from 'prop-types';
 import {
   Box, Text, ResponsiveContext,
 } from 'grommet';
@@ -27,7 +27,7 @@ function SolarCalendarLink({ locationName, coordinates }) {
           }}
         >
           <CustomIcon flex={{ shrink: 0 }} size={size !== 'small' ? '40px' : '30px'} path="/icons/svg/calendar.svg" margin={{ right: '8px', left: '8px' }} />
-          <Text color="textGray" size="medium">Open solar/lunar calendar</Text>
+          <Text size="medium">Open solar/lunar calendar</Text>
           <Box margin={size === 'small' ? { left: '10px', right: '15px' } : '0px'}><FormNextLink /></Box>
         </Box>
       )}
@@ -38,7 +38,10 @@ function SolarCalendarLink({ locationName, coordinates }) {
 
 SolarCalendarLink.propTypes = {
   locationName: PropTypes.string.isRequired,
-  coordinates: PropTypes.object.isRequired,
+  coordinates: PropTypes.shape({
+    lat: PropTypes.number,
+    lon: PropTypes.number,
+  }).isRequired,
 };
 
 export default SolarCalendarLink;
