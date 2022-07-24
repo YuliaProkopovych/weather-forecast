@@ -17,6 +17,7 @@
   },
   "scripts": {
     "start": "export ESLINT_NO_DEV_ERRORS=true && NODE_ENV=development && react-scripts start",
+    "startprod": "export NODE_ENV=production && export PORT=7302 && export ESLINT_NO_DEV_ERRORS=true && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
