@@ -4,7 +4,7 @@ const fastify = require('fastify')({ logger: true });
 
 const PORT = 7402;
 
-fastify.register(require('fastify-cors'), { origin: ['http://localhost:3000', 'http://192.168.0.104:3000'], credentials: true });
+fastify.register(require('fastify-cors'), { origin: '*', credentials: true });
 
 fastify.register(require('./routes/forecast'));
 fastify.register(require('./routes/solar-forecast'));
